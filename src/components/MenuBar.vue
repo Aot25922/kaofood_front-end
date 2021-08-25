@@ -36,8 +36,8 @@
               <i class="material-icons"> account_circle </i>
           </div>
           <div v-show="showLoginMenu" class="mt-2 py-2 bg-white rounded-lg shadow-xl"> 
-            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Login</a> 
-            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">SignUp</a> 
+            <router-link to="/login" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Login</router-link>
+            <router-link to="/signup" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Sign Up</router-link>
           </div>
         </div>
 
@@ -51,7 +51,7 @@ export default {
   name: "MenuBar",
   data() {
     return {
-      showLoginMenu: false
+      showLoginMenu: false,
     }
   },
 }
