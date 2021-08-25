@@ -30,9 +30,17 @@
         <button class="btn btn-square btn-ghost">
           <i class="material-icons"> shopping_cart </i>
         </button>
-        <button class="btn btn-square btn-ghost">
-            <i class="material-icons"> account_circle </i>
-        </button>
+        <!-- ปุ่ม Login -->
+        <div @click="showLoginMenu = !showLoginMenu"> 
+          <div class="flex justify-between">
+              <i class="material-icons"> account_circle </i>
+          </div>
+          <div v-show="showLoginMenu" class="mt-2 py-2 bg-white rounded-lg shadow-xl"> 
+            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Login</a> 
+            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">SignUp</a> 
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -40,6 +48,11 @@
 
 <script>
 export default {
-    name: "MenuBar"
+  name: "MenuBar",
+  data() {
+    return {
+      showLoginMenu: false
+    }
+  },
 }
 </script>
