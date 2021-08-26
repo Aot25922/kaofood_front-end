@@ -1,5 +1,5 @@
 # kaofood_front-end
-https://kaofood.netlify.app/
+https://kaofood.redirectme.net
 
 ## Project setup
 ```
