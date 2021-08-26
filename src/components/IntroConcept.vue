@@ -1,7 +1,10 @@
 <template>
   <div id="introConcept">
     <div class="text-center relative text-white">
-      <img src="../assets/header.jpg" alt="Header image" class="filter brightness-50 w-full" />
+      <!-- Header img for Iphone6 to IphoneX -->
+      <img src="../assets/header-mb.jpg" alt="Header image" class="filter brightness-50 md:hidden w-full" />
+      <!-- Header img for Ipad to Computer -->
+      <img src="../assets/header.jpg" alt="Header image" class="filter brightness-50 md:w-full w-0" />
       <div class="font-medium absolute transform inset-0 top-1/4">
         <p class="xl:text-8xl md:text-5xl sm:text-4xl text-2xl font-bold uppercase">Kaofood Restaurant</p>
         <p class="xl:text-3xl md:text-2xl sm:text-base text-xs xl:my-10 sm:mt-5 mt-1 md:px-5 px-2">If you're hungry that's your business not us. We have many menus but we don't have "Anything will do".</p>
