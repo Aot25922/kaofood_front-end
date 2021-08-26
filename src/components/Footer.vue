@@ -2,7 +2,7 @@
   <div id="footer">
     <div class="p-10 bg-black text-white flex flex-wrap">
       <!-- Kao Food -->
-      <div class="flex-1 p-10">
+      <div class="flex-1 md:p-5 p-10">
         <h1 class="xl:text-4xl text-3xl uppercase font-bold">Kaofood</h1>
         <span class="text-gray-400">
           <hr class="xl:w-3/5 w-44" />
@@ -14,7 +14,7 @@
       </div>
 
       <!-- Link -->
-      <div class="flex-1 p-10 text-center">
+      <div class="flex-1 md:p-5 p-10 text-center">
         <h1 class="text-2xl uppercase font-semibold ">Link</h1>
         <hr class="w-1/2 pb-5 mx-auto" />
         <div class="flex flex-col leading-loose uppercase tracking-widest">
@@ -25,7 +25,7 @@
       </div>
 
       <!-- Opening Hours -->
-      <div class="flex-1 p-10 text-center">
+      <div class="flex-1 md:p-5 p-10 text-center">
         <h1 class="text-2xl uppercase font-semibold ">Opening Hours</h1>
         <hr class="w-11/12 mx-auto" />
         <div class="text-lg">
@@ -42,7 +42,7 @@
       </div>
 
       <!-- Social -->
-      <div class="flex-1 p-10">
+      <div class="flex-1 md:p-5 p-10">
         <h1 class="text-2xl uppercase font-semibold text-center">Social</h1>
         <hr class="w-1/2 mx-auto" />
         <div class="flex flex-row justify-center">
