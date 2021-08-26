@@ -1,8 +1,11 @@
 <template>
-  <div class="home">
-    <router-link to="/">
-      <img class="w-16" alt="KaoFood logo" src="../assets/logo.png"/>
-    </router-link>
-  </div>
+    <intro-concept />
 </template>
 
+<script>
+import IntroConcept from '@/components/IntroConcept.vue'
+export default {
+    name: "Home",
+    components: { IntroConcept },
+}
+</script>
