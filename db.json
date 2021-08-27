@@ -10,18 +10,18 @@
             "menuName": "Beef Noodle Soup",
             "price": 40.50,
             "description": "Wonderfully fragrant and deliciously healthy, this simple Chinese Beef Noodle Soup makes the perfect warming meal.",
-            "menuImg": "/images/menu/noodleSoup.jpg",
-            "type": "Noodle",
-            "typeImg": "/images/type/noode.png"
+            "menuImg": "https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2020/04/dx3e9y.jpg",
+            "cate": "Noodle",
+            "cateImg": "https://freepikpsd.com/media/2019/10/noodle-icon-png-7-Transparent-Images.png"
         },
         {
             "menuId": "2",
             "menuName": "Spicy Shrimp Soup",
             "price": 120.00,
             "description": "Tom Yum is probably the most famous of Thai soups and is popular not only in Thailand but in Thai restaurants worldwide. It is a clear, sour soup flavored with fragrant lemon grass, fresh galangal root and kaffir lime leaf. This potent herbal mixture is well known for its medicinal properties.",
-            "menuImg": "/images/menu/spicyShrimpSoup.jpg",
-            "type": "Soup",
-            "typeImg": "/images/menu/soup.png"
+            "menuImg": "https://img.theculturetrip.com/1440x/smart/wp-content/uploads/2020/04/fkdbth.jpg",
+            "cate": "Soup",
+            "cateImg": "https://image.flaticon.com/icons/png/512/454/454570.png"
         }
     ],
 
