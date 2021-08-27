@@ -48,14 +48,6 @@
     </button>
 
   <!-- Account: Toggle when ipad to laptop -->
-    <!-- old version: ถ้าต้องใช้อันนี้อยู่บอกด้วย เพราะ daisyUI มีมาให้ถ้าไม่ เชิญลบ data-->
-    <!-- <butoon @click="showLoginMenu = !showLoginMenu" class="md:flex hidden justify-between btn btn-ghost btn-sm rounded-btn md:text-xl"> 
-      <i class="material-icons">account_circle</i>
-      <div v-show="showLoginMenu" class="mt-2 py-2 bg-white rounded-lg shadow-xl"> 
-        <router-link to="/login" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Login</router-link>
-        <router-link to="/signup" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Sign Up</router-link>
-      </div>
-    </butoon> -->
     <div class="md:flex hidden dropdown dropdown-end">
         <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
         <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
@@ -75,10 +67,5 @@
 <script>
 export default {
   name: "MenuBar",
-  data() {
-    return {
-      showLoginMenu: false,
-    }
-  },
 }
 </script>

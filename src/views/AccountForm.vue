@@ -1,29 +1,42 @@
 <template>
-  <div class="h-screen bg-blue-700 px-3 py-16">
+  <div class="h-screen bg-fire-lightest px-3 py-10">
     <div class="max-w-md mx-auto bg-white p-3 rounded">
       <!-- ส่วนของ Sign Up -->
       <div v-if="mode == 'SignUp'" class="w-full p-3 px-6 py-10">
         <div class="text-center">
-          <span class="text-xl text-gray-700">SignUp</span>
+          <span class="text-xl uppercase">Register a new account</span>
         </div>
         <div class="mt-3 relative">
           <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">First name</span>
-          <input type="text" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-red-600"/>
+          <input v-model.trim="firstName" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+          <span v-if="emptyFirstName" class="text-error">Firstname required</span>
         </div>
         <div class="mt-4 relative">
           <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Last name</span>
-          <input type="text" class=" h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-red-600"/>
+          <input v-model.trim="lastName" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+          <span v-if="emptyLastName" class="text-error">Lastname required</span>
+        </div>
+        <div class="mt-4 relative">
+          <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Phone</span>
+          <input v-model.trim="phone" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+          <span v-if="emptyPhone" class="text-error">Phone required</span>
         </div>
         <div class="mt-4 relative">
           <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Email</span>
-          <input type="text" class=" h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-red-600"/>
+          <input v-model.trim="email" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+          <span v-if="emptyEmail" class="text-error">Email required</span>
         </div>
         <div class="mt-4 relative">
           <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Password</span>
-          <input type="text" class=" h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-red-600"/>
+          <input v-model="password" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+          <span v-if="emptyPassword" class="text-error">Password required</span>
+        </div>
+        <!-- Textarea still has bug -->
+        <div class="mt-4 relative">
+          <textarea class="h-24 p-2 w-full border-2 rounded focus:outline-none focus:border-gray-600" placeholder="Your address..."/>
         </div>
         <div class="mt-4">
-          <button class="h-12 w-full bg-red-600 text-white rounded hover:bg-red-700">Click to proceed
+          <button @click="signUp" class="h-12 w-full bg-red-600 text-white rounded hover:bg-red-700">Sign Up
             <i class="fa fa-long-arrow-right"></i>
           </button>
         </div>
@@ -36,16 +49,17 @@
         </div>
         <div class="relative mb-3">
           <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Email</span>
-          <input v-model="email" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
-          <span v-if="emptyEmail" class="text-red">Email cannot empty!</span>
+          <input v-model.trim="email" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
+          <span v-if="emptyEmail" class="text-error">Email cannot be empty!</span>
         </div>
         <div class="relative mb-1">
           <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Password</span>
           <input v-model="password" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
-          <span v-if="emptyPassword" class="text-red">password cannot empty!</span>
+          <span v-if="emptyPassword" class="text-error">password cannot be empty!</span>
         </div>
-        <div class="text-right mb-3">
-          <a href="#" class="cursor-pointer text-blue-500 hover:text-blue-700">Forgot password?</a>
+        <div class="flex flex-row mb-3">
+          <a href="#" class="flex-1 cursor-pointer text-blue-500 hover:text-blue-700">Forgot password?</a>
+          <router-link class="flex-none text-neutral-focus underline" to="/signup">Sign Up</router-link>
         </div>
         <button @click="login" class=" h-12 w-full hover:bg-red-800 focus:outline-none bg-red-700 rounded text-white mb-3">Login</button>
       </div>
@@ -59,10 +73,17 @@ export default {
   props: ["mode"],
   data() {
     return {
+      firstName: "",
+      lastName: "",
+      phone: "",
       email: "",
       password: "",
       account: null,
       checkForLogin: false,
+      checkSignUp: false,
+      emptyFirstName: null,
+      emptyLastName: null,
+      emptyPhone: null,
       emptyEmail: null,
       emptyPassword: null
     };
@@ -84,17 +105,64 @@ export default {
       }
     },
     checkLoginForm(){
-      if(this.email!==""){
+      if(this.email !== ""){
+        this.emptyEmail = false
+      }else{
+        this.emptyEmail = true
+      }
+      if(this.password !== ""){
+        this.emptyPassword = false
+      }else{
+        this.emptyPassword = true
+      }
+    },
+    async signUp(){
+      this.checkSignUp();
+      if(this.emptyFirstName && this.lastName && this.emptyPhone && this.emptyEmail && this.emptyPassword) {
+        try{
+          const res = await fetch(`http://localhost:3000/user`);
+          const data = res.json();
+          this.account = await data;
+         if(this.account==false){
+           this.checkForLogin = false
+         }
+        } catch (error) {
+          console.log(`Counld not get! ${error}`);
+        }
+      }
+    },
+    checkSignUpForm(){
+      // check firstName
+      if(this.firstName !== "") {
+        this.emptyFirstName = false
+      } else {
+        this.emptyFirstName = true
+      }
+      // check lastName
+      if(this.lastName !== "") {
+        this.emptyLastName = false
+      } else {
+        this.emptyLastName = true
+      }
+      // check email
+      if(this.email !== ""){
         this.emptyEmail=false
       }else{
         this.emptyEmail=true
       }
-      if(this.password!==""){
-        this.emptyPassword=false
+      // check password
+      if(this.password !== ""){
+        this.emptyPassword = false
       }else{
-        this.emptyPassword=true
+        this.emptyPassword = true
       }
-    },
+      // check phone
+      if(this.phone !== ""){
+        this.emptyPhone = false
+      }else{
+        this.emptyPhone = true
+      }
+    }
   },
-};
+}
 </script>
