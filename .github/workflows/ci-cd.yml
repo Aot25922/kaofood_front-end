@@ -35,4 +35,5 @@ jobs:
         script: |
           cd kaofood/
           git pull
+          docker pull ghcr.io/int222-31-33-43/kaofood_front-end
           docker-compose up -d
