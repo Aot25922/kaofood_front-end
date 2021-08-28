@@ -28,11 +28,12 @@
       </div>
 
   <!-- Main menu ipad to laptop -->
-  <div class="mx-2 px-2">
-    <div class="md:items-stretch hidden flex-none md:block">
-        <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Home</router-link>
-        <router-link to="" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Menu</router-link>
-        <router-link to="" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Contact</router-link>
+  <div class="px-4">
+    <img src="../assets/logo.png" class="lg:w-20 md:w-14 lg:pr-2 md:pr-1 md:py-1 w-0"/>
+    <div class="md:items-stretch hidden md:block">
+      <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Home</router-link>
+      <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Menu</router-link>
+      <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Contact</router-link>
     </div>
   </div>
 
