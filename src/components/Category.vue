@@ -1,12 +1,12 @@
 <template>
-  <div id="category" class="navbar flex flex-row p-2">
+  <div id="category" class="navbar md:flex md:flex-row grid grid-cols-3 p-2">
     <!-- All Menu -->
-    <button class="flex-1 text-black btn btn-accent btn-ghost" v-on:click="$emit('SelectCate',null)">
+    <button class="md:flex-1 text-black btn btn-accent btn-ghost lg:text-lg md:text-base" @click="$emit('SelectCate', null)">
       All Menu
     </button>
     <!-- Category -->
-    <button class="flex-1 text-black btn btn-accent btn-ghost" v-for="category in categoryList" :key="category.menuId" v-on:click="$emit('SelectCate', category.cateId)">
-        <img class="w-6" v-bind:src="category.cateImg"> <span class="ml-1">{{ category.cate }}</span>
+    <button class="md:flex-1 text-black btn btn-accent btn-ghost lg:text-lg md:text-base md:p-1" v-for="category in categoryList" :key="category.cateId" @click="$emit('SelectCate', category.cateId)">
+        <img class="w-6" v-bind:src="category.image"><span class="ml-1">{{ category.cateName }}</span>
     </button>
   </div>
 </template>
@@ -15,6 +15,7 @@
 export default {
   name: "Category",
   emits: ["SelectCate"],
+  inject: ["categoryUrl"],
   data() {
     return {
       categoryList: [],
@@ -23,7 +24,7 @@ export default {
   methods: {
     async getCategory() {
       try{
-      const res = await fetch("http://localhost:3000/menu");
+      const res = await fetch(this.categoryUrl);
       const data = await res.json();
       return data;
       } catch (error) { 

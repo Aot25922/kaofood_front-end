@@ -1,17 +1,17 @@
 <template>
-  <div id="menuList">
-    <div class="card bordered p-2" v-for="menu in menuFilterList" :key="menu.id">
+  <div id="menuList" class="sm:flex sm:flex-row">
+    <div class="card bordered p-2 sm:flex-1" v-for="menu in menuFilterList" :key="menu.id">
       <div class="relative">
-        <img class="rounded" :src="menu.menuImg">
-        <span class="font-medium absolute bottom-0 left-0 rounded bg-primary p-1">{{ menu.price }} ฿</span>
+        <img class="rounded w-full" :src="menu.menuImg">
+        <span class="font-medium absolute bottom-0 left-0 rounded bg-primary md:text-2xl text-xl p-1">{{ menu.price }} ฿</span>
       </div> 
       <div class="card-body">
-        <h2 class="card-title">{{ menu.menuName }}
-          <div class="badge mx-2 badge-secondary">NEW</div>
+        <h2 class="card-title lg:text-4xl md:text-2xl">{{ menu.menuName }}
+          <div class="badge mx-2 badge-secondary lg:text-xl md:text-lg lg:py-4 md:p-3 ">NEW</div>
         </h2> 
-        <p>&emsp;{{ menu.description }}</p> 
+        <!-- <p class="truncate">&emsp;{{ menu.description }}</p> -->
           <div class="justify-center card-actions">
-            <button class="btn btn-secondary uppercase w-full text-base">Add to Cart</button>
+            <button class="btn btn-secondary w-full uppercase lg:text-xl text-base">Add to Cart</button>
           </div>
       </div>
     </div> 

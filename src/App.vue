@@ -12,8 +12,16 @@ import Footer from '@/components/Footer.vue'
 export default {
     name: "App",
     components: { MenuBar, Footer },
+    provide(){
+        return{
+            categoryUrl: `${this.dbUrl}/category`,
+            userUrl: `${this.dbUrl}/user`,
+            userDetailUrl: `${this.dbUrl}/userdetail`
+        }
+    },
     data() {
         return {
+            dbUrl: "https://kaofood-spring.azurewebsites.net",
             showAccountForm: false,
             signupAccountForm: null,
         };
