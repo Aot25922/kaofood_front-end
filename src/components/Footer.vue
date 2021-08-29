@@ -29,13 +29,13 @@
         <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-semibold ">Opening Hours</h1>
         <hr class="w-3/5 mx-auto" />
         <div class="text-lg">
-          <p class="lg:text-base text-sm pt-1">
+          <p class="lg:text-base md:text-sm text-xs pt-1">
             <span class="text-fire-lighter font-medium">Mon - Thu:</span> 9AM - 9PM
           </p>
-          <p class="lg:text-base text-sm pt-1">
+          <p class="lg:text-base md:text-sm text-xs pt-1">
             <span class="text-fire-lighter font-medium">Fri - Sat:</span> 10AM - 8PM
           </p>
-          <p class="lg:text-base text-sm pt-1">
+          <p class="lg:text-base md:text-sm text-xs pt-1">
             <span class="text-fire-lighter font-medium">Sun:</span> 10AM - 6PM
           </p>
         </div>
@@ -47,7 +47,7 @@
         <hr class="w-1/2 mx-auto" />
         <div class="flex flex-row justify-center">
           <!-- Twitter -->
-          <a class="p-6">
+          <a class="p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -58,7 +58,7 @@
             </svg>
           </a>
           <!-- Youtube -->
-          <a class="p-6">
+          <a class="p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -69,7 +69,7 @@
             </svg>
           </a>
           <!-- Facebook -->
-          <a class="p-6">
+          <a class="p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

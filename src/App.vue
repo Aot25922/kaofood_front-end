@@ -21,7 +21,7 @@ export default {
     },
     data() {
         return {
-            dbUrl: "https://kaofood-spring.azurewebsites.net",
+            dbUrl: "https://kaofood.ddns.net/api/",
             showAccountForm: false,
             signupAccountForm: null,
         };
