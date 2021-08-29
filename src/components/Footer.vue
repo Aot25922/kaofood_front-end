@@ -2,11 +2,11 @@
   <div id="footer">
     <div class="p-5 bg-black text-white flex flex-wrap">
       <!-- Kao Food -->
-      <div class="flex-1 p-1">
+      <div class="flex-1 p-1 xl:text-center">
         <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-bold">Kaofood</h1>
         <span class="text-gray-400">
-          <hr class="xl:w-3/5 w-44" />
-          <p class="xl:text-center text-right xl:mr-36 xl:text-sm md:text-xs text-2xs">Capitalism Restaurant</p>
+          <hr class="xl:w-1/2 w-44 xl:mx-auto" />
+          <p class="lg:text-center text-right xl:text-sm md:text-xs text-2xs">Capitalism Restaurant</p>
         </span>
         <!-- <p class="py-1"><i class="material-icons"> location_on </i> 99 Bei Chang Jie, Xicheng Qu, Beijing Shi, China</p> -->
         <p class="pt-1 lg:text-base md:text-sm text-xs"><i class="material-icons">email</i> kaofood@mail.com</p>
@@ -16,7 +16,7 @@
       <!-- Link -->
       <div class="flex-1 p-1 text-center">
         <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-semibold ">Link</h1>
-        <hr class="w-1/2 pb-1 mx-auto" />
+        <hr class="lg:w-1/3 w-1/2 pb-1 mx-auto" />
         <div class="flex flex-col leading-loose uppercase tracking-widest">
           <router-link class="lg:text-base text-sm pt-1" to="/">Home</router-link>
           <router-link class="lg:text-base text-sm pt-1" to="">Menu</router-link>
@@ -25,9 +25,9 @@
       </div>
 
       <!-- Opening Hours -->
-      <div class="flex-1 md:p-1 p-5 text-center">
-        <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-semibold ">Opening Hours</h1>
-        <hr class="w-3/5 mx-auto" />
+      <div class="flex-1 md:p-1 py-1 px-5 text-center">
+        <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-semibold">Opening Hours</h1>
+        <hr class="lg:w-3/4 w-full mx-auto" />
         <div class="text-lg">
           <p class="lg:text-base md:text-sm text-xs pt-1">
             <span class="text-fire-lighter font-medium">Mon - Thu:</span> 9AM - 9PM
@@ -42,9 +42,9 @@
       </div>
 
       <!-- Social -->
-      <div class="flex-1 md:py-1 md:px-0 p-5">
+      <div class="flex-1 p-1">
         <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-semibold text-center">Social</h1>
-        <hr class="w-1/2 mx-auto" />
+        <hr class="lg:w-1/3 w-1/2 mx-auto" />
         <div class="flex flex-row justify-center">
           <!-- Twitter -->
           <a class="p-2">
@@ -81,7 +81,7 @@
           </a>
         </div>
       </div>
-        <p class="w-full text-center text-xs">Copyright © 2021 - All right reserved by Capital Kaofood Restautant</p>
+        <p class="w-full text-center pt-3 lg:text-sm md:text-xs text-2xs">Copyright © 2021 - All right reserved by Capital Kaofood Restautant</p>
     </div>
   </div>
 </template>
