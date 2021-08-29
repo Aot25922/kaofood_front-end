@@ -21,9 +21,8 @@
 <script>
 export default {
   name: "MenuList",
-  props: {
-    cateId: null
-  },
+  props: {cateId: null},
+  inject: ["menuUrl"],
   data(){
     return {
       menuList:[],
@@ -32,7 +31,7 @@ export default {
   methods : {
   async getMenuList() {
       try {
-        const res = await fetch("http://localhost:3000/menu");
+        const res = await fetch(this.menuUrl);
         const data = res.json();
         return data;
       } catch (error) {

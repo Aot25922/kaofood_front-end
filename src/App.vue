@@ -14,14 +14,15 @@ export default {
     components: { MenuBar, Footer },
     provide(){
         return{
-            categoryUrl: `${this.dbUrl}/category`,
-            userUrl: `${this.dbUrl}/user`,
-            userDetailUrl: `${this.dbUrl}/userdetail`
+            categoryUrl: `${this.backendUrl}/category`,
+            menuUrl: `${this.backendUrl}/menu`,
+            userUrl: `${this.backendUrl}/user`
         }
     },
     data() {
         return {
-            dbUrl: "https://kaofood-spring.azurewebsites.net",
+            backendUrl: "https://kaofood.ddns.net/api",
+            // backendUrl: "http://localhost:8080",
             showAccountForm: false,
             signupAccountForm: null,
         };

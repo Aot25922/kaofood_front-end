@@ -49,12 +49,12 @@
         </div>
         <div class="relative mb-3">
           <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Email</span>
-          <input v-model="email" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
+          <input type="email" v-model="email" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
           <span v-if="emptyEmail" class="text-error">Email cannot be empty!</span>
         </div>
         <div class="relative mb-1">
           <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Password</span>
-          <input v-model="password" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
+          <input type="password" v-model="password" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
           <span v-if="emptyPassword" class="text-error">password cannot be empty!</span>
         </div>
         <div class="flex flex-row mb-3">
@@ -71,6 +71,7 @@
 export default {
   name: "AccountForm",
   props: ["mode"],
+  inject: ["userUrl"],
   data() {
     return {
       account:null,
@@ -88,21 +89,12 @@ export default {
       emptyPassword: null
     };
   },
-  mounted() {
-    if (localStorage.getItem('account')) {
-      try {
-        this.account = JSON.parse(localStorage.getItem('account'));
-      } catch(e) {
-        localStorage.removeItem('account');
-      }
-    }
-  },
   methods: {
     async login() {
       this.checkLoginForm();
       if(!(this.emptyPassword&&this.emptyEmail)){
       try {
-        const res = await fetch(`http://localhost:8088/user/${this.email}/${this.password}`);
+        const res = await fetch(`${this.userUrl}/${this.email}/${this.password}`);
         const data = res.json();
         this.account = await data;
          if(this.account==null){
@@ -131,10 +123,10 @@ export default {
       }
     },
     async signUp(){
-      this.checkSignUp();
+      this.checkSignUpForm();
       if(this.emptyFirstName && this.lastName && this.emptyPhone && this.emptyEmail && this.emptyPassword) {
         try{
-          const res = await fetch(`http://localhost:3000/user`);
+          const res = await fetch(`${this.userUrl}/user`);
           const data = res.json();
           this.account = await data;
          if(this.account==false){
@@ -175,6 +167,15 @@ export default {
         this.emptyPhone = false
       }else{
         this.emptyPhone = true
+      }
+    }
+  },
+  mounted() {
+    if (localStorage.getItem('account')) {
+      try {
+        this.account = JSON.parse(localStorage.getItem('account'));
+      } catch(e) {
+        localStorage.removeItem('account');
       }
     }
   }
