@@ -1,5 +1,4 @@
 # kaofood_front-end
-https://kaofood.redirectme.net
 
 ## Project setup
 ```

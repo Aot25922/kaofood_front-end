@@ -44,17 +44,17 @@
 
       <!-- ส่วนของ login -->
       <div v-else class="px-3 py-5">
-        <div class="text-center mb-10">
+        <div v-if="account!=null" class="text-center mb-10">
           <h1 class="text-2xl mb-4">Login</h1>
         </div>
         <div class="relative mb-3">
           <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Email</span>
-          <input v-model.trim="email" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
+          <input type="email" v-model="email" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
           <span v-if="emptyEmail" class="text-error">Email cannot be empty!</span>
         </div>
         <div class="relative mb-1">
           <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Password</span>
-          <input v-model="password" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
+          <input type="password" v-model="password" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
           <span v-if="emptyPassword" class="text-error">password cannot be empty!</span>
         </div>
         <div class="flex flex-row mb-3">
@@ -71,14 +71,15 @@
 export default {
   name: "AccountForm",
   props: ["mode"],
+  inject: ["userUrl"],
   data() {
     return {
+      account:null,
       firstName: "",
       lastName: "",
       phone: "",
       email: "",
       password: "",
-      account: null,
       checkForLogin: false,
       checkSignUp: false,
       emptyFirstName: null,
@@ -91,13 +92,18 @@ export default {
   methods: {
     async login() {
       this.checkLoginForm();
-      if(this.emptyPasswordl&&this.emptyEmail){
+      if(!(this.emptyPassword&&this.emptyEmail)){
       try {
-        const res = await fetch(`http://localhost:3000/user/login/${this.email}/${this.passsword}`);
+        const res = await fetch(`${this.userUrl}/${this.email}/${this.password}`);
         const data = res.json();
         this.account = await data;
-         if(this.account==false){
+         if(this.account==null){
            this.checkForLogin = false
+         }
+         else{
+           console.log(this.account)
+           const parsed = JSON.stringify(this.account);
+           localStorage.setItem('account', parsed);
          }
       } catch (error) {
         console.log(`Counld not get! ${error}`);
@@ -117,10 +123,10 @@ export default {
       }
     },
     async signUp(){
-      this.checkSignUp();
+      this.checkSignUpForm();
       if(this.emptyFirstName && this.lastName && this.emptyPhone && this.emptyEmail && this.emptyPassword) {
         try{
-          const res = await fetch(`http://localhost:3000/user`);
+          const res = await fetch(`${this.userUrl}/user`);
           const data = res.json();
           this.account = await data;
          if(this.account==false){
@@ -164,5 +170,14 @@ export default {
       }
     }
   },
+  mounted() {
+    if (localStorage.getItem('account')) {
+      try {
+        this.account = JSON.parse(localStorage.getItem('account'));
+      } catch(e) {
+        localStorage.removeItem('account');
+      }
+    }
+  }
 }
 </script>
