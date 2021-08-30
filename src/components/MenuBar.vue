@@ -1,7 +1,7 @@
 <template>
   <div id="menuBar">
     <div class="navbar bg-primary-focus text-neutral-content">
-      <!-- Hamberger Dropdown -->
+      <!-- Hamburger Dropdown -->
       <div class="dropdown dropdown-right md:hidden">
         <button class="btn btn-square btn-ghost">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">           

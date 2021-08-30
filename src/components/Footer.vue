@@ -3,10 +3,10 @@
     <div class="p-5 bg-black text-white flex flex-wrap">
       <!-- Kao Food -->
       <div class="flex-1 p-1 xl:text-center">
-        <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-bold">Kaofood</h1>
+        <h1 class="xl:mr-28 xl:text-2xl md:text-xl text-lg uppercase font-bold">Kaofood</h1>
         <span class="text-gray-400">
           <hr class="xl:w-1/2 w-44 xl:mx-auto" />
-          <p class="lg:text-center text-right xl:text-sm md:text-xs text-2xs">Capitalism Restaurant</p>
+          <p class="xl:ml-24 lg:text-center text-right xl:text-sm md:text-xs text-2xs">Capitalism Restaurant</p>
         </span>
         <!-- <p class="py-1"><i class="material-icons"> location_on </i> 99 Bei Chang Jie, Xicheng Qu, Beijing Shi, China</p> -->
         <p class="pt-1 lg:text-base md:text-sm text-xs"><i class="material-icons">email</i> kaofood@mail.com</p>
