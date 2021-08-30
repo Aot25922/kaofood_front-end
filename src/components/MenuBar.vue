@@ -31,13 +31,22 @@
           <i class="material-icons"> shopping_cart </i>
         </button>
         <!-- ปุ่ม Login -->
-        <div @click="showLoginMenu = !showLoginMenu"> 
+        <div @click="showLoginMenu = !showLoginMenu" v-if="account==null"> 
           <div class="flex justify-between">
               <i class="material-icons"> account_circle </i>
           </div>
-          <div v-show="showLoginMenu" class="mt-2 py-2 bg-white rounded-lg shadow-xl"> 
+          <div v-if="showLoginMenu" class="mt-2 py-2 bg-white rounded-lg shadow-xl"> 
             <router-link to="/login" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Login</router-link>
             <router-link to="/signup" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Sign Up</router-link>
+          </div>
+        </div>
+        <!-- ปุ่ม Logout -->
+        <div @click="showLogoutMenu = !showLogoutMenu" v-if="account!=null"> 
+          <div class="flex justify-between">
+              <i class="material-icons"> account_circle </i>
+          </div>
+          <div v-if="showLogoutMenu" class="mt-2 py-2 bg-white rounded-lg shadow-xl"> 
+            <span class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" @click="logout">Logout</span>
           </div>
         </div>
 
@@ -49,9 +58,33 @@
 <script>
 export default {
   name: "MenuBar",
+  inject: ["account"],
+  emits: ["logout-account"],
+  props: {
+    newAccount : null
+  },
   data() {
     return {
       showLoginMenu: false,
+      showLogoutMenu:false,
+      account : this.newAccount
+    }
+  },
+  mounted() {
+    if (localStorage.getItem("account")) {
+      try {
+        this.account = JSON.parse(localStorage.getItem("account"));
+        console.log(this.account)
+      } catch (e) {
+        localStorage.removeItem("account");
+        console.log(this.account)
+      }
+    }
+  },
+  methods : {
+    logout(){
+      localStorage.removeItem("account");
+      this.$emit("logout-account")
     }
   },
 }
