@@ -104,6 +104,7 @@ export default {
            console.log(this.account)
            const parsed = JSON.stringify(this.account);
            localStorage.setItem('account', parsed);
+           this.$router.push('/')
          }
       } catch (error) {
         console.log(`Counld not get! ${error}`);
@@ -129,9 +130,9 @@ export default {
           const res = await fetch(`${this.userUrl}/user`);
           const data = res.json();
           this.account = await data;
-         if(this.account==false){
+          if(this.account==false){
            this.checkForLogin = false
-         }
+          }
         } catch (error) {
           console.log(`Counld not get! ${error}`);
         }

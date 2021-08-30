@@ -68,5 +68,20 @@
 <script>
 export default {
   name: "MenuBar",
+  data() {
+    return {
+      account:null
+    };
+  },
+  mounted() {
+    if (localStorage.getItem('account')) {
+      try {
+        this.account = JSON.parse(localStorage.getItem('account'));
+        console.log(this.account);
+      } catch(e) {
+        localStorage.removeItem('account');
+      }
+    }
+  }
 }
 </script>
