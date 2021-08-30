@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     colors: {
       fire: {
+        lightest: "#F8C6C6",
         lighter: '#F7B267',
         light: '#F79D65',
         DEFAULT: '#F4845F',

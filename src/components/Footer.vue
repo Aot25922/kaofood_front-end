@@ -1,16 +1,16 @@
 <template>
   <div id="footer">
-    <div class="p-10 bg-black text-white flex flex-wrap">
+    <div class="p-5 bg-black text-white flex flex-wrap">
       <!-- Kao Food -->
       <div class="flex-1 md:p-5 p-10">
         <h1 class="xl:text-4xl text-3xl uppercase font-bold">Kaofood</h1>
         <span class="text-gray-400">
-          <hr class="xl:w-3/5 w-44" />
-          <p class="xl:text-center xl:mr-36 ml-14 xl:text-sm text-xs">Capitalism Restaurant</p>
+          <hr class="xl:w-1/2 w-44 xl:mx-auto" />
+          <p class="xl:ml-24 lg:text-center text-right xl:text-sm md:text-xs text-2xs">Capitalism Restaurant</p>
         </span>
-        <p class="py-5"><i class="material-icons"> location_on </i> 99 Bei Chang Jie, Xicheng Qu, Beijing Shi, China</p>
-        <p><i class="material-icons">email</i> kaofood@mail.com</p>
-        <p class="py-5"><i class="material-icons">call</i> +86 112 2021 2564</p>
+        <!-- <p class="py-1"><i class="material-icons"> location_on </i> 99 Bei Chang Jie, Xicheng Qu, Beijing Shi, China</p> -->
+        <p class="pt-1 lg:text-base md:text-sm text-xs"><i class="material-icons">email</i> kaofood@mail.com</p>
+        <p class="pt-1 lg:text-base md:text-sm text-xs"><i class="material-icons">call</i> +86 112 2021 2564</p>
       </div>
 
       <!-- Link -->
@@ -18,9 +18,9 @@
         <h1 class="text-2xl uppercase font-semibold ">Link</h1>
         <hr class="w-1/2 pb-5 mx-auto" />
         <div class="flex flex-col leading-loose uppercase tracking-widest">
-          <router-link to="/">Home</router-link>
-          <router-link to="">Menu</router-link>
-          <router-link to="">Contact</router-link>
+          <router-link class="lg:text-base text-sm pt-1" to="/">Home</router-link>
+          <router-link class="lg:text-base text-sm pt-1" to="">Menu</router-link>
+          <router-link class="lg:text-base text-sm pt-1" to="">Contact</router-link>
         </div>
       </div>
 
@@ -29,13 +29,13 @@
         <h1 class="text-2xl uppercase font-semibold ">Opening Hours</h1>
         <hr class="w-11/12 mx-auto" />
         <div class="text-lg">
-          <p class="mt-3">
+          <p class="lg:text-base md:text-sm text-xs pt-1">
             <span class="text-fire-lighter font-medium">Mon - Thu:</span> 9AM - 9PM
           </p>
-          <p class="mt-3">
+          <p class="lg:text-base md:text-sm text-xs pt-1">
             <span class="text-fire-lighter font-medium">Fri - Sat:</span> 10AM - 8PM
           </p>
-          <p class="mt-3">
+          <p class="lg:text-base md:text-sm text-xs pt-1">
             <span class="text-fire-lighter font-medium">Sun:</span> 10AM - 6PM
           </p>
         </div>
@@ -47,7 +47,7 @@
         <hr class="w-1/2 mx-auto" />
         <div class="flex flex-row justify-center">
           <!-- Twitter -->
-          <a class="p-6 ">
+          <a class="p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -58,7 +58,7 @@
             </svg>
           </a>
           <!-- Youtube -->
-          <a class="p-6 ">
+          <a class="p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -69,7 +69,7 @@
             </svg>
           </a>
           <!-- Facebook -->
-          <a class="p-6 ">
+          <a class="p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -81,7 +81,7 @@
           </a>
         </div>
       </div>
-        <p class="w-full text-center text-xs">Copyright © 2021 - All right reserved by Capital Kaofood Restautant</p>
+        <p class="w-full text-center pt-3 lg:text-sm md:text-xs text-2xs">Copyright © 2021 - All right reserved by Capital Kaofood Restautant</p>
     </div>
   </div>
 </template>
