@@ -27,8 +27,8 @@ export default {
   },
   data() {
     return {
-      backendUrl: "https://kaofood.ddns.net/api",
-      // backendUrl: "http://localhost:8088",
+    //   backendUrl: "https://kaofood.ddns.net/api",
+      backendUrl: "http://localhost:8088",
       showAccountForm: false,
       signupAccountForm: null,
       reloadMenu: 0,
@@ -40,15 +40,17 @@ export default {
       this.showAccountForm = true;
       this.signupAccountForm = i;
     },
-  },
-  updateAccount() {
+    updateAccount() {
     if (localStorage.getItem("account")) {
       this.account = JSON.parse(localStorage.getItem("account"));
     } else {
       this.account = null;
     }
+    this.account
     this.reloadMenu += 1;
   },
+  },
+  
   mounted() {
     if (localStorage.getItem("account")) {
       try {

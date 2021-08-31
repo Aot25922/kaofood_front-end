@@ -19,10 +19,13 @@
           <router-link to="/">Contact</router-link>
         </li>
         <li>
-          <router-link to="/login">Login</router-link>
+          <router-link to="/login" v-if="account==null">Login</router-link>
         </li>
         <li>
-          <router-link to="/signup" class="mt-10 font-bold">Sign Up</router-link>
+          <router-link to="/signup" class="mt-10 font-bold" v-if="account==null">Sign Up</router-link>
+        </li>
+        <li>
+          <span @click="logout" v-if="account!=null">Logout</span>
         </li>
       </ul>
       </div>
@@ -52,7 +55,7 @@
   <!-- Login button -->
     <div @click="showLoginMenu = !showLoginMenu" v-if="account==null" class="md:flex hidden dropdown dropdown-end">
         <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
-        <ul v-if="showLoginMenu" tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
+        <ul  tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
           <li>
             <router-link to="/login">Login</router-link>
           </li> 
@@ -62,11 +65,10 @@
         </ul>
     </div>
 
-  <!-- Logout: Still Error! -->
+  <!-- Logout -->
       <div @click="showLogoutMenu = !showLogoutMenu" v-if="account!=null" class="md:flex hidden dropdown dropdown-end"> 
         <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
-          <ul v-if="showLoginMenu" tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black" @click="logout">
-            <li>{{ account }}</li>
+          <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
             <li @click="logout">Logout</li>
           </ul>
       </div>
