@@ -5,8 +5,9 @@
       All Menu
     </button>
     <!-- Category -->
-    <button class="md:flex-1 text-black btn btn-accent btn-ghost xl:text-xl lg:text-lg md:text-base md:p-1" v-for="category in categoryList" :key="category.cateId" @click="$emit('SelectCate', category.cateId)">
-        <img class="w-6" v-bind:src="category.image"><span class="ml-1">{{ category.cateName }}</span>
+    <button class="md:flex-1 text-black btn btn-accent btn-ghost xl:text-xl lg:text-lg md:text-base md:p-1" 
+      v-for="category in categoryList" :key="category.id" @click="$emit('SelectCate', category.id)">
+        <img class="w-6" v-bind:src="category.image"><span class="ml-1">{{ category.name }}</span>
     </button>
   </div>
 </template>
