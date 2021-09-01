@@ -96,7 +96,7 @@ export default {
       if (!(this.emptyPassword && this.emptyEmail)) {
         try {
           const res = await fetch(
-            `${this.userUrl}/${this.email}/${this.password}`
+            `${this.userUrl}/login?email=${this.email}&password=${this.password}`
           );
           const checkAccount = await res.text();
           if (checkAccount.length != 0) {
