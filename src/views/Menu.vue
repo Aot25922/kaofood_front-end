@@ -1,6 +1,5 @@
 <template>
   <div id="menu">
-    Test
     <category/>
     <menu-list/>
   </div>
