@@ -2,8 +2,6 @@ name: ci-cd
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,5 +32,6 @@ jobs:
         script: |
           cd kaofood/
           git pull
-          docker pull ghcr.io/int222-31-33-43/kaofood_web
+          docker-compose pull
           docker-compose up -d
+          docker image prune -af
