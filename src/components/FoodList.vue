@@ -4,11 +4,11 @@
   <div class="lg:grid lg:grid-cols-4 md:grid md:grid-cols-2 sm:flex sm:flex-row">
     <div class="card p-2 sm:flex-1" v-for="menu in menuFilterList" :key="menu.id">
       <div class="relative">
-        <img class="rounded w-full" :src="menu.menuImg">
+        <img class="rounded w-full" :src="menuUrl+menu.image">
         <span class="font-medium absolute bottom-0 left-0 rounded bg-primary md:text-2xl text-xl p-1">{{ menu.price }} ฿</span>
       </div> 
       <div class="card-body">
-        <h2 class="card-title xl:text-2xl lg:text-xl md:text-lg text-base">{{ menu.menuName }}
+        <h2 class="card-title xl:text-2xl lg:text-xl md:text-lg text-base">{{ menu.name }}
           <!-- <div class="badge mx-2 badge-secondary lg:text-xl md:text-lg lg:py-4 md:p-3 ">NEW</div> -->
         </h2> 
         <!-- <p class="truncate">&emsp;{{ menu.description }}</p> -->
@@ -32,7 +32,7 @@ export default {
     }
   },
   methods : {
-  async getMenuList() {
+    async getMenuList() {
       try {
         const res = await fetch(this.menuUrl);
         const data = res.json();
@@ -46,7 +46,7 @@ export default {
     menuFilterList() {
       if(this.cateId == null) return this.menuList;
       return this.menuList.filter(list => {
-        return list.category.cateId == this.cateId
+        return list.category.id == this.cateId
       })
     }
   },
