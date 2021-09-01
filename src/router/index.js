@@ -7,6 +7,16 @@ const routes = [
     component: () => import('../views/Home.vue'),
   },
   {
+    path: '/menu',
+    name: 'Menu',
+    component: () => import('../views/Menu.vue'),
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: () => import('../views/About.vue'),
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('../views/AccountForm.vue'),

@@ -13,10 +13,10 @@
           <router-link to="/">Home</router-link>
         </li> 
         <li>
-          <router-link to="/">Menu</router-link>
+          <router-link to="/menu">Menu</router-link>
         </li> 
         <li>
-          <router-link to="/">Contact</router-link>
+          <router-link to="/about">About Us</router-link>
         </li>
         <li>
           <router-link to="/login" v-if="account==null">Login</router-link>
@@ -35,8 +35,8 @@
     <img src="../assets/logo.png" class="lg:w-20 md:w-14 lg:pr-2 md:pr-1 md:py-1 w-0"/>
     <div class="md:items-stretch hidden md:block">
       <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Home</router-link>
-      <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Menu</router-link>
-      <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Contact</router-link>
+      <router-link to="/menu" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Menu</router-link>
+      <router-link to="/about" class="btn btn-ghost btn-sm rounded-btn md:text-xl">About Us</router-link>
     </div>
   </div>
 

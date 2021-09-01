@@ -5,7 +5,7 @@
     <div class="card p-2 sm:flex-1" v-for="menu in menuFilterList" :key="menu.id">
       <div class="relative">
         <img class="rounded w-full" :src="menu.menuImg">
-        <span class="font-medium absolute bottom-0 left-0 rounded bg-primary xl:text-4xl lg:text-3xl md:text-2xl text-xl p-1">{{ menu.price }} ฿</span>
+        <span class="font-medium absolute bottom-0 left-0 rounded bg-primary md:text-2xl text-xl p-1">{{ menu.price }} ฿</span>
       </div> 
       <div class="card-body">
         <h2 class="card-title xl:text-2xl lg:text-xl md:text-lg text-base">{{ menu.menuName }}
