@@ -16,7 +16,7 @@
           <router-link to="/menu">Menu</router-link>
         </li> 
         <li>
-          <router-link to="/about">About Us</router-link>
+          <router-link to="/contact">Contact</router-link>
         </li>
         <li>
           <router-link to="/login" v-if="account==null">Login</router-link>
@@ -36,7 +36,7 @@
     <div class="md:items-stretch hidden md:block">
       <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Home</router-link>
       <router-link to="/menu" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Menu</router-link>
-      <router-link to="/about" class="btn btn-ghost btn-sm rounded-btn md:text-xl">About Us</router-link>
+      <router-link to="/contact" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Contact</router-link>
     </div>
   </div>
 

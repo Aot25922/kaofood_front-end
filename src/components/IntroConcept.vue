@@ -17,6 +17,6 @@
 
 <script>
 export default {
-  name: "ImgHomeHeader",
+  name: "IntroConcept",
 };
 </script>

@@ -1,16 +1,16 @@
 <template>
   <div id="menu">
     <category/>
-    <menu-list/>
+    <food-list/>
   </div>
 </template>
 
 <script>
 import Category from '@/components/Category.vue'
-import MenuList from '@/components/MenuList.vue'
+import FoodList from '@/components/FoodList.vue'
 export default {
     name: "Menu",
-    components: { Category, MenuList },
+    components: { Category, FoodList },
     methods: {
     async getMenuList() {
       try {

@@ -1,14 +1,18 @@
 <template>
-    <img-home-header />
-    <home-cate />
+    <intro-concept/>
+    <about class="my-5"/>
+    <!-- Home page: Category -->
+    <div>
+        
+    </div>
 </template>
 
 <script>
-import ImgHomeHeader from '@/components/ImgHomeHeader.vue'
-import HomeCate from '@/components/HomeCate.vue'
+import IntroConcept from '@/components/IntroConcept.vue'
+import About from '@/components/About.vue'
 export default {
     name: "Home",
-    components: { ImgHomeHeader, HomeCate },
+    components: { IntroConcept, About },
     data() {
         return {
             cateId: null,
