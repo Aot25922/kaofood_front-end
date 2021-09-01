@@ -1,23 +1,23 @@
 <template>
   <div id="menu">
     <category @SelectCate="selectCate" />
-    <menu-list :cateId="cateId"/>
+    <food-list :cateId="cateId"/>
   </div>
 </template>
 
 <script>
 import Category from "@/components/Category.vue";
-import MenuList from "@/components/MenuList.vue";
+import FoodList from "@/components/FoodList.vue";
 export default {
   name: "Menu",
-  components: { Category, MenuList },
+  components: { Category, FoodList },
    data() {
     return {
       cateId : null,
     };
   },
   methods: {
-  async getMenuList() {
+  async getFoodList() {
     try {
       const res = await fetch(this.menuUrl);
       const data = res.json();
