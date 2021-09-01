@@ -20,8 +20,8 @@
         <hr class="lg:w-1/3 w-1/2 pb-1 mx-auto" />
         <div class="flex flex-col leading-loose uppercase tracking-widest">
           <router-link class="lg:text-base text-sm pt-1" to="/">Home</router-link>
-          <router-link class="lg:text-base text-sm pt-1" to="">Menu</router-link>
-          <router-link class="lg:text-base text-sm pt-1" to="">Contact</router-link>
+          <router-link class="lg:text-base text-sm pt-1" to="/menu">Menu</router-link>
+          <router-link class="lg:text-base text-sm pt-1" to="/about">Contact</router-link>
         </div>
       </div>
 

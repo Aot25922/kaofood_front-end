@@ -1,10 +1,7 @@
 <template>
   <div id="introConcept">
     <div class="text-center relative text-white">
-      <!-- Header img for Iphone6 to IphoneX -->
-      <img src="../assets/header-mb.jpg" alt="Header image" class="filter brightness-50 md:hidden w-full" />
-      <!-- Header img for Ipad to Computer -->
-      <img src="../assets/header.jpg" alt="Header image" class="filter brightness-50 md:w-full w-0" />
+      <img src="../assets/header.jpg" alt="Header image" class="filter brightness-50 md:w-full md:h-full h-96 md:object-none object-cover" />
       <div class="font-medium absolute transform inset-0 top-1/4">
         <p class="xl:text-8xl md:text-5xl sm:text-4xl text-2xl font-bold uppercase">Kaofood Restaurant</p>
         <p>{{account}}</p>
@@ -17,6 +14,6 @@
 
 <script>
 export default {
-  name: "ImgHomeHeader",
+  name: "IntroConcept",
 };
 </script>

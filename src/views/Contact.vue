@@ -1,11 +1,11 @@
 <template>
-  <div id="homeCate">
-
+  <div id="contact">
+      
   </div>
 </template>
 
 <script>
 export default {
-    name: "HomeCate"
+
 }
 </script>
