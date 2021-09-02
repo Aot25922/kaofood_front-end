@@ -54,8 +54,8 @@
   <!-- Account: Toggle when ipad to laptop -->
   <!-- Login button -->
     <div @click="showLoginMenu = !showLoginMenu" v-if="account==null" class="md:flex hidden dropdown dropdown-end">
-        <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
-        <ul  tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
+      <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
+        <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
           <li>
             <router-link to="/login">Login</router-link>
           </li> 
@@ -69,7 +69,7 @@
       <div @click="showLogoutMenu = !showLogoutMenu" v-if="account!=null" class="md:flex hidden dropdown dropdown-end"> 
         <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
-            <li @click="logout">Logout</li>
+            <li @click="logout" class="btn btn-ghost">Logout</li>
           </ul>
       </div>
     </div>

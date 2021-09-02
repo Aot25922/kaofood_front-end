@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import VueTailwindPanigation from '@ocrv/vue-tailwind-pagination'
+// import VueTailwindPanigation from '@ocrv/vue-tailwind-pagination'
 export default {
   name: "MenuList",
-  components: { VueTailwindPanigation },
+  // components: { VueTailwindPanigation },
   props: {cateId: null},
   inject: ["menuUrl"],
   data(){
