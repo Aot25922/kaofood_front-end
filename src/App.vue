@@ -27,8 +27,8 @@ export default {
   },
   data() {
     return {
-      backendUrl: "https://kaofood.ddns.net/api",
-      // backendUrl: "http://localhost:8080",
+      // backendUrl: "https://kaofood.ddns.net/api",
+      backendUrl: "http://localhost:8088",
       showAccountForm: false,
       signupAccountForm: null,
       reloadMenu: 0,
