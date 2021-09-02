@@ -1,5 +1,10 @@
 <template>
 <div id="menuList">
+
+  <!-- <VueTailwindPanigation
+  :current="">
+  </VueTailwindPanigation> -->
+
   <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold" >Our Menu</h1>
   <div class="lg:grid lg:grid-cols-4 md:grid md:grid-cols-2 sm:flex sm:flex-row">
     <div class="card p-2 sm:flex-1" v-for="menu in menuFilterList" :key="menu.id">
@@ -22,8 +27,10 @@
 </template>
 
 <script>
+import VueTailwindPanigation from '@ocrv/vue-tailwind-pagination'
 export default {
   name: "MenuList",
+  components: { VueTailwindPanigation },
   props: {cateId: null},
   inject: ["menuUrl"],
   data(){
