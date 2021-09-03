@@ -20,23 +20,26 @@
           <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Phone</span>
           <input v-model.trim="phone" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
           <span v-if="emptyPhone" class="text-error">Phone required</span>
+          <span v-if="accountPhoneExist" class="text-error">Phone already exist!</span>
         </div>
         <div class="mt-4 relative">
           <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Email</span>
           <input v-model.trim="email" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
           <span v-if="emptyEmail" class="text-error">Email required</span>
+          <span v-if="accountEmailExist" class="text-error">Email already exist!</span>
         </div>
         <div class="mt-4 relative">
           <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Password</span>
           <input v-model="password" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
-          <span v-if="emptyPassword" class="text-error">Password required</span>
+          <span v-if="emptyPassword" class="text-error">Password required</span>        
         </div>
         <!-- Textarea still has bug -->
         <div class="mt-4 relative">
-          <textarea class="h-24 p-2 w-full border-2 rounded focus:outline-none focus:border-gray-600" placeholder="Your address..."/>
+          <textarea class="h-24 p-2 w-full border-2 rounded focus:outline-none focus:border-gray-600" placeholder="Your address..." v-model="address"/>
         </div>
         <div class="mt-4">
-          <button @click="signUp" class="h-12 w-full bg-red-600 text-white rounded hover:bg-red-700">Sign Up
+          <button @click="signUp" class="h-12 w-full bg-red-600 text-white rounded hover:bg-red-700">
+            Sign Up
             <i class="fa fa-long-arrow-right"></i>
           </button>
         </div>
@@ -44,7 +47,7 @@
 
       <!-- ส่วนของ login -->
       <div v-else class="px-3 py-5">
-        <div v-if="account!=null" class="text-center mb-10">
+        <div v-if="account != null" class="text-center mb-10">
           <h1 class="text-2xl mb-4">Login</h1>
         </div>
         <div class="relative mb-3">
@@ -58,10 +61,12 @@
           <span v-if="emptyPassword" class="text-error">password cannot be empty!</span>
         </div>
         <div class="flex flex-row mb-3">
-          <a href="#" class="flex-1 cursor-pointer text-blue-500 hover:text-blue-700">Forgot password?</a>
-          <router-link class="flex-none text-neutral-focus underline" to="/signup">Sign Up</router-link>
+          <!-- <a href="#" class="flex-1 cursor-pointer text-blue-500 hover:text-blue-700">Forgot password?</a> -->
+          <router-link class="flex-none text-blue-500 underline" to="/signup">Sign Up</router-link>
         </div>
-        <button @click="login" class=" h-12 w-full hover:bg-red-800 focus:outline-none bg-red-700 rounded text-white mb-3">Login</button>
+        <button @click="login" class="h-12 w-full hover:bg-red-800 focus:outline-none bg-red-700 rounded text-white mb-3">
+          Login
+        </button>
       </div>
     </div>
   </div>
@@ -81,13 +86,16 @@ export default {
       phone: "",
       email: "",
       password: "",
+      address:"",
       checkForLogin: false,
       checkSignUp: false,
-      emptyFirstName: null,
-      emptyLastName: null,
-      emptyPhone: null,
-      emptyEmail: null,
-      emptyPassword: null
+      emptyFirstName: false,
+      emptyLastName: false,
+      emptyPhone: false,
+      emptyEmail: false,
+      emptyPassword: false,
+      accountEmailExist:false,
+      accountPhoneExist:false
     };
   },
   methods: {
@@ -129,19 +137,41 @@ export default {
     },
     async signUp() {
       this.checkSignUpForm();
-      if (
+      if (!(
         this.emptyFirstName &&
-        this.lastName &&
+        this.emptyLastName &&
         this.emptyPhone &&
         this.emptyEmail &&
         this.emptyPassword
-      ) {
+      )) {
+        let newAccount = JSON.stringify({
+          email : this.email,
+          password : this.password,
+          fname : this.firstName,
+          lname : this.lastName,
+          phone : this.phone,
+          address : this.address,
+          role : "Customer"
+        })
+        let data = new FormData();
+        data.append("account",newAccount)
         try {
-          const res = await fetch(`${this.userUrl}/user`);
-          const data = res.json();
-          this.account = await data;
-          if (this.account == false) {
-            this.checkForLogin = false;
+          const res = await fetch(`${this.userUrl}/signup`,{
+          method: "POST",
+          body: data,
+        });
+          const checkAccount = await res.text();
+          console.log(checkAccount)
+          if(checkAccount == "accountEmailExist"){
+            this.accountEmailExist = true
+          }
+          if(checkAccount == "accountPhoneExist"){
+            console.log("phone")
+            this.accountPhoneExist = true
+          }
+          if(checkAccount == "success"){
+            this.accountEmailExist =false
+            this.accountPhoneExist=false
           }
         } catch (error) {
           console.log(`Counld not get! ${error}`);

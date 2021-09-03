@@ -9,6 +9,7 @@
     "backend": "json‐server ‐‐watch db.json ‐‐port 5000"
   },
   "dependencies": {
+    "@ocrv/vue-tailwind-pagination": "^0.0.4",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "autoprefixer": "^9",
     "core-js": "^3.6.5",
