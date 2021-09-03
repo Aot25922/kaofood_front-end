@@ -1,5 +1,5 @@
 <template>
-    <intro-concept/>
+    <intro-concept class="mt-16"/>
     <about class="my-5"/>
     <!-- Home page: Category -->
     <div>
