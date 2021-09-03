@@ -12,9 +12,24 @@ const routes = [
     component: () => import('../views/Menu.vue'),
   },
   {
+    path: '/menu/add',
+    name: 'Add',
+    component: () => import('../components/Add.vue'),
+  },
+  {
+    path: '/menu/edit',
+    name: 'Edit',
+    component: () => import('../components/Edit.vue'),
+  },
+  {
     path: '/contact',
     name: 'Contact',
     component: () => import('../views/Contact.vue'),
+  },
+  {
+    path: '/cartList',
+    name: 'CartList',
+    component: ()=> import('../views/CartList.vue')
   },
   {
     path: '/login',

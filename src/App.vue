@@ -71,3 +71,8 @@ export default {
   },
 };
 </script>
+
+<style>
+/* Writing style font */
+@import url('https://fonts.googleapis.com/css2?family=Allison&display=swap');
+</style>

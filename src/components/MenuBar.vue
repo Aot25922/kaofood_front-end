@@ -3,18 +3,21 @@
     <div class="navbar bg-primary-focus text-neutral-content fixed z-50 w-full top-0">
       <!-- Hamburger Dropdown -->
       <div class="dropdown dropdown-right md:hidden">
-        <button tabindex="0" class="btn btn-square btn-ghost">
+        <div tabindex="0" class="btn btn-square btn-ghost">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">           
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>               
           </svg>
-        </button>
+        </div>
       <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
         <li>
           <router-link to="/">Home</router-link>
         </li> 
         <li>
           <router-link to="/menu">Menu</router-link>
-        </li> 
+        </li>
+        <li>
+          <router-link to="/cartList">My Order</router-link>
+        </li>
         <li>
           <router-link to="/contact">Contact</router-link>
         </li>
@@ -25,7 +28,7 @@
           <router-link to="/signup" class="mt-10 font-bold" v-if="account==null">Sign Up</router-link>
         </li>
         <li>
-          <span @click="logout" v-if="account!=null">Logout</span>
+          <span @click="logout" v-if="account!=null" class="font-bold">Logout</span>
         </li> 
       </ul>
       </div>
@@ -65,11 +68,14 @@
         </ul>
     </div>
 
-  <!-- Logout -->
+  <!-- Logout&Ordering -->
       <div @click="showLogoutMenu = !showLogoutMenu" v-if="account!=null" class="md:flex hidden dropdown dropdown-end"> 
         <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
-            <li @click="logout" class="btn btn-ghost">Logout</li>
+            <li>
+              <router-link to="/cartList" class="mx-auto">My Order</router-link>
+            </li>
+            <li @click="logout" class="btn btn-ghost font-bold">Logout</li>
           </ul>
       </div>
     </div>

@@ -6,7 +6,7 @@
   </VueTailwindPanigation> -->
 
   <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold" >Our Menu</h1>
-  <div class="lg:grid lg:grid-cols-4 md:grid md:grid-cols-2 sm:flex sm:flex-row">
+  <div class="lg:grid lg:grid-cols-4 lg:grid-rows-3 md:grid md:grid-cols-2 md:grid-rows-2 sm:flex sm:flex-row">
     <div class="card p-2 sm:flex-1" v-for="menu in menuFilterList" :key="menu.id">
       <div class="relative">
         <img class="rounded w-full xl:h-80 h-56 object-cover" :src="menuUrl+menu.image">
