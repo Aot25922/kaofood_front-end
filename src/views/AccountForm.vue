@@ -136,12 +136,12 @@ export default {
     async login() {
       this.checkLoginForm();
       if (this.loginForm.isEmailEmpty || this.loginForm.isPasswordEmpty) return;
-      await this.$store.dispatch("getAccount", this.loginForm)
-      if (this.$store.state.account == null) {
-        this.isErrorLogin = true;
+      await this.$store.dispatch("getAccount", this.loginForm);
+      if (this.$store.state.account == null || this.$store.state.account == '') {
+        this.loginForm.isErrorLogin = true;
         return;
       } else {
-        this.isErrorLogin = false;
+        this.loginForm.isErrorLogin = false;
         this.$router.go(-1);
       }
     },

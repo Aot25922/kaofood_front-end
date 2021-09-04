@@ -40,6 +40,9 @@ export default {
     account() {
       return this.$store.state.account;
     }
+  },
+  beforeCreate() {
+    this.$store.dispatch("fetchMenuAPI");
   }
 };
 </script>

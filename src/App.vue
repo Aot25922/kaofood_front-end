@@ -13,7 +13,6 @@ export default {
   name: "App",
   components: { MenuBar, Footer },
   beforeCreate() {
-    this.$store.dispatch("fetchAPI");
     this.$store.dispatch("fetchLocalStoeage");
   }
 };

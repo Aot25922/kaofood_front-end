@@ -20,6 +20,7 @@ export default createStore({
       state.cart = data
     },
     SET_ACCOUNT(state, data) {
+      if (data == null || data == '') state.account = null;
       state.account = data
     },
     addCartItem(state, item){
@@ -36,16 +37,19 @@ export default createStore({
     }
   },
   actions: {
-    async fetchAPI({ commit }) {
+    async fetchCategoryAPI({ commit }) {
       await axios.get(`${this.state.backendUrl}/category`)
           .then(response => {
             commit('SET_Category', response.data)
           })
+      console.log("Fetch Category");
+    },
+    async fetchMenuAPI({ commit }) {
       await axios.get(`${this.state.backendUrl}/menu`)
           .then(response => {
             commit('SET_MENU', response.data)
           })
-      console.log("Fetch API");
+      console.log("Fetch MENU");
     },
 
     fetchLocalStoeage({ commit }) {
@@ -80,13 +84,14 @@ export default createStore({
     async getAccount({ commit }, loginForm){
       if (loginForm == null){
         commit('SET_ACCOUNT',null);
-        return;
+        localStorage.removeItem("cart");
+      }else {
+        await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`)
+            .then(response => {
+              commit('SET_ACCOUNT', response.data)
+            })
+        localStorage.setItem('account', JSON.stringify(this.state.account))
       }
-      await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`)
-        .then(response => {
-          commit('SET_ACCOUNT', response.data)
-        })
-      localStorage.setItem('account',JSON.stringify(this.state.account))
     }
   },
   getters:{},
