@@ -1,31 +1,38 @@
 import { createStore } from "vuex";
+import axios from 'axios'
 
 export default createStore({
   state: {
-    menu: [],
+    menus: [],
+    categories: [],
     cart: []
   },
   mutations: {
-    addCartItem(state, item) {
-      item.quantity = 1;
-      state.cart.push(item);
+    SET_MENU(state, data) {
+      state.menus = data
     },
-    updateCartItem(state, updatedItem) {
-      state.cart = state.cart.map((cartItem) => {
-        if (cartItem.id == updatedItem.id) {
-          return updatedItem;
-        }
-
-        return cartItem;
-      });
-    },
-    removeCartItem(state, item) {
-      state.cart = state.cart.filter((cartItem) => {
-        return cartItem.id != item.id;
-      });
+    SET_Category(state, data) {
+      state.categories = data
     }
   },
   actions: {
+    fetchMenu({ commit }) {
+      axios.get('https://kaofood.ddns.net/api/menu')
+          .then(response => {
+            commit('SET_MENU', response.data)
+          })
+    },
+    fetchCategory({ commit }) {
+      axios.get('https://kaofood.ddns.net/api/category')
+          .then(response => {
+            commit('SET_Category', response.data)
+          })
+    }
+  },
+  getters:{
+    getMenu(state){
+      return state.menus;
+    }
   },
   modules: {
   }

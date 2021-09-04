@@ -17,24 +17,14 @@ export default {
   name: "Category",
   emits: ["SelectCate"],
   inject: ["categoryUrl"],
-  data() {
-    return {
-      categoryList: [],
-    };
+
+  computed: {
+    categoryList() {
+      return this.$store.state.categories;
+    }
   },
-  methods: {
-    async getCategory() {
-      try{
-      const res = await fetch(this.categoryUrl);
-      const data = await res.json();
-      return data;
-      } catch (error) { 
-          console.log(`Could not get! ${error}`)
-        }
-    },
-  },
-  async created() {
-    this.categoryList = await this.getCategory();
-  },
+  mounted() {
+    this.$store.dispatch("fetchCategory");
+  }
 };
 </script>
