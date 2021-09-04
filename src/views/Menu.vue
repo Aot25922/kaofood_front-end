@@ -6,7 +6,7 @@
        <router-view />
     </div>
     <div v-else> 
-       <category @SelectCate="selectCate"/>
+       <category class="lg:mt-24 md:mt-20 mt-16" @SelectCate="selectCate"/>
        <food-list :cateId="cateId"/>
     </div>
   </div>
