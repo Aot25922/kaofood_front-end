@@ -14,7 +14,7 @@
           <button>Delete</button>
         </div>
         <div class="justify-center card-actions" v-else>
-          <button class="btn btn-secondary w-full uppercase xl:text-xl lg:text-lg md:text-base text-sm">Add to Cart
+          <button @click="addToCart" class="btn btn-secondary w-full uppercase xl:text-xl lg:text-lg md:text-base text-sm">Add to Cart
           </button>
         </div>
       </div>
@@ -28,7 +28,8 @@ export default {
   inject: ["account"],
   methods: {
     addToCart(){
-
+      this.$store.dispatch('addToCart',this.menu)
+      console.log(this.$store.state.cart);
     }
   },
 };

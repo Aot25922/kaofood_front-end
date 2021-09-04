@@ -65,10 +65,11 @@ export default {
         localStorage.removeItem("account");
       }
     }
+    console.log(this.$store.state.cart);
   },
   beforeCreate() {
-    this.$store.dispatch("fetchCategory");
-    this.$store.dispatch("fetchMenu");
+    this.$store.dispatch("fetchAPI");
+    this.$store.dispatch("fetchLocalStoeage");
   }
 };
 </script>
