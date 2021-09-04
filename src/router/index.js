@@ -10,16 +10,10 @@ const routes = [
     path: '/menu',
     name: 'Menu',
     component: () => import('../views/Menu.vue'),
-  },
-  {
-    path: '/menu/add',
-    name: 'Add',
-    component: () => import('../components/Add.vue'),
-  },
-  {
-    path: '/menu/edit',
-    name: 'Edit',
-    component: () => import('../components/Edit.vue'),
+    children:[
+      {path : 'add' , component : () => import('../components/Add.vue')},
+      {path : 'edit' , component : () => import('../components/Edit.vue')} 
+    ]
   },
   {
     path: '/contact',

@@ -17,21 +17,22 @@ import Footer from "@/components/Footer.vue";
 export default {
   name: "App",
   components: { MenuBar, Footer },
-  provide() {
-    return {
-      categoryUrl: `${this.backendUrl}/category`,
-      menuUrl: `${this.backendUrl}/menu`,
-      userUrl: `${this.backendUrl}/user`,
-      account: null,
-    };
-  },
-  data() {
+    data() {
     return {
       backendUrl: "https://kaofood.ddns.net/api",
       // backendUrl: "http://localhost:8080",
       showAccountForm: false,
       signupAccountForm: null,
       reloadMenu: 0,
+      account : null
+    };
+  },
+  provide() {
+    return {
+      categoryUrl: `${this.backendUrl}/category`,
+      menuUrl: `${this.backendUrl}/menu`,
+      userUrl: `${this.backendUrl}/user`,
+      account: () => this.account,
     };
   },
   methods: {
@@ -46,11 +47,9 @@ export default {
     } else {
       this.account = null;
     }
-    this.account
     this.reloadMenu += 1;
   },
   },
-  
   mounted() {
     if (localStorage.getItem("account")) {
       try {
