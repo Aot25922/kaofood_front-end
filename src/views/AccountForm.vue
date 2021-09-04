@@ -1,44 +1,38 @@
 <template>
-  <div class="h-screen bg-fire-lightest px-3 py-10">
-    <div class="max-w-md mx-auto bg-white p-3 rounded">
+  <div class="h-screen bg-fire-lightest mt-16 px-3 py-5">
+    <div class="max-w-md mx-auto bg-white p-3 rounded shadow-sm">
       <!-- ส่วนของ Sign Up -->
       <div v-if="mode == 'SignUp'" class="w-full p-3 px-6 py-10">
         <div class="text-center">
-          <span class="text-xl uppercase">Register a new account</span>
+          <span class="text-xl uppercase font-semibold">Register a new account</span>
         </div>
-        <div class="mt-3 relative">
-          <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">First name</span>
-          <input v-model.trim="firstName" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+        <div class="mt-4">
+          <input v-model.trim="firstName" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Firstname"/>
           <span v-if="emptyFirstName" class="text-error">Firstname required</span>
         </div>
-        <div class="mt-4 relative">
-          <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Last name</span>
-          <input v-model.trim="lastName" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+        <div class="mt-4">
+          <input v-model.trim="lastName" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Lastname"/>
           <span v-if="emptyLastName" class="text-error">Lastname required</span>
         </div>
-        <div class="mt-4 relative">
-          <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Phone</span>
-          <input v-model.trim="phone" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+        <div class="mt-4">
+          <input v-model.trim="phone" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Phone"/>
           <span v-if="emptyPhone" class="text-error">Phone required</span>
           <span v-if="accountPhoneExist" class="text-error">Phone already exist!</span>
         </div>
-        <div class="mt-4 relative">
-          <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Email</span>
-          <input v-model.trim="email" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+        <div class="mt-4">
+          <input v-model.trim="email" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Email"/>
           <span v-if="emptyEmail" class="text-error">Email required</span>
           <span v-if="accountEmailExist" class="text-error">Email already exist!</span>
         </div>
-        <div class="mt-4 relative">
-          <span class="absolute p-1 bottom-8 ml-2 bg-white text-gray-400">Password</span>
-          <input v-model="password" class="h-12 px-2 w-full border-2 rounded focus:outline-none focus:border-gray-600"/>
+        <div class="mt-4">
+          <input v-model="password" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Password"/>
           <span v-if="emptyPassword" class="text-error">Password required</span>        
         </div>
-        <!-- Textarea still has bug -->
-        <div class="mt-4 relative">
-          <textarea class="h-24 p-2 w-full border-2 rounded focus:outline-none focus:border-gray-600" placeholder="Your address..." v-model="address"/>
+        <div class="mt-4 ">
+          <textarea class="h-24 p-2 w-full outline-none border rounded focus:outline-none focus:border-gray-600" placeholder="Your address..." v-model="address"/>
         </div>
         <div class="mt-4">
-          <button @click="signUp" class="h-12 w-full bg-red-600 text-white rounded hover:bg-red-700">
+          <button @click="signUp" class="h-12 w-full btn btn-secondary text-white rounded hover:bg-red-700">
             Sign Up
             <i class="fa fa-long-arrow-right"></i>
           </button>
@@ -47,24 +41,22 @@
 
       <!-- ส่วนของ login -->
       <div v-else class="px-3 py-5">
-        <div v-if="account != null" class="text-center mb-10">
-          <h1 class="text-2xl mb-4">Login</h1>
+        <div v-if="account != null" class="w-full p-3 px-6 py-10">
+          <span class="text-xl uppercase font-semibold">Login</span>
         </div>
-        <div class="relative mb-3">
-          <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Email</span>
-          <input type="email" v-model="email" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
+        <div class="mb-3">
+          <input type="email" v-model="email" class="transition duration-500 outline-none border-b h-12 rounded w-full px-2 mb-2" placeholder="Email"/>
           <span v-if="emptyEmail" class="text-error">Email cannot be empty!</span>
         </div>
-        <div class="relative mb-1">
+        <div class="mb-3">
           <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Password</span>
-          <input type="password" v-model="password" class="transition duration-500 border h-12 rounded w-full px-2 mb-2"/>
+          <input type="password" v-model="password" class="transition duration-500 outline-none border-b h-12 rounded w-full px-2 mb-2" placeholder="Password"/>
           <span v-if="emptyPassword" class="text-error">password cannot be empty!</span>
         </div>
-        <div class="flex flex-row mb-3">
-          <!-- <a href="#" class="flex-1 cursor-pointer text-blue-500 hover:text-blue-700">Forgot password?</a> -->
-          <router-link class="flex-none text-blue-500 underline" to="/signup">Sign Up</router-link>
+        <div class="flex flex-row-reverse">    
+          <router-link class="text-neutral-focus underline text-sm" to="/signup">Sign Up</router-link>
         </div>
-        <button @click="login" class="h-12 w-full hover:bg-red-800 focus:outline-none bg-red-700 rounded text-white mb-3">
+        <button @click="login" class="h-12 w-full btn btn-primary rounded text-white mt-3">
           Login
         </button>
       </div>
