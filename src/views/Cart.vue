@@ -1,11 +1,11 @@
 <template>
-  <div id="cartList">
+  <div id="cart">
       <!-- หน้าตะกร้า -->
   </div>
 </template>
 
 <script>
 export default {
-    name: "CartList"
+    name: "Cart"
 }
 </script>
