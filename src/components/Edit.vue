@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="edit">
     <category @SelectCate="selectCate" />
     <food-list :cateId="cateId" />
   </div>
