@@ -16,15 +16,11 @@
 export default {
   name: "Category",
   emits: ["SelectCate"],
-  inject: ["categoryUrl"],
 
   computed: {
     categoryList() {
       return this.$store.state.categories;
     }
-  },
-  mounted() {
-    this.$store.dispatch("fetchCategory");
   }
 };
 </script>

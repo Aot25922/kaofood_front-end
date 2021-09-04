@@ -44,9 +44,6 @@ export default {
         return list.category.id == this.cateId
       })
     }
-  },
-  mounted() {
-    this.$store.dispatch("fetchMenu");
   }
 };
 </script>

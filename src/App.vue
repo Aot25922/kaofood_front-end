@@ -29,8 +29,6 @@ export default {
   },
   provide() {
     return {
-      categoryUrl: `${this.backendUrl}/category`,
-      menuUrl: `${this.backendUrl}/menu`,
       userUrl: `${this.backendUrl}/user`,
       account: () => this.account,
     };
@@ -68,6 +66,10 @@ export default {
       }
     }
   },
+  beforeCreate() {
+    this.$store.dispatch("fetchCategory");
+    this.$store.dispatch("fetchMenu");
+  }
 };
 </script>
 

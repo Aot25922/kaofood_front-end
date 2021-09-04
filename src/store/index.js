@@ -3,6 +3,7 @@ import axios from 'axios'
 
 export default createStore({
   state: {
+    backendUrl: "https://kaofood.ddns.net/api",
     menus: [],
     categories: [],
     cart: []
@@ -17,13 +18,13 @@ export default createStore({
   },
   actions: {
     fetchMenu({ commit }) {
-      axios.get('https://kaofood.ddns.net/api/menu')
+      axios.get(`${this.state.backendUrl}/menu`)
           .then(response => {
             commit('SET_MENU', response.data)
           })
     },
     fetchCategory({ commit }) {
-      axios.get('https://kaofood.ddns.net/api/category')
+      axios.get(`${this.state.backendUrl}/category`)
           .then(response => {
             commit('SET_Category', response.data)
           })
