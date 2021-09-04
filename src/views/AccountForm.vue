@@ -1,6 +1,8 @@
 <template>
-  <div class="h-screen bg-fire-lightest mt-16 px-3 py-5">
-    <div class="max-w-md mx-auto bg-white p-3 rounded shadow-sm">
+  <div class="bg-fire-lightest lg:pt-80 lg:pb-96 md:pb-48 px-3 py-20">
+    <div class="lg:grid lg:grid-cols-3 lg:mt-44">
+      <img src="../assets/logo.png" class="lg:col-span-1 lg:m-auto md:mt-28 my-10 mx-auto lg:w-3/4 md:w-1/4 w-1/3" />
+    <div class="lg:col-span-2 lg:w-full xl:max-w-screen-lg max-w-xl mx-auto bg-white p-3 rounded shadow border-8 border-fire-darkest">
       <!-- ส่วนของ Sign Up -->
       <div v-if="mode == 'SignUp'" class="w-full p-3 px-6 py-10">
         <div class="text-center">
@@ -40,8 +42,8 @@
       </div>
 
       <!-- ส่วนของ login -->
-      <div v-else class="px-3 py-5">
-        <div v-if="account != null" class="w-full p-3 px-6 py-10">
+      <div v-else class="xl:mt-20 xl:px-10 px-3 py-5">
+        <div v-if="account != null">
           <span class="text-xl uppercase font-semibold">Login</span>
         </div>
         <div class="mb-3">
@@ -54,12 +56,13 @@
           <span v-if="emptyPassword" class="text-error">password cannot be empty!</span>
         </div>
         <div class="flex flex-row-reverse">    
-          <router-link class="text-neutral-focus underline text-sm" to="/signup">Sign Up</router-link>
+          <router-link class="text-neutral underline text-sm" to="/signup">Sign Up</router-link>
         </div>
         <button @click="login" class="h-12 w-full btn btn-primary rounded text-white mt-3">
           Login
         </button>
       </div>
+    </div>
     </div>
   </div>
 </template>
