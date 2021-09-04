@@ -4,6 +4,7 @@ import axios from 'axios'
 export default createStore({
   state: {
     backendUrl: "https://kaofood.ddns.net/api",
+    account: null,
     menus: [],
     categories: [],
     cart: []
@@ -18,16 +19,17 @@ export default createStore({
     SET_CART(state, data) {
       state.cart = data
     },
+    SET_ACCOUNT(state, data) {
+      state.account = data
+    },
     addCartItem(state, item){
-      if(item.count == null) item.count = 1;
+      item.count = 1;
       state.cart.push(item);
     },
     updateCartItem(state, item){
-      // bugแดก แก้ข้อมูลที่ load จาก LocalStoeage ไม่ได้
       item.count += 1;
       state.cart.map(add => {
         if (add.id == item.id) {
-            console.log('updateCartItem')
           return item;
         }else return add;
       });
@@ -35,29 +37,37 @@ export default createStore({
   },
   actions: {
     async fetchAPI({ commit }) {
-      axios.get(`${this.state.backendUrl}/category`)
+      await axios.get(`${this.state.backendUrl}/category`)
           .then(response => {
             commit('SET_Category', response.data)
           })
-      axios.get(`${this.state.backendUrl}/menu`)
+      await axios.get(`${this.state.backendUrl}/menu`)
           .then(response => {
             commit('SET_MENU', response.data)
           })
       console.log("Fetch API");
     },
+
     fetchLocalStoeage({ commit }) {
+      if (localStorage.getItem("account")) {
+        try {
+          commit('SET_ACCOUNT',JSON.parse(localStorage.getItem("account")));
+        } catch (e) {
+          localStorage.removeItem("account");
+        }
+      }
+
       if(localStorage.getItem("cart")){
         try {
-          let cart = JSON.parse(localStorage.getItem("cart"));
-          for(let data of cart){
-              commit('addCartItem',data);
-          }
+          // bugแดก แก้ข้อมูลที่ load จาก LocalStoeage ไม่ได้
+          commit('SET_CART',JSON.parse(localStorage.getItem("cart")));
         } catch (e) {
           localStorage.removeItem("cart");
         }
       }
       console.log("Fetch LocalStoeage");
     },
+
     addToCart({ commit }, item){
       if(this.state.cart.find(element => (element.id == item.id) ? true : false)){
         commit('updateCartItem',item);
@@ -65,6 +75,18 @@ export default createStore({
         commit('addCartItem', item);
       }
       localStorage.setItem('cart',JSON.stringify(this.state.cart))
+    },
+
+    async getAccount({ commit }, loginForm){
+      if (loginForm == null){
+        commit('SET_ACCOUNT',null);
+        return;
+      }
+      await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`)
+        .then(response => {
+          commit('SET_ACCOUNT', response.data)
+        })
+      localStorage.setItem('account',JSON.stringify(this.state.account))
     }
   },
   getters:{},

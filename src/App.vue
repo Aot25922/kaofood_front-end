@@ -1,12 +1,7 @@
 <template>
   <div id="app">
-    <menu-bar
-      @show-login="accountForm()"
-      @show-signup="accountForm()"
-      @logout-account="updateAccount()"
-      :key="reloadMenu"
-    />
-    <router-view @reload-menu="updateAccount()" />
+    <menu-bar />
+    <router-view />
     <Footer />
   </div>
 </template>
@@ -17,56 +12,6 @@ import Footer from "@/components/Footer.vue";
 export default {
   name: "App",
   components: { MenuBar, Footer },
-    data() {
-    return {
-      backendUrl: "https://kaofood.ddns.net/api",
-      // backendUrl: "http://localhost:8080",
-      showAccountForm: false,
-      signupAccountForm: null,
-      reloadMenu: 0,
-      account : null
-    };
-  },
-  provide() {
-    return {
-      userUrl: `${this.backendUrl}/user`,
-      account: () => this.account,
-    };
-  },
-  methods: {
-    accountForm(i) {
-      console.log(i);
-      this.showAccountForm = true;
-      this.signupAccountForm = i;
-    },
-    updateAccount() {
-    if (localStorage.getItem("account")) {
-      this.account = JSON.parse(localStorage.getItem("account"));
-    } else {
-      this.account = null;
-    }
-    this.reloadMenu += 1;
-  },
-  },
-  mounted() {
-    if (localStorage.getItem("account")) {
-      try {
-        this.account = JSON.parse(localStorage.getItem("account"));
-      } catch (e) {
-        localStorage.removeItem("account");
-      }
-    }
-  },
-  created() {
-    if (localStorage.getItem("account")) {
-      try {
-        this.account = JSON.parse(localStorage.getItem("account"));
-      } catch (e) {
-        localStorage.removeItem("account");
-      }
-    }
-    console.log(this.$store.state.cart);
-  },
   beforeCreate() {
     this.$store.dispatch("fetchAPI");
     this.$store.dispatch("fetchLocalStoeage");
