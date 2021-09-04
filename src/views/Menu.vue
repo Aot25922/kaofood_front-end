@@ -1,18 +1,14 @@
 <template>
   <div id="menu">
-    <div v-if="account()!=null&&account().role=='Admin'">
-       <category @SelectCate="selectCate"/>
-       <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold" >Menus</h1>
-       <div class="lg:flex-wrap flex flex-row">
-        <router-link class="lg:w-1/3 lg:flex-none flex-1 m-1 btn btn-outline lg:text-xl md:text-lg" to="/menu/edit">Edit Menu</router-link>
-        <router-link class="lg:w-1/3 lg:flex-none flex-1 m-1 btn btn-secondary lg:text-xl md:text-lg" to="/menu/add">Add Menu</router-link>
-       </div>
-       <food-list :cateId="cateId"/>
+    <category @SelectCate="selectCate"/>
+    <div class="lg:flex-wrap flex flex-row">
+      <router-link class="lg:w-1/3 lg:flex-none flex-1 m-1 btn btn-outline lg:text-xl md:text-lg" to="/menu/edit">Edit Menu</router-link>
+      <router-link class="lg:w-1/3 lg:flex-none flex-1 m-1 btn btn-secondary lg:text-xl md:text-lg" to="/menu/add">Add Menu</router-link>
     </div>
-    <div v-else> 
-       <category @SelectCate="selectCate"/>
-       <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold" >Our Menus</h1>
-       <food-list :cateId="cateId"/>
+    <!--FoodList with Loop-->
+    <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold">Our Menu</h1>
+    <div class="xl:grid-rows-none lg:grid lg:grid-cols-4 lg:grid-rows-3 md:grid md:grid-cols-2 md:grid-rows-2 sm:flex sm:flex-row">
+      <food-list class="card p-2 sm:flex-1" v-for="menu in menuFilterList" :menu="menu" :key="menu.id"/>
     </div>
   </div>
 </template>
@@ -20,28 +16,28 @@
 <script>
 import Category from "@/components/Category.vue";
 import FoodList from "@/components/FoodList.vue";
+
 export default {
   name: "Menu",
-  components: { Category, FoodList },
-  inject : ["account"],
-   data() {
+  components: {Category, FoodList},
+
+  data() {
     return {
-      cateId : null,
+      cateId: null,
     };
   },
   methods: {
-  async getFoodList() {
-    try {
-      const res = await fetch(this.menuUrl);
-      const data = res.json();
-      return data;
-    } catch (error) {
-      console.log(`Counld not get! ${error}`);
+    selectCate(id) {
+      this.cateId = id;
+    },
+  },
+  computed: {
+    menuFilterList() {
+      if (this.cateId == null) return this.$store.state.menus;
+      return this.$store.state.menus.filter(list => {
+        return list.category.id == this.cateId
+      })
     }
-  },
-  selectCate(id) {
-    this.cateId = id;
-  },
-},
+  }
 };
 </script>

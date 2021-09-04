@@ -29,8 +29,6 @@ export default {
   },
   provide() {
     return {
-      categoryUrl: `${this.backendUrl}/category`,
-      menuUrl: `${this.backendUrl}/menu`,
       userUrl: `${this.backendUrl}/user`,
       account: () => this.account,
     };
@@ -67,7 +65,12 @@ export default {
         localStorage.removeItem("account");
       }
     }
+    console.log(this.$store.state.cart);
   },
+  beforeCreate() {
+    this.$store.dispatch("fetchAPI");
+    this.$store.dispatch("fetchLocalStoeage");
+  }
 };
 </script>
 
