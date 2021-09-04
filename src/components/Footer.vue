@@ -30,13 +30,13 @@
         <hr class="lg:w-3/4 w-full mx-auto" />
         <div class="text-lg">
           <p class="lg:text-base md:text-sm text-xs pt-1">
-            <span class="text-fire-lighter font-medium">Mon - Thu:</span> 9AM - 9PM
+            <span class="text-fire-lighter font-medium">Mon - Thu:</span> 9.00 - 21.00
           </p>
           <p class="lg:text-base md:text-sm text-xs pt-1">
-            <span class="text-fire-lighter font-medium">Fri - Sat:</span> 10AM - 8PM
+            <span class="text-fire-lighter font-medium">Fri - Sat:</span> 10.00 - 20.00
           </p>
           <p class="lg:text-base md:text-sm text-xs pt-1">
-            <span class="text-fire-lighter font-medium">Sun:</span> 10AM - 6PM
+            <span class="text-fire-lighter font-medium">Sun:</span> 10.00 - 18.00
           </p>
         </div>
       </div>
