@@ -1,7 +1,14 @@
 <template>
   <div id="menu">
-    <category @SelectCate="selectCate" />
-    <food-list :cateId="cateId"/>
+    <div class="mt-32" v-if="account()!=null&&account().role=='Admin'">
+       <router-link to="/menu/edit">Edit</router-link>
+       <router-link to="/menu/add">Add</router-link>
+       <router-view />
+    </div>
+    <div v-else> 
+       <category @SelectCate="selectCate"/>
+       <food-list :cateId="cateId"/>
+    </div>
   </div>
 </template>
 
@@ -11,6 +18,7 @@ import FoodList from "@/components/FoodList.vue";
 export default {
   name: "Menu",
   components: { Category, FoodList },
+  inject : ["account"],
    data() {
     return {
       cateId : null,

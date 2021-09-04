@@ -22,13 +22,13 @@
           <router-link to="/contact">Contact</router-link>
         </li>
         <li>
-          <router-link to="/login" v-if="account==null">Login</router-link>
+          <router-link to="/login" v-if="account()==null">Login</router-link>
         </li>
         <li>
-          <router-link to="/signup" class="mt-10 font-bold" v-if="account==null">Sign Up</router-link>
+          <router-link to="/signup" class="mt-10 font-bold" v-if="account()==null">Sign Up</router-link>
         </li>
         <li>
-          <span @click="logout" v-if="account!=null" class="font-bold">Logout</span>
+          <span @click="logout" v-if="account()!=null" class="font-bold">Logout</span>
         </li> 
       </ul>
       </div>
@@ -58,7 +58,7 @@
 
   <!-- Account: Toggle when ipad to laptop -->
   <!-- Login button -->
-    <div @click="showLoginMenu = !showLoginMenu" v-if="account==null" class="md:flex hidden dropdown dropdown-end">
+    <div @click="showLoginMenu = !showLoginMenu" v-if="account()==null" class="md:flex hidden dropdown dropdown-end">
       <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
         <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
           <li>
@@ -71,7 +71,7 @@
     </div>
 
   <!-- Logout&Ordering -->
-      <div @click="showLogoutMenu = !showLogoutMenu" v-if="account!=null" class="md:flex hidden dropdown dropdown-end"> 
+      <div @click="showLogoutMenu = !showLogoutMenu" v-if="account()!=null" class="md:flex hidden dropdown dropdown-end"> 
         <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div> 
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
             <li>
@@ -90,31 +90,17 @@ export default {
   name: "MenuBar",
   inject: ["account"],
   emits: ["logout-account"],
-  props: {
-    newAccount : null
-  },
   data() {
     return {
       showLoginMenu: false,
       showLogoutMenu:false,
-      account : this.newAccount
     }
   },
   methods : {
     logout(){
       localStorage.removeItem("account");
       this.$emit("logout-account")
-    }
-  },
-  mounted() {
-    if (localStorage.getItem("account")) {
-      try {
-        this.account = JSON.parse(localStorage.getItem("account"));
-        console.log(this.account)
-      } catch (e) {
-        localStorage.removeItem("account");
-        console.log(this.account)
-      }
+      console.log(this.account())
     }
   },
 }

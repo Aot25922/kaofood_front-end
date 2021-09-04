@@ -12,7 +12,11 @@
           <!-- <div class="badge mx-2 badge-secondary lg:text-xl md:text-lg lg:py-4 md:p-3 ">NEW</div> -->
         </h2> 
         <!-- <p class="truncate">&emsp;{{ menu.description }}</p> -->
-          <div class="justify-center card-actions">
+        <div v-if="account()!=null&&account().role=='Admin'">
+          <button>Edit</button>
+          <button>Delete</button>
+        </div>
+          <div class="justify-center card-actions" v-else>
             <button class="btn btn-secondary w-full uppercase xl:text-xl lg:text-lg md:text-base text-sm">Add to Cart</button>
           </div>
       </div>
@@ -25,7 +29,7 @@
 export default {
   name: "MenuList",
   props: {cateId: null},
-  inject: ["menuUrl"],
+  inject: ["menuUrl","account"],
   data(){
     return {
       menuList:[],
