@@ -2,6 +2,18 @@
   <div id="form">
       <!-- form กรอกข้อมูล เพิ่ม แก้ไข สำหรับ admin -->
       <form @submit.prevent="submitForm()" class="bg-fire-lighter">
+        <div class="mt-4">
+          <input v-model.trim="menuName" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
+          <span v-if="!validateName" class="text-error">Name required</span>
+        </div>
+        <div class="mt-4">
+          <select v-model="category" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Category"/>
+          <span v-if="!validateCategory" class="text-error">Category required</span>
+        </div>
+        <div class="mt-4">
+          <input v-model="price" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
+          <span v-if="!validateDescript" class="text-error">Price required</span>
+        </div>
       </form>
   </div>
 </template>
