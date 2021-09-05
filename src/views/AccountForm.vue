@@ -112,18 +112,11 @@ export default {
         isPasswordEmpty: false,
       },
       account: null,
-      firstName: "",
-      lastName: "",
-      phone: "",
-      email: "",
-      password: "",
-      address: "",
       checkForLogin: false,
       checkSignUp: false,
       emptyFirstName: false,
       emptyLastName: false,
       emptyPhone: false,
-
       accountEmailExist: false,
       accountPhoneExist: false
     };
@@ -154,9 +147,48 @@ export default {
       this.signUpForm.isPasswordEmpty = (this.signUpForm.password == "") ? true : false
     },
     async signUp() {
+      const axios = require('axios');
       this.checkSignUpForm();
       if (this.signUpForm.isFirstNameEmpty || this.signUpForm.isLastNameEmpty || this.signUpForm.isAddressEmpty
-          || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty) return;
+          || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty) {return}
+          else{
+          let newAccount = JSON.stringify({
+            fname : this.signUpForm.firstName,
+            lname : this.signUpForm.lastName,
+            email : this.signUpForm.email,
+            phone : this.signUpForm.phone,
+            password : this.signUpForm.password,
+            address : this.signUpForm.address,
+            role : "Customer"
+          })
+          let data = new FormData();
+          data.append("account",newAccount)
+          let config = {
+             headers: {
+                   "Access-Control-Allow-Origin":"*",
+                },
+           }
+          try {
+            await axios.post(`${this.$store.state.backendUrl}/user/signup`,data,config
+            ).then(response => {
+            if(response.data == "accountEmailExist"){
+              console.log("accountEmailExist")
+              this.accountEmailExist = true
+            }
+            if(response.data == "accountPhoneExist"){
+              console.log("phone")
+              this.accountPhoneExist = true
+            }
+            if(response.data == "success"){
+              console.log("success")
+              this.accountEmailExist =false
+              this.accountPhoneExist=false
+            }}).catch(function (error) {console.log(error);})
+      
+          } catch (error) {
+            console.log(`Counld not get! ${error}`);
+          }
+          }
 
     }
     //   async signUp() {
