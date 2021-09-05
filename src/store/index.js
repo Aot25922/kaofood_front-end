@@ -28,7 +28,7 @@ export default createStore({
       state.cart.push(item);
     },
     updateCartItem(state, item){
-      item.count += 1;
+      state.cart.find(element => (element.id == item.id)).count+=1
       state.cart.map(add => {
         if (add.id == item.id) {
           return item;
@@ -84,6 +84,7 @@ export default createStore({
     async getAccount({ commit }, loginForm){
       if (loginForm == null){
         commit('SET_ACCOUNT',null);
+        localStorage.removeItem("account")
         localStorage.removeItem("cart");
       }else {
         await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`)
