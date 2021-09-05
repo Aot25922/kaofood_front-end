@@ -4,15 +4,28 @@
       <form @submit.prevent="submitForm()" class="bg-fire-lighter">
         <div class="mt-4">
           <input v-model.trim="menuName" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
-          <span v-if="!validateName" class="text-error">Name required</span>
+          <span v-if="!validateName" @blur="checkName" class="text-error">Name required</span>
         </div>
         <div class="mt-4">
           <select v-model="category" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Category"/>
-          <span v-if="!validateCategory" class="text-error">Category required</span>
+          <span v-if="!validateCategory" @blur="checkCategory" class="text-error">Category required</span>
         </div>
         <div class="mt-4">
-          <input v-model="price" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
-          <span v-if="!validateDescript" class="text-error">Price required</span>
+          <input v-model="price" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Price"/>
+          <span v-if="!validatePrice" @blur="checkPrice" class="text-error">Price required</span>
+        </div>
+        <div class="mt-4">
+          <input v-model="descript" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Description"/>
+          <span v-if="!validateDescript" @blur="checkDescript" class="text-error">Description required</span>
+        </div>
+        <div class="mt-4">
+          <img id="output" width="200">
+          <input type="file" name="img" accept="image" id="file" @change="onFileChange($event)"/>
+          <span v-if="!validateFile" class="text-error">Description required</span>
+        </div>
+        <div class="flex flex-row">
+          <div class="btn">Save Form</div>
+          <div class="btn btn-primary">Cancel</div>
         </div>
       </form>
   </div>

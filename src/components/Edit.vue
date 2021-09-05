@@ -11,24 +11,24 @@ import FoodList from "@/components/FoodList.vue";
 export default {
   name: "Menu",
   components: { Category, FoodList },
-   data() {
+  data() {
     return {
-      cateId : null,
+      cateId: null,
     };
   },
   methods: {
-  async getFoodList() {
-    try {
-      const res = await fetch(this.menuUrl);
-      const data = res.json();
-      return data;
-    } catch (error) {
-      console.log(`Counld not get! ${error}`);
-    }
+    async getFoodList() {
+      try {
+        const res = await fetch(this.menuUrl);
+        const data = res.json();
+        return data;
+      } catch (error) {
+        console.log(`Counld not get! ${error}`);
+      }
+    },
+    selectCate(id) {
+      this.cateId = id;
+    },
   },
-  selectCate(id) {
-    this.cateId = id;
-  },
-},
 };
 </script>

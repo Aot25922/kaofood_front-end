@@ -1,11 +1,13 @@
 <template>
   <div id="add">
-    
+    <AddForm />
   </div>
 </template>
 
 <script>
+import AddForm from '@/components/Form.vue'
 export default {
-    name: "Add"
+    name: "Add",
+    components: { AddForm }
 }
 </script>

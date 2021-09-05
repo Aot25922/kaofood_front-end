@@ -17,7 +17,7 @@
             <router-link to="/menu">Menu</router-link>
           </li>
           <li>
-            <router-link to="/cartList">My Order</router-link>
+            <router-link to="/cart">My Order</router-link>
           </li>
           <li>
             <router-link to="/contact">Contact</router-link>

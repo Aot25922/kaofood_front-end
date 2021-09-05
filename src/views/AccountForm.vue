@@ -11,37 +11,37 @@
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.firstName"
-                   class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600"
+                   class="h-12 px-2 w-full outline-none border-b border-gray-500 rounded focus:outline-none focus:border-gray-600"
                    placeholder="Firstname"/>
             <span v-if="signUpForm.isFirstNameEmpty" class="text-error">Firstname required</span>
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.lastName"
-                   class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600"
+                   class="h-12 px-2 w-full outline-none border-b border-gray-500 rounded focus:outline-none focus:border-gray-600"
                    placeholder="Lastname"/>
             <span v-if="signUpForm.isLastNameEmpty" class="text-error">Lastname required</span>
           </div>
           <div class="mt-4 ">
-            <textarea class="h-24 p-2 w-full outline-none border rounded focus:outline-none focus:border-gray-600"
+            <textarea class="h-24 p-2 w-full outline-none border border-gray-500 rounded focus:outline-none focus:border-gray-600"
                       placeholder="Your address..." v-model="signUpForm.address"/>
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.phone"
-                   class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600"
+                   class="h-12 px-2 w-full outline-none border-b border-gray-500 rounded focus:outline-none focus:border-gray-600"
                    placeholder="Phone"/>
             <span v-if="signUpForm.isPhoneEmpty" class="text-error">Phone required</span>
             <span v-if="signUpForm.accountPhoneExist" class="text-error">Phone already exist!</span>
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.email"
-                   class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600"
+                   class="h-12 px-2 w-full outline-none border-b border-gray-500 rounded focus:outline-none focus:border-gray-600"
                    placeholder="Email"/>
             <span v-if="signUpForm.isEmailEmpty" class="text-error">Email required</span>
             <span v-if="signUpForm.accountEmailExist" class="text-error">Email already exist!</span>
           </div>
           <div class="mt-4">
             <input v-model="signUpForm.password"
-                   class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600"
+                   class="h-12 px-2 w-full outline-none border-b border-gray-500 rounded focus:outline-none focus:border-gray-600"
                    placeholder="Password"/>
             <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
           </div>

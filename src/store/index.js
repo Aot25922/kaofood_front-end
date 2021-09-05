@@ -3,8 +3,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    backendUrl: "https://kaofood.ddns.net/api",
-    // backendUrl: "http://localhost:8080/",
+    // backendUrl: "https://kaofood.ddns.net/api",
+    backendUrl: "http://localhost:8080/",
     account: null,
     menus: [],
     categories: [],
@@ -64,7 +64,7 @@ export default createStore({
 
       if(localStorage.getItem("cart")){
         try {
-          // bugแดก แก้ข้อมูลที่ load จาก LocalStoeage ไม่ได้
+          // bugแดก แก้ข้อมูลที่ load จาก LocalStorage ไม่ได้
           commit('SET_CART',JSON.parse(localStorage.getItem("cart")));
         } catch (e) {
           localStorage.removeItem("cart");
