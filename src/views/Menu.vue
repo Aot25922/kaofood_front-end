@@ -1,7 +1,7 @@
 <template>
   <div id="menu">
     <category @SelectCate="selectCate"/>
-    <div class="lg:flex-wrap flex flex-row">
+    <div v-if="account!=null" class="lg:flex-wrap flex flex-row">
       <router-link class="lg:w-1/3 lg:flex-none flex-1 m-1 btn btn-outline lg:text-xl md:text-lg" to="/menu/edit">Edit Menu</router-link>
       <router-link class="lg:w-1/3 lg:flex-none flex-1 m-1 btn btn-secondary lg:text-xl md:text-lg" to="/menu/add">Add Menu</router-link>
     </div>
@@ -20,7 +20,6 @@ import FoodList from "@/components/FoodList.vue";
 export default {
   name: "Menu",
   components: {Category, FoodList},
-
   data() {
     return {
       cateId: null,
@@ -37,7 +36,13 @@ export default {
       return this.$store.state.menus.filter(list => {
         return list.category.id == this.cateId
       })
+    },
+    account() {
+      return this.$store.state.account;
     }
+  },
+  beforeCreate() {
+    this.$store.dispatch("fetchMenuAPI");
   }
 };
 </script>

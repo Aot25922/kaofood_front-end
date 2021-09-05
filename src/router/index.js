@@ -16,16 +16,6 @@ const routes = [
     ]
   },
   {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue'),
-  },
-  {
-    path: '/cart',
-    name: 'Cart',
-    component: ()=> import('../views/Cart.vue')
-  },
-  {
     path: '/login',
     name: 'Login',
     component: () => import('../views/AccountForm.vue'),
@@ -37,6 +27,16 @@ const routes = [
     component: () => import('../views/AccountForm.vue'),
     props: { mode: 'SignUp' }
   },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: () => import('../views/Contact.vue'),
+  },
+  // {
+  //   path: '/cart',
+  //   name: 'Cart',
+  //   component: ()=> import('../views/Cart.vue')
+  // },
 ]
 
 const router = createRouter({
