@@ -3,7 +3,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    backendUrl: "https://kaofood.ddns.net/api",
+    // backendUrl: "https://kaofood.ddns.net/api",
+    backendUrl: "http://localhost:8080/",
     account: null,
     menus: [],
     categories: [],
