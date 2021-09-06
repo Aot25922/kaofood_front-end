@@ -10,7 +10,7 @@
         </h2>
         <!-- <p class="truncate">&emsp;{{ menu.description }}</p> -->
         <div v-if="account!=null&&account.role=='Admin'" class="flex flex-row">
-          <button class="btn btn-warning lg:text-base text-sm mx-1 flex-1">Edit</button>
+          <button class="btn btn-warning lg:text-base text-sm mx-1 flex-1" @click="$emit('edit-food', menu)">Edit</button>
           <button class="btn btn-error lg:text-base text-sm mx-1 flex-1">Delete</button>
         </div>
         <div class="justify-center card-actions" v-else>
@@ -25,6 +25,7 @@
 export default {
   name: "FoodList",
   props: ['menu'],
+  emits: ['edit-food'],
   methods: {
     addToCart(){
       this.$store.dispatch('addToCart',this.menu)

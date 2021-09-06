@@ -3,19 +3,24 @@
       <!-- form กรอกข้อมูล เพิ่ม แก้ไข สำหรับ admin -->
       <form @submit.prevent="submitForm()" class="bg-fire-lighter">
         <div class="mt-4">
-          <input v-model.trim="menuName" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
+          <input v-model.trim="menu.name" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
           <span v-if="!validateName" @blur="checkName" class="text-error">Name required</span>
         </div>
         <div class="mt-4">
-          <select v-model="category" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Category"/>
+          <select id="category" v-model="menu.category" name="category" >
+           <option disabled value="">Please select one</option>
+           <option :value="category" v-for="category in this.$store.state.categories" :key="category.id">
+                {{category.name }}
+           </option>
+          </select>
           <span v-if="!validateCategory" @blur="checkCategory" class="text-error">Category required</span>
         </div>
         <div class="mt-4">
-          <input v-model="price" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Price"/>
+          <input v-model="menu.price" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Price"/>
           <span v-if="!validatePrice" @blur="checkPrice" class="text-error">Price required</span>
         </div>
         <div class="mt-4">
-          <input v-model="descript" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Description"/>
+          <input v-model="menu.description" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Description"/>
           <span v-if="!validateDescript" @blur="checkDescript" class="text-error">Description required</span>
         </div>
         <div class="mt-4">
@@ -36,20 +41,19 @@ export default {
     name: "Form",
     props:{
       isEdit: Boolean,
-      menuToEdit: null,
+      menuToEditProps: null,
     },
-    inject: [ "categoryUrl", "menuUrl", "userUrl" ],
+    inject: [],
     data(){
       return{
-        menuName: "",
-        menuList: [],
-        price: "",
-        img: "",
+        menu : {
+           name : "",
+           price : 0,
+           description : "",
+           category : null,
+           image : ""
+        },
         file: null,
-        descript: "",
-        category: null,
-        cateList: [],
-        edit: this.isEdit,
         validateName: true,
         validatePrice: true,
         validateDescript: true,
@@ -64,10 +68,10 @@ export default {
         this.checkCategory();
         this.checkFile();
         if( this.validateName && this.validatePrice && this.validateDescript && this.validateCategory ){
-          if(this.edit) {
+          if(this.menuToEditProps!=null) {
             this.editMenu();
           } else {
-            this.addproduct();
+            this.addNewMenu();
           }
         } else {
           return;
@@ -121,87 +125,125 @@ export default {
           this.validateFile = true;
         }
       },
-      async getCategoryList(){
-        try{
-          const res = await fetch(this.categoryUrl);
-          const data = res.json();
-          return data;
-        } catch(error) {
-          console.log(`Counld not get! ${error}`);
-        }
-      },
-      async getMenuList(){
-        try{
-          const res = await fetch(this.menuUrl);
-          const data = res.json();
-          return data;
-        } catch(error) {
-          console.log(`Counld not get! ${error}`);
-        }
+      setFoodToEdit(){
+      if(this.menuToEditProps!=null){
+        this.menu = this.menuToEditProps
+         const image = document.getElementById("output")
+         image.src = this.$store.state.backendUrl+this.menuToEditProps.image
+      }
+      else{
+        console.log(this.$store.state.categories)
+          }
       },
       async addNewMenu(){
-        let menu = JSON.stringify({
-          menuName: this.menuName,
-          price: this.price,
-          descript: this.descript,
-          img: this.img,
-          category: this.category
-        })
-        let data = new FormData();
-        data.append("menu", menu);
-        data.append("multipathFile". this.file)
-        try{
-          await fetch(this.menuUrl, {
-            method: "POST",
-            body: data,
-          });
-        } catch(error){
-          console.log(error)
-        }
-        this.cancel()
-      },
-      async editMenu(){
-        let editOnlyImg;
-        let menu = JSON.stringify({
-          menuName: this.menuName,
-          price: this.price,
-          descript: this.descript,
-          img: this.img,
-          category: this.category
-        })
-        let data = new FormData();
-        let editImg = new FormData();
-        data.append("menu", menu)
-        try {
-        await fetch(
-          `${this.menuUrl}/${this.productToEdit.productId}`,
-          {
-            method: "PUT",
-            body: data,
+         const axios = require('axios');
+         let newMenu = JSON.stringify(this.menu)
+         let data = new FormData()
+         data.append("menu",newMenu)
+         data.append("multipartFile", this.file);
+         let config = {
+             headers: {
+                   "Access-Control-Allow-Origin":"*",
+                },
+           }
+         try{
+           await axios.post(`${this.$store.state.backendUrl}/menu/add`,data,config)
+         }catch(error){
+            console.log(`Counld not get! ${error}`);
           }
-        );
-      } catch (error) {
-        console.log(error);
-      }
-      if (this.file !== null) {
-        editImg.append("multipartFile", this.file);
-        editOnlyImg=true;
-        try {
-          await fetch(
-            `${this.productUrl}/image/${this.menuToEdit.menuId}`,
-            {
-              method: "PUT",
-              body: editImg,
-            }
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      } 
-      this.$emit("reload-data",editOnlyImg);
-      this.cancel();
+      },
+      onFileChange(event) {
+      var image = document.getElementById("output");
+      image.src = URL.createObjectURL(event.target.files[0]);
+      this.file = event.target.files[0];
     },
+    //   async getCategoryList(){
+    //     try{
+    //       const res = await fetch(this.categoryUrl);
+    //       const data = res.json();
+    //       return data;
+    //     } catch(error) {
+    //       console.log(`Counld not get! ${error}`);
+    //     }
+    //   },
+    //   async getMenuList(){
+    //     try{
+    //       const res = await fetch(this.menuUrl);
+    //       const data = res.json();
+    //       return data;
+    //     } catch(error) {
+    //       console.log(`Counld not get! ${error}`);
+    //     }
+    //   },
+    //   async addNewMenu(){
+    //     let menu = JSON.stringify({
+    //       menuName: this.menuName,
+    //       price: this.price,
+    //       descript: this.descript,
+    //       img: this.img,
+    //       category: this.category
+    //     })
+    //     let data = new FormData();
+    //     data.append("menu", menu);
+    //     data.append("multipathFile". this.file)
+    //     try{
+    //       await fetch(this.menuUrl, {
+    //         method: "POST",
+    //         body: data,
+    //       });
+    //     } catch(error){
+    //       console.log(error)
+    //     }
+    //     this.cancel()
+    //   },
+    //   async editMenu(){
+    //     let editOnlyImg;
+    //     let menu = JSON.stringify({
+    //       menuName: this.menuName,
+    //       price: this.price,
+    //       descript: this.descript,
+    //       img: this.img,
+    //       category: this.category
+    //     })
+    //     let data = new FormData();
+    //     let editImg = new FormData();
+    //     data.append("menu", menu)
+    //     try {
+    //     await fetch(
+    //       `${this.menuUrl}/${this.productToEdit.productId}`,
+    //       {
+    //         method: "PUT",
+    //         body: data,
+    //       }
+    //     );
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    //   if (this.file !== null) {
+    //     editImg.append("multipartFile", this.file);
+    //     editOnlyImg=true;
+    //     try {
+    //       await fetch(
+    //         `${this.productUrl}/image/${this.menuToEdit.menuId}`,
+    //         {
+    //           method: "PUT",
+    //           body: editImg,
+    //         }
+    //       );
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   } 
+    //   this.$emit("reload-data",editOnlyImg);
+    //   this.cancel();
+    // },
       
-  }
+  },
+  mounted(){
+    this.setFoodToEdit()
+},
+updated(){
+    this.setFoodToEdit()
+}
 }
 </script>
