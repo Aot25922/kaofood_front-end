@@ -8,7 +8,6 @@
 import AddForm from '@/components/Form.vue'
 export default {
     name: "Add",
-    props: ['menu'],
     components: { AddForm },
     methods: {
       addNewMenu(){

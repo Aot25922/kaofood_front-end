@@ -5,7 +5,7 @@
       <img src="../assets/about-2.png" alt="About" class="mx-auto lg:hidden md:w-1/2 w-3/4"/>
       <div class="lg:col-span-1 xl:mt-20">
         <div class="font-bold lg:text-left text-center md:text-4xl text-3xl py-1">
-          <h1 class="text-red-700 pb-2" style="font-family: 'Allison', cursive">
+          <h1 class="text-red-700 pb-2 font-writing">
             Our History
           </h1>
           <h2>Origins of the restaurant</h2>
@@ -36,7 +36,7 @@ import About from '@/components/About.vue'
 
 export default {
   name: "Contact",
-  components: {About},
+  components: { About },
   data() {
     return {
       teamList: [{id: 62130500031, name: 'Thanasap Leelapisuth', img: '', role: ['Frontend', 'Database']},

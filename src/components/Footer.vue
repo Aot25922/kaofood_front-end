@@ -3,9 +3,9 @@
     <div class="p-5 bg-black text-white md:flex md:flex-wrap grid grid-cols-2">
       <!-- Kao Food -->
       <div class="md:flex-1 p-1 lg:text-center col-span-1">
-        <h1 class="xl:mr-28 lg:mr-20 xl:text-2xl md:text-xl text-lg uppercase font-bold">Kaofood</h1>
+        <h1 class="xl:mr-28 lg:mr-20 xl:text-xl md:text-lg uppercase font-bold">Kaofood</h1>
         <span class="text-gray-400">
-          <hr class="xl:w-1/2 w-44 lg:mx-auto"/>
+          <hr class="xl:w-1/2 w-full lg:mx-auto"/>
           <p class="xl:ml-24 lg:ml-16 lg:text-center text-right xl:text-sm md:text-xs text-2xs">Capitalism Restaurant</p>
         </span>
         <!-- <p class="py-1"><i class="material-icons"> location_on </i> 99 Bei Chang Jie, Xicheng Qu, Beijing Shi, China</p> -->
@@ -15,18 +15,18 @@
 
       <!-- Link -->
       <div class="md:flex-1 py-2 px-1 text-center col-span-1">
-        <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-semibold ">Link</h1>
+        <h1 class="xl:text-xl md:text-lg uppercase font-semibold ">Link</h1>
         <hr class="lg:w-1/3 w-1/2 pb-1 mx-auto" />
         <div class="flex flex-col leading-loose uppercase tracking-widest">
-          <router-link class="lg:text-base text-sm pt-1" to="/">Home</router-link>
-          <router-link class="lg:text-base text-sm pt-1" to="/menu">Menu</router-link>
-          <router-link class="lg:text-base text-sm pt-1" to="/contact">Contact</router-link>
+          <router-link class="lg:text-base md:text-sm text-xs pt-1" to="/">Home</router-link>
+          <router-link class="lg:text-base md:text-sm text-xs pt-1" to="/menu">Menu</router-link>
+          <router-link class="lg:text-base md:text-sm text-xs pt-1" to="/contact">Contact</router-link>
         </div>
       </div>
 
       <!-- Opening Hours -->
       <div class="md:flex-1 py-2 px-1 text-center col-span-1">
-        <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-semibold">Opening Hours</h1>
+        <h1 class="xl:text-xl md:text-lg uppercase font-semibold">Opening Hours</h1>
         <hr class="lg:w-3/4 w-full mx-auto" />
         <div class="text-lg">
           <p class="lg:text-base md:text-sm text-xs pt-1">
@@ -43,11 +43,11 @@
 
       <!-- Social -->
       <div class="md:flex-1 p-1 col-span-1">
-        <h1 class="xl:text-2xl md:text-xl text-lg uppercase font-semibold text-center">Social</h1>
+        <h1 class="xl:text-xl md:text-lg uppercase font-semibold text-center">Social</h1>
         <hr class="lg:w-1/3 w-1/2 mx-auto" />
         <div class="flex flex-row justify-center">
           <!-- Twitter -->
-          <a class="p-2">
+          <a class="md:p-4 p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -58,7 +58,7 @@
             </svg>
           </a>
           <!-- Youtube -->
-          <a class="p-2">
+          <a class="md:p-4 p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -69,7 +69,7 @@
             </svg>
           </a>
           <!-- Facebook -->
-          <a class="p-2">
+          <a class="md:p-4 p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

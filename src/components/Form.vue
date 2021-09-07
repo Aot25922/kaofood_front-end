@@ -1,26 +1,27 @@
 <template>
-  <div id="form">
-      <!-- form กรอกข้อมูล เพิ่ม แก้ไข สำหรับ admin -->
-      <form @submit.prevent="submitForm()" class="bg-fire-lighter">
-        <div class="mt-4">
-          <input v-model.trim="menu.name" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
+  <div id="form" class="p-5">
+      <form @submit.prevent="submitForm()" class="bg-salmon card p-5">
+        <div class="mt-4 flex flex-col">
+          <label for="menuName" class="font-semibold">Menu name</label>
+          <input v-model.trim="menu.name" class="h-12 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
           <span v-if="!validateName" @blur="checkName" class="text-error">Name required</span>
         </div>
         <div class="mt-4">
-          <select id="category" v-model="menu.category" name="category" >
-           <option disabled value="">Please select one</option>
+          <label for="category" class="font-semibold">Category</label>
+          <select id="category" v-model="menu.category" name="category">
+           <option value="" disabled select>Please select one</option>
            <option :value="category" v-for="category in this.$store.state.categories" :key="category.id">
-                {{category.name }}
+                {{ category.name }}
            </option>
           </select>
           <span v-if="!validateCategory" @blur="checkCategory" class="text-error">Category required</span>
         </div>
         <div class="mt-4">
-          <input v-model="menu.price" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Price"/>
+          <input v-model="menu.price" class="h-12 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray-600" placeholder="Price"/>
           <span v-if="!validatePrice" @blur="checkPrice" class="text-error">Price required</span>
         </div>
         <div class="mt-4">
-          <input v-model="menu.description" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Description"/>
+          <textarea v-model="menu.description" class="h-12 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray-600" placeholder="Description"/>
           <span v-if="!validateDescript" @blur="checkDescript" class="text-error">Description required</span>
         </div>
         <div class="mt-4">

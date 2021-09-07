@@ -6,7 +6,7 @@
     <!-- Header -->
     <div class="lg:col-span-1">
       <div class="font-bold lg:text-left text-center md:text-4xl text-3xl py-1">
-        <h1 class="text-red-700 pb-2" style="font-family: 'Allison', cursive;">Why Choose Us</h1>
+        <h1 class="text-red-700 pb-2 font-writing">Why Choose Us</h1>
         <h2>Why we are the best</h2>
       </div>
     <!-- body -->

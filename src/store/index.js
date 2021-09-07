@@ -24,6 +24,10 @@ export default createStore({
       if (data == null || data == '') state.account = null;
       state.account = data
     },
+    DELETE_MENU(state, id){
+      var index = state.menus.findIndex(menu => menu.id == id)
+      state.menus.splice(index, 1)
+    },
     addCartItem(state, item){
       item.count = 1;
       state.cart.push(item);
@@ -83,6 +87,11 @@ export default createStore({
         commit('addMenuItem', item);
       }
       localStorage.setItem('menu', JSON.stringify(this.state.menus))
+    },
+
+    deleteMenu({commit}, id){
+      this.$store.delete('https://kaofood.ddns.net/api/' + id).then(
+        () => { commit('DELETE_MENU', id) })
     },
 
     addToCart({ commit }, item){
