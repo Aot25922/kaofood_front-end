@@ -35,6 +35,9 @@ export default createStore({
           return item;
         }else return add;
       });
+    },
+    addNewMenu(state, item) {
+      state.menus.push(item);
     }
   },
   actions: {
@@ -53,7 +56,7 @@ export default createStore({
       console.log("Fetch MENU");
     },
 
-    fetchLocalStoeage({ commit }) {
+    fetchLocalStorage({ commit }) {
       if (localStorage.getItem("account")) {
         try {
           commit('SET_ACCOUNT',JSON.parse(localStorage.getItem("account")));
@@ -71,6 +74,15 @@ export default createStore({
         }
       }
       console.log("Fetch LocalStoeage");
+    },
+
+    addMenu({commit}, item){
+      if(this.state.menus.find(element => (element.id == item.id) ? true : false)){
+        commit('updateMenuItem', item);
+      } else {
+        commit('addMenuItem', item);
+      }
+      localStorage.setItem('menu', JSON.stringify(this.state.menus))
     },
 
     addToCart({ commit }, item){

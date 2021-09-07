@@ -23,7 +23,7 @@
           <button class="flex-1 btn btn-xs btn-ghost">
             <i class="material-icons">remove</i>
           </button>
-          <input type="text" id="quantity" class="input input-sm input-bordered flex-1 w-1">
+          <input type="text" v-model="quantity" class="input input-sm input-bordered flex-1 w-1 text-center">
           <button class="flex-1 btn btn-xs btn-ghost">
             <i class="material-icons">add</i>
           </button>
@@ -50,5 +50,12 @@
 <script>
 export default {
   name: "Cart",
+  data() {
+    return {
+      menuName: "",
+      quantity: 1,
+      price: ""
+    }
+  },
 };
 </script>

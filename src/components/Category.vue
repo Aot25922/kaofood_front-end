@@ -17,7 +17,6 @@
 export default {
   name: "Category",
   emits: ["SelectCate"],
-
   computed: {
     categoryList() {
       return this.$store.state.categories;
