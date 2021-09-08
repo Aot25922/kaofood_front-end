@@ -10,11 +10,10 @@ const routes = [
     path: '/menu',
     name: 'Menu',
     component: () => import('../views/Menu.vue'),
-  },
-  {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue'),
+    children:[
+      {path : 'add' , component : () => import('../components/Add.vue')},
+      {path : 'edit' , component : () => import('../components/Edit.vue')} 
+    ]
   },
   {
     path: '/login',
@@ -27,6 +26,16 @@ const routes = [
     name: 'SignUp',
     component: () => import('../views/AccountForm.vue'),
     props: { mode: 'SignUp' }
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: () => import('../views/Contact.vue'),
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: ()=> import('../views/Cart.vue')
   },
 ]
 

@@ -9,9 +9,14 @@ module.exports = {
         light: '#F79D65',
         DEFAULT: '#F4845F',
         dark: '#F27059',
-        darker: '#F25C54'
-      }
+        darker: '#F25C54',
+        darkest: "#F14A41"
+      },
+      salmon: "#FFAB73"
     },
+    fontFamily: {
+      'writing': 'Allison, cursive'
+    }
   },
   variants: {
     extend: {},
