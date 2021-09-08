@@ -52,7 +52,6 @@
             </button>
           </div>
         </div>
-
         <!-- ส่วนของ login -->
         <div v-else class="xl:mt-20 xl:px-10 px-3 py-5">
           <div v-if="account != null">
