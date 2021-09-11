@@ -28,7 +28,6 @@ export default {
   methods: {
     addToCart(){
       this.$store.dispatch('addToCart',this.menu)
-      console.log(this.$store.state.cart);
     },
     deleteMenu(menu){
       this.$store.commit('DELETE_MENU', menu)

@@ -24,6 +24,7 @@
           <div class="mt-4 ">
             <textarea class="h-24 p-2 w-full outline-none border border-gray-light rounded focus:outline-none focus:border-gray"
                       placeholder="Your address..." v-model="signUpForm.address"/>
+            <span v-if="signUpForm.isAddressEmpty" class="text-error">Address required</span>
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.phone"
@@ -33,17 +34,23 @@
             <span v-if="signUpForm.accountPhoneExist" class="text-error">Phone already exist!</span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.email"
+            <input type="email" v-model.trim="signUpForm.email"
                    class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
                    placeholder="Email"/>
             <span v-if="signUpForm.isEmailEmpty" class="text-error">Email required</span>
             <span v-if="signUpForm.accountEmailExist" class="text-error">Email already exist!</span>
           </div>
           <div class="mt-4">
-            <input v-model="signUpForm.password"
+            <input type="password" v-model="signUpForm.password"
                    class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
                    placeholder="Password"/>
+          </div>
+          <div class="mt-4">
+            <input type="password" v-model="signUpForm.confirmPassword"
+                   class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
+                   placeholder="Confirm Password"/>
             <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
+            <span v-if="signUpForm.passwordNotSame" class="text-error">Password Not Same</span>
           </div>
           <div class="mt-10">
             <button @click="signUp" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
@@ -56,6 +63,7 @@
           </div>
           </div>
         </div>
+
         <!-- ส่วนของ login -->
         <div v-else class="xl:mt-20 xl:px-10 px-3 py-5">
           <div v-if="account != null">
@@ -88,9 +96,6 @@
 <script>
 export default {
   name: "AccountForm",
-  props: ["mode"],
-  emits: ["reload-menu"],
-  inject: ["userUrl", "account"],
   data() {
     return {
       loginForm: {
@@ -107,21 +112,17 @@ export default {
         phone: '',
         email: '',
         password: '',
+        confirmPassword: '',
         isFirstNameEmpty: false,
         isLastNameEmpty: false,
         isAddressEmpty: false,
         isPhoneEmpty: false,
         isEmailEmpty: false,
         isPasswordEmpty: false,
-      },
-      account: null,
-      checkForLogin: false,
-      checkSignUp: false,
-      emptyFirstName: false,
-      emptyLastName: false,
-      emptyPhone: false,
-      accountEmailExist: false,
-      accountPhoneExist: false
+        passwordNotSame: false,
+        accountEmailExist: false,
+        accountPhoneExist: false
+      }
     };
   },
   methods: {
@@ -148,136 +149,31 @@ export default {
       this.signUpForm.isPhoneEmpty = (this.signUpForm.phone == "") ? true : false
       this.signUpForm.isEmailEmpty = (this.signUpForm.email == "") ? true : false
       this.signUpForm.isPasswordEmpty = (this.signUpForm.password == "") ? true : false
+      this.signUpForm.passwordNotSame = (this.signUpForm.password != this.signUpForm.confirmPassword) ? true : false
     },
     async signUp() {
-      const axios = require('axios');
       this.checkSignUpForm();
       if (this.signUpForm.isFirstNameEmpty || this.signUpForm.isLastNameEmpty || this.signUpForm.isAddressEmpty
-          || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty) {return}
-          else{
-          let newAccount = JSON.stringify({
-            fname : this.signUpForm.firstName,
-            lname : this.signUpForm.lastName,
-            email : this.signUpForm.email,
-            phone : this.signUpForm.phone,
-            password : this.signUpForm.password,
-            address : this.signUpForm.address,
-            role : "Customer"
-          })
-          let data = new FormData();
-          data.append("account",newAccount)
-          let config = {
-             headers: {
-                   "Access-Control-Allow-Origin":"*",
-                },
-           }
-          try {
-            await axios.post(`${this.$store.state.backendUrl}/user/signup`,data,config
-            ).then(response => {
-            if(response.data == "accountEmailExist"){
-              console.log("accountEmailExist")
-              this.accountEmailExist = true
-            }
-            if(response.data == "accountPhoneExist"){
-              console.log("phone")
-              this.accountPhoneExist = true
-            }
-            if(response.data == "success"){
-              console.log("success")
-              this.accountEmailExist =false
-              this.accountPhoneExist=false
-            }}).catch(function (error) {console.log(error);})
-      
-          } catch (error) {
-            console.log(`Counld not get! ${error}`);
-          }
-          }
-
+          || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty ||
+          this.signUpForm.passwordNotSame) return;
+      let newAccount = JSON.stringify({
+        fname : this.signUpForm.firstName,
+        lname : this.signUpForm.lastName,
+        email : this.signUpForm.email,
+        phone : this.signUpForm.phone,
+        password : this.signUpForm.password,
+        address : this.signUpForm.address,
+        role : "Customer"
+      })
+      await this.$store.dispatch("setNewAccount", newAccount);
+      if (this.$store.state.account == 'success') {
+        this.signUpForm.accountEmailExist = false;
+        this.signUpForm.accountPhoneExist = false;
+        this.$router.push('/login');
+      }
+      this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
+      this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
     }
-    //   async signUp() {
-    //     this.checkSignUpForm();
-    //     if (!(
-    //       this.emptyFirstName &&
-    //       this.emptyLastName &&
-    //       this.emptyPhone &&
-    //       this.emptyEmail &&
-    //       this.emptyPassword
-    //     )) {
-    //       let newAccount = JSON.stringify({
-    //         email : this.email,
-    //         password : this.password,
-    //         fname : this.firstName,
-    //         lname : this.lastName,
-    //         phone : this.phone,
-    //         address : this.address,
-    //         role : "Customer"
-    //       })
-    //       let data = new FormData();
-    //       data.append("account",newAccount)
-    //       try {
-    //         const res = await fetch(`${this.userUrl}/signup`,{
-    //         method: "POST",
-    //         body: data,
-    //       });
-    //         const checkAccount = await res.text();
-    //         console.log(checkAccount)
-    //         if(checkAccount == "accountEmailExist"){
-    //           this.accountEmailExist = true
-    //         }
-    //         if(checkAccount == "accountPhoneExist"){
-    //           console.log("phone")
-    //           this.accountPhoneExist = true
-    //         }
-    //         if(checkAccount == "success"){
-    //           this.accountEmailExist =false
-    //           this.accountPhoneExist=false
-    //         }
-    //       } catch (error) {
-    //         console.log(`Counld not get! ${error}`);
-    //       }
-    //     }
-    //   },
-    //   checkSignUpForm() {
-    //     // check firstName
-    //     if (this.firstName !== "") {
-    //       this.emptyFirstName = false;
-    //     } else {
-    //       this.emptyFirstName = true;
-    //     }
-    //     // check lastName
-    //     if (this.lastName !== "") {
-    //       this.emptyLastName = false;
-    //     } else {
-    //       this.emptyLastName = true;
-    //     }
-    //     // check email
-    //     if (this.email !== "") {
-    //       this.emptyEmail = false;
-    //     } else {
-    //       this.emptyEmail = true;
-    //     }
-    //     // check password
-    //     if (this.password !== "") {
-    //       this.emptyPassword = false;
-    //     } else {
-    //       this.emptyPassword = true;
-    //     }
-    //     // check phone
-    //     if (this.phone !== "") {
-    //       this.emptyPhone = false;
-    //     } else {
-    //       this.emptyPhone = true;
-    //     }
-    //   },
-    // },
-    // mounted() {
-    //   if (localStorage.getItem("account")) {
-    //     try {
-    //       this.account = JSON.parse(localStorage.getItem("account"));
-    //     } catch (e) {
-    //       localStorage.removeItem("account");
-    //     }
-    //   }
   }
 }
 </script>
