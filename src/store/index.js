@@ -40,6 +40,11 @@ export default createStore({
         }else return add;
       });
     },
+    removeCartItem(state, item) {
+      state.cart = state.cart.filter((cartItem) => {
+        return cartItem.id != item.id;
+      });
+    },
     addNewMenu(state, item) {
       state.menus.push(item);
     }
@@ -96,12 +101,15 @@ export default createStore({
 
     addToCart({ commit }, item){
       if(this.state.cart.find(element => (element.id == item.id) ? true : false)){
-        // TODO: Put Method
         commit('updateCartItem',item);
       }else {
-        // TODO: Post Method
         commit('addCartItem', item);
       }
+      localStorage.setItem('cart',JSON.stringify(this.state.cart))
+    },
+
+    removeCart({ commit }, item){
+      commit('removeCartItem', item);
       localStorage.setItem('cart',JSON.stringify(this.state.cart))
     },
 
@@ -119,8 +127,26 @@ export default createStore({
       }
     },
 
-    setNewAccount(){
-      return "test1"
+    async setNewAccount({ commit }, newAccount){
+      let data = new FormData();
+      data.append("account",newAccount)
+      let config = {
+        headers: {
+          "Access-Control-Allow-Origin":"*",
+        },
+      }
+      await axios.post(`${this.state.backendUrl}/user/signup`,data,config
+      ).then(response => {
+        if(response.data == "accountEmailExist"){
+          commit('SET_ACCOUNT', "accountEmailExist")
+        }
+        if(response.data == "accountPhoneExist"){
+          commit('SET_ACCOUNT', "accountPhoneExist")
+        }
+        if(response.data == "success"){
+          commit('SET_ACCOUNT', "success")
+        }
+      }).catch(function (error) {console.log(error);})
     }
   },
   getters:{},
