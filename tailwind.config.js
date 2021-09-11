@@ -1,4 +1,5 @@
 module.exports = {
+  mode: 'jit',
   purge: { content: ['./public/**/*.html', './src/**/*.vue'] },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -11,8 +12,23 @@ module.exports = {
         dark: '#F27059',
         darker: '#F25C54',
         darkest: "#F14A41"
-      }
+      },
+      black: "#000000",
+      white: "#FFFFFF",
+      red: "#B91C1C",
+      blue: {
+        light: "#3B82F6",
+        DEFAULT: "#1D4ED8"
+      },
+      gray: {
+        light: "#6B7280",
+        DEFAULT: "#9CA3AF"
+      },
+      salmon: "#ffd1b3"
     },
+    fontFamily: {
+      'writing': 'Allison, cursive'
+    }
   },
   variants: {
     extend: {},

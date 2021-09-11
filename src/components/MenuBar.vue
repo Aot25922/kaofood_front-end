@@ -41,7 +41,6 @@
           <router-link to="/contact" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Contact</router-link>
         </div>
       </div>
-
       <div class="md:flex ml-auto mx-2">
         <!-- Search -->
         <button class=" btn btn-square btn-ghost">
@@ -54,7 +53,6 @@
             <i class="material-icons"> shopping_cart </i>
           </button>
         </router-link>
-
         <!-- Account: Toggle when ipad to laptop -->
         <!-- Logout&Ordering -->
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
