@@ -10,7 +10,7 @@
         </h2>
         <div v-if="account!=null&&account.role=='Admin'" class="flex flex-row">
           <button class="btn btn-warning lg:text-base text-sm mx-1 flex-1" @click="$emit('edit-food', menu)">Edit</button>
-          <button class="btn btn-error lg:text-base text-sm mx-1 flex-1" @click="deleteMenu">Delete</button>
+          <button class="btn btn-error lg:text-base text-sm mx-1 flex-1" @click="deleteMenu(index)">Delete</button>
         </div>
         <div class="justify-center card-actions" v-else>
           <button @click="addToCart" class="btn btn-secondary w-full uppercase xl:text-xl lg:text-lg md:text-base text-sm">Add to Cart

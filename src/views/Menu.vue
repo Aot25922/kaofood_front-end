@@ -1,6 +1,6 @@
 <template>
   <div id="menu">
-    <!-- !!In pc screen order should have 3 cols not 4cols in admin -->
+    <!-- !! In pc screen order should have 3 cols not 4cols in admin -->
     <!--Option for edit menu to admin-->
     <div v-if="this.$store.state.account!=null" class="md:mt-24 mt-20">
       <div class="flex flex-row">
