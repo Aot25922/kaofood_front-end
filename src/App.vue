@@ -2,7 +2,7 @@
   <div id="app">
     <menu-bar />
     <router-view />
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   name: "App",
   components: { MenuBar, Footer },
   beforeCreate() {
-    this.$store.dispatch("fetchLocalStoeage");
+    this.$store.dispatch("fetchLocalStorage");
   }
 };
 </script>

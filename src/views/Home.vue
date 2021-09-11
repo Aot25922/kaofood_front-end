@@ -1,7 +1,7 @@
 <template>
   <intro-concept class="mt-16"/>
   <about class="my-5"/>
-  <!-- Home page: Category -->
+  <!-- TODO:Home page: Category -->
   <div>
 
   </div>
@@ -14,11 +14,5 @@ import About from '@/components/About.vue'
 export default {
   name: "Home",
   components: {IntroConcept, About},
-  data() {
-    return {
-      cateId: null,
-      menuList: []
-    }
-  },
 }
 </script>

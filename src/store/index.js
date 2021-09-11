@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    backendUrl: "https://kaofood.ddns.net/api",
+    backendUrl: "https://kaofood.works/api",
     // backendUrl: "http://localhost:8080",
     account: null,
     menus: [],
@@ -71,7 +71,6 @@ export default createStore({
 
       if(localStorage.getItem("cart")){
         try {
-          // bugแดก แก้ข้อมูลที่ load จาก LocalStorage ไม่ได้
           commit('SET_CART',JSON.parse(localStorage.getItem("cart")));
         } catch (e) {
           localStorage.removeItem("cart");
@@ -83,6 +82,7 @@ export default createStore({
     addMenu({commit}, item){
       if(this.state.menus.find(element => (element.id == item.id) ? true : false)){
         commit('updateMenuItem', item);
+
       } else {
         commit('addMenuItem', item);
       }
@@ -90,14 +90,16 @@ export default createStore({
     },
 
     deleteMenu({commit}, id){
-      this.$store.delete('https://kaofood.ddns.net/api/' + id).then(
+      this.$store.delete(`${this.state.backendUrl}/${id}`).then(
         () => { commit('DELETE_MENU', id) })
     },
 
     addToCart({ commit }, item){
       if(this.state.cart.find(element => (element.id == item.id) ? true : false)){
+        // TODO: Put Method
         commit('updateCartItem',item);
       }else {
+        // TODO: Post Method
         commit('addCartItem', item);
       }
       localStorage.setItem('cart',JSON.stringify(this.state.cart))
@@ -115,6 +117,10 @@ export default createStore({
             })
         localStorage.setItem('account', JSON.stringify(this.state.account))
       }
+    },
+
+    setNewAccount(){
+      return "test1"
     }
   },
   getters:{},

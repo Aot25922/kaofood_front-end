@@ -1,37 +1,39 @@
 <template>
-  <div id="form" class="p-5">
-      <form @submit.prevent="submitForm()" class="bg-salmon card p-5">
-        <div class="mt-4 flex flex-col">
-          <label for="menuName" class="font-semibold">Menu name</label>
-          <input v-model.trim="menu.name" class="h-12 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
+  <div id="form" class="lg:px-16 md:px-10 py-5 px-6">
+      <form @submit.prevent="submitForm()" class="bg-salmon card p-5 md:my-5 md:grid md:grid-cols-2">
+        <div class="mt-4 flex flex-col md:p-2">
+          <label for="menuName" class="font-semibold text-lg pb-2">Menu name</label>
+          <input v-model.trim="menu.name" class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray" placeholder="Menu Name"/>
           <span v-if="!validateName" @blur="checkName" class="text-error">Name required</span>
         </div>
-        <div class="mt-4">
-          <label for="category" class="font-semibold">Category</label>
-          <select id="category" v-model="menu.category" name="category">
-           <option value="" disabled select>Please select one</option>
+        <div class="mt-4 flex flex-col md:p-2">
+          <label for="category" class="font-semibold text-lg pb-2">Category</label>
+          <select id="category" v-model="menu.category" name="category" class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray">
+           <option value="" disabled select class="font-semibold">-- Please select one --</option>
            <option :value="category" v-for="category in this.$store.state.categories" :key="category.id">
                 {{ category.name }}
            </option>
           </select>
           <span v-if="!validateCategory" @blur="checkCategory" class="text-error">Category required</span>
         </div>
-        <div class="mt-4">
-          <input v-model="menu.price" class="h-12 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray-600" placeholder="Price"/>
+        <div class="md:col-span-2 md:p-2 mt-4 flex flex-col">
+          <label for="category" class="font-semibold text-lg pb-2">Price</label>
+          <input v-model="menu.price" class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray md:w-1/2" placeholder="Price"/>
           <span v-if="!validatePrice" @blur="checkPrice" class="text-error">Price required</span>
         </div>
-        <div class="mt-4">
-          <textarea v-model="menu.description" class="h-12 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray-600" placeholder="Description"/>
+        <div class="md:col-span-2 md:p-2 mt-4 flex flex-col">
+          <label for="description" class="font-semibold text-lg pb-2">Menu Description</label>
+          <textarea v-model="menu.description" class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray" placeholder="Description"/>
           <span v-if="!validateDescript" @blur="checkDescript" class="text-error">Description required</span>
         </div>
-        <div class="mt-4">
+        <div class="md:col-span-2 md:p-2 mt-4 flex flex-col">
           <img id="output" width="200">
           <input type="file" name="img" accept="image" id="file" @change="onFileChange($event)"/>
-          <span v-if="!validateFile" class="text-error">Description required</span>
+          <span v-if="!validateFile" class="text-error">Image required</span>
         </div>
-        <div class="flex flex-row">
-          <div class="btn">Save Form</div>
-          <div class="btn btn-primary">Cancel</div>
+        <div class="md:col-span-2 md:p-2 md:mr-0 flex flex-row mx-auto pt-5">
+          <button type="submit" class="btn md:mx-5 mx-2">Save Form</button>
+          <button class="btn btn-primary md:mx-5 mx-2">Cancel</button>
         </div>
       </form>
   </div>
@@ -58,7 +60,8 @@ export default {
         validateName: true,
         validatePrice: true,
         validateDescript: true,
-        validateCategory: true
+        validateCategory: true,
+        validateFile: true
       }
     },
     methods:{
@@ -102,7 +105,7 @@ export default {
         }
       },
       checkPrice() {
-        if (this.price == "") {
+        if (this.price == "" && this.price < 0) {
           this.validatePrice = false;
         } else {
           this.validatePrice = true;

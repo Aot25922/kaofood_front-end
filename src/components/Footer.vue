@@ -4,10 +4,8 @@
       <!-- Kao Food -->
       <div class="md:flex-1 p-1 lg:text-center col-span-1">
         <h1 class="xl:mr-28 lg:mr-20 xl:text-xl md:text-lg uppercase font-bold">Kaofood</h1>
-        <span class="text-gray-400">
           <hr class="xl:w-1/2 w-full lg:mx-auto"/>
-          <p class="xl:ml-24 lg:ml-16 lg:text-center text-right xl:text-sm md:text-xs text-2xs">Capitalism Restaurant</p>
-        </span>
+          <p class="xl:ml-24 lg:ml-16 lg:text-center text-right xl:text-sm md:text-xs text-2xs text-gray">Capitalism Restaurant</p>
         <!-- <p class="py-1"><i class="material-icons"> location_on </i> 99 Bei Chang Jie, Xicheng Qu, Beijing Shi, China</p> -->
         <p class="pt-1 lg:text-base md:text-sm text-xs"><i class="material-icons">email</i> kaofood@mail.com</p>
         <p class="pt-1 lg:text-base md:text-sm text-xs"><i class="material-icons">call</i> +86 112 2021 2564</p>
