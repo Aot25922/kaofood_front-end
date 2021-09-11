@@ -1,7 +1,7 @@
 <template>
   <div id="form">
       <!-- form กรอกข้อมูล เพิ่ม แก้ไข สำหรับ admin -->
-      <form @submit.prevent="submitForm()" class="bg-fire-lighter">
+      <form @submit.prevent="submitform()" class="bg-fire-lighter">
         <div class="mt-4">
           <input v-model.trim="menu.name" class="h-12 px-2 w-full outline-none border-b rounded focus:outline-none focus:border-gray-600" placeholder="Menu Name"/>
           <span v-if="!validateName" @blur="checkName" class="text-error">Name required</span>
@@ -26,10 +26,10 @@
         <div class="mt-4">
           <img id="output" width="200">
           <input type="file" name="img" accept="image" id="file" @change="onFileChange($event)"/>
-          <span v-if="!validateFile" class="text-error">Description required</span>
+          <span v-if="!validateFile" class="text-error">Picture required</span>
         </div>
         <div class="flex flex-row">
-          <div class="btn">Save Form</div>
+          <div class="btn"><button>Save Form</button></div>
           <div class="btn btn-primary">Cancel</div>
         </div>
       </form>
@@ -57,7 +57,8 @@ export default {
         validateName: true,
         validatePrice: true,
         validateDescript: true,
-        validateCategory: true
+        validateCategory: true,
+        validateFile : true
       }
     },
     methods:{
@@ -67,48 +68,53 @@ export default {
         this.checkDescript();
         this.checkCategory();
         this.checkFile();
-        if( this.validateName && this.validatePrice && this.validateDescript && this.validateCategory ){
+         if( this.validateName && this.validatePrice && this.validateDescript && this.validateCategory ){
           if(this.menuToEditProps!=null) {
             this.editMenu();
+            this.reset();
           } else {
             this.addNewMenu();
+            this.reset();
           }
-        } else {
-          return;
-        }
+         } else {
+           return;
+         }
+      },
+      reset(){
+         this.menu.name = ""
+         this.menu.price = 0
+         this.menu.description = ""
+         this.menu.category = null
+         this.menu.image = ""
       },
       checkName() {
-      if (this.productName == "") {
+      if (this.menu.name == "") {
         this.validateName = false;
       }
       else {
-        for(let i =0 ; i<this.productList.length;i++){
-          if(this.productName==this.productList[i].productName){
-            if(!this.edit){
-            this.validateName = false;
-            return;
-            }
-          }
-        }
-        this.validateName = true;
+        this.$store.state.menus.find(element => {if(element.name == this.menu.name){
+          this.validateName = false;
+        }else{
+          this.validateName = true;
+        }})
         }
       },
       checkDescript() {
-        if (this.descript == "") {
+        if (this.menu.description == "") {
           this.validateDescript = false;
         } else {
           this.validateDescript = true;
         }
       },
       checkPrice() {
-        if (this.price == "") {
+        if (this.menu.price == "") {
           this.validatePrice = false;
         } else {
           this.validatePrice = true;
         }
       },
       checkCategory() {
-        if (this.category == null) {
+        if (this.menu.category == null) {
           this.validateCategory = false;
         } else {
           this.validateCategory = true;
@@ -116,10 +122,6 @@ export default {
       },
       checkFile() {
         if ( this.file == null) {
-          if(this.edit){
-            this.validateFile = true;
-            return;
-          }
           this.validateFile = false;
         } else {
           this.validateFile = true;
@@ -131,9 +133,6 @@ export default {
          const image = document.getElementById("output")
          image.src = this.$store.state.backendUrl+this.menuToEditProps.image
       }
-      else{
-        console.log(this.$store.state.categories)
-          }
       },
       async addNewMenu(){
          const axios = require('axios');
@@ -141,13 +140,17 @@ export default {
          let data = new FormData()
          data.append("menu",newMenu)
          data.append("multipartFile", this.file);
-         let config = {
-             headers: {
-                   "Access-Control-Allow-Origin":"*",
-                },
-           }
+//          let config = {
+//              headers: {
+//                   'Access-Control-Allow-Origin': 'http://localhost:80',
+// 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+// 'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
+// 'Access-Control-Max-Age': '86400',
+// 'Access-Control-Allow-Credentials': 'true'
+//                 },
+//            }
          try{
-           await axios.post(`${this.$store.state.backendUrl}/menu/add`,data,config)
+           await axios.post(`${this.$store.state.backendUrl}menu/add`,data)
          }catch(error){
             console.log(`Counld not get! ${error}`);
           }
@@ -157,87 +160,6 @@ export default {
       image.src = URL.createObjectURL(event.target.files[0]);
       this.file = event.target.files[0];
     },
-    //   async getCategoryList(){
-    //     try{
-    //       const res = await fetch(this.categoryUrl);
-    //       const data = res.json();
-    //       return data;
-    //     } catch(error) {
-    //       console.log(`Counld not get! ${error}`);
-    //     }
-    //   },
-    //   async getMenuList(){
-    //     try{
-    //       const res = await fetch(this.menuUrl);
-    //       const data = res.json();
-    //       return data;
-    //     } catch(error) {
-    //       console.log(`Counld not get! ${error}`);
-    //     }
-    //   },
-    //   async addNewMenu(){
-    //     let menu = JSON.stringify({
-    //       menuName: this.menuName,
-    //       price: this.price,
-    //       descript: this.descript,
-    //       img: this.img,
-    //       category: this.category
-    //     })
-    //     let data = new FormData();
-    //     data.append("menu", menu);
-    //     data.append("multipathFile". this.file)
-    //     try{
-    //       await fetch(this.menuUrl, {
-    //         method: "POST",
-    //         body: data,
-    //       });
-    //     } catch(error){
-    //       console.log(error)
-    //     }
-    //     this.cancel()
-    //   },
-    //   async editMenu(){
-    //     let editOnlyImg;
-    //     let menu = JSON.stringify({
-    //       menuName: this.menuName,
-    //       price: this.price,
-    //       descript: this.descript,
-    //       img: this.img,
-    //       category: this.category
-    //     })
-    //     let data = new FormData();
-    //     let editImg = new FormData();
-    //     data.append("menu", menu)
-    //     try {
-    //     await fetch(
-    //       `${this.menuUrl}/${this.productToEdit.productId}`,
-    //       {
-    //         method: "PUT",
-    //         body: data,
-    //       }
-    //     );
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    //   if (this.file !== null) {
-    //     editImg.append("multipartFile", this.file);
-    //     editOnlyImg=true;
-    //     try {
-    //       await fetch(
-    //         `${this.productUrl}/image/${this.menuToEdit.menuId}`,
-    //         {
-    //           method: "PUT",
-    //           body: editImg,
-    //         }
-    //       );
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   } 
-    //   this.$emit("reload-data",editOnlyImg);
-    //   this.cancel();
-    // },
-      
   },
   mounted(){
     this.setFoodToEdit()
