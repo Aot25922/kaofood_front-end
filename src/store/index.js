@@ -71,7 +71,6 @@ export default createStore({
 
       if(localStorage.getItem("cart")){
         try {
-          // TODO:bugแดก แก้ข้อมูลที่ load จาก LocalStorage ไม่ได้
           commit('SET_CART',JSON.parse(localStorage.getItem("cart")));
         } catch (e) {
           localStorage.removeItem("cart");
@@ -118,6 +117,10 @@ export default createStore({
             })
         localStorage.setItem('account', JSON.stringify(this.state.account))
       }
+    },
+
+    setNewAccount(){
+      return "test1"
     }
   },
   getters:{},
