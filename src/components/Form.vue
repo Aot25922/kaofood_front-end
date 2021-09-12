@@ -1,6 +1,6 @@
 <template>
   <div id="form" class="lg:px-16 md:px-10 py-5 px-6">
-      <form @submit.prevent="submitForm()" class="bg-salmon card p-5 md:my-5 md:grid md:grid-cols-2">
+      <form @submit.prevent="submitform()" class="bg-salmon card p-5 md:my-5 md:grid md:grid-cols-2">
         <div class="mt-4 flex flex-col md:p-2">
           <label for="menuName" class="font-semibold text-lg pb-2">Menu name</label>
           <input v-model.trim="menu.name" class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray" placeholder="Menu Name"/>
@@ -143,17 +143,8 @@ export default {
          let data = new FormData()
          data.append("menu",newMenu)
          data.append("multipartFile", this.file);
-//          let config = {
-//              headers: {
-//                   'Access-Control-Allow-Origin': 'http://localhost:80',
-// 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-// 'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-// 'Access-Control-Max-Age': '86400',
-// 'Access-Control-Allow-Credentials': 'true'
-//                 },
-//            }
          try{
-           await axios.post(`${this.$store.state.backendUrl}menu/add`,data)
+           await axios.post(`${this.$store.state.backendUrl}/menu/add`,data)
          }catch(error){
             console.log(`Counld not get! ${error}`);
           }
