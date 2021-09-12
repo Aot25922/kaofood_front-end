@@ -30,7 +30,7 @@ export default {
       this.$store.dispatch('addToCart',this.menu)
     },
     deleteMenu(menu){
-      this.$store.commit('DELETE_MENU', menu)
+      this.$store.commit('DELETE_MENU', menu.id)
     }
   },
   computed: {

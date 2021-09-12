@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <menu-bar />
-    <router-view />
+    <router-view class="lg:h-screen"/>
     <Footer/>
   </div>
 </template>
