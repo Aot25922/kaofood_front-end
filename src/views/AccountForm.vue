@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-fire-lightest px-7 py-14">
+  <div class="bg-fire-lightest px-7 py-12">
     <div class="lg:grid lg:grid-cols-3 lg:mt-44">
       <img src="../assets/logo.png" class="lg:col-span-1 lg:m-auto md:mt-16 my-10 mx-auto lg:w-3/4 md:w-1/4 w-1/3"/>
       <div
@@ -96,6 +96,7 @@
 <script>
 export default {
   name: "AccountForm",
+  props: ['mode'],
   data() {
     return {
       loginForm: {

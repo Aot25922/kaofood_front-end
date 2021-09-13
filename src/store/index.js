@@ -81,7 +81,7 @@ export default createStore({
           localStorage.removeItem("cart");
         }
       }
-      console.log("Fetch LocalStoeage");
+      console.log("Fetch LocalStorage");
     },
 
     addMenu({commit}, item){
