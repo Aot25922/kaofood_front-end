@@ -1,6 +1,6 @@
 <template>
   <div id="form" class="lg:px-16 md:px-10 py-5 px-6">
-      <form @submit.prevent="submitForm()" class="bg-salmon card p-5 md:my-5 md:grid md:grid-cols-2">
+      <form @submit.prevent="submitform()" class="bg-salmon card p-5 md:my-5 md:grid md:grid-cols-2">
         <div class="mt-4 flex flex-col md:p-2">
           <label for="menuName" class="font-semibold text-lg pb-2">Menu name</label>
           <input v-model.trim="menu.name" class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray" placeholder="Menu Name"/>
@@ -32,9 +32,8 @@
           <span v-if="!validateFile" class="text-error">Image required</span>
         </div>
         <div class="md:col-span-2 md:p-2 md:mr-0 flex flex-row mx-auto pt-5">
-          <button type="submit" class="btn md:mx-5 mx-2">Save Form</button>
-          <!-- TODO: Must v-if cancel of edit menu -->
-          <button @click="reset" class="btn btn-primary md:mx-5 mx-2">Cancel</button>
+          <button type="submit" class="btn md:mx-5 mx-2" >Save Form</button>
+          <button class="btn btn-primary md:mx-5 mx-2" @click="$emit('cancel-form')">Cancel</button>
         </div>
       </form>
   </div>
@@ -43,6 +42,7 @@
 <script>
 export default {
     name: "Form",
+    emits:['cancel-form'],
     props:{
       isEdit: Boolean,
       menuToEditProps: null,
@@ -76,7 +76,7 @@ export default {
          if( this.validateName && this.validatePrice && this.validateDescript && this.validateCategory ){
           if(this.menuToEditProps!=null) {
             this.editMenu();
-            this.reset();
+            this.$emit('cancel-form')
           } else {
             this.addNewMenu();
             this.reset();
@@ -91,18 +91,17 @@ export default {
          this.menu.description = ""
          this.menu.category = null
          this.menu.image = ""
+         this.file = null
+         var image = document.getElementById("output");
+         image.src = "";
       },
       checkName() {
       if (this.menu.name == "") {
         this.validateName = false;
+      }else{
+        this.validateName = true
       }
-      else {
-        this.$store.state.menus.find(element => {if(element.name == this.menu.name){
-          this.validateName = false;
-        }else{
-          this.validateName = true;
-        }})
-        }
+      
       },
       checkDescript() {
         if (this.menu.description == "") {
@@ -137,40 +136,55 @@ export default {
         this.menu = this.menuToEditProps
          const image = document.getElementById("output")
          image.src = this.$store.state.backendUrl+this.menuToEditProps.image
+
+      }
+      else{
+        console.log("error")
       }
       },
       async addNewMenu(){
          const axios = require('axios');
          let newMenu = JSON.stringify(this.menu)
          let data = new FormData()
-         data.append("menu",newMenu)
+         data.append("menu",newMenu)      
          data.append("multipartFile", this.file);
-//          let config = {
-//              headers: {
-//                   'Access-Control-Allow-Origin': 'http://localhost:80',
-// 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-// 'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
-// 'Access-Control-Max-Age': '86400',
-// 'Access-Control-Allow-Credentials': 'true'
-//                 },
-//            }
          try{
-           await axios.post(`${this.$store.state.backendUrl}menu/add`,data)
+           await axios.post(`${this.$store.state.backendUrl}/menu/add`,data)
          }catch(error){
             console.log(`Counld not get! ${error}`);
           }
+          alert(JSON.parse(newMenu).name+" add to menu")
       },
       onFileChange(event) {
       var image = document.getElementById("output");
       image.src = URL.createObjectURL(event.target.files[0]);
       this.file = event.target.files[0];
+    },
+    async editMenu(){
+      const axios = require('axios');
+      console.log(this.menu)
+      let editMenu = JSON.stringify(this.menu)
+      let data = new FormData()
+      data.append("menu",editMenu)
+      data.append("multipartFile", this.file);
+      try{
+        await axios.put(`${this.$store.state.backendUrl}/menu/edit`,data)
+      }catch(error){
+        console.log(error)
+      }
+      if(this.file!=null){
+        this.$router.go(0)
+      }
     }
   },
+  watch : {
+    menuToEditProps : function() {
+           this.setFoodToEdit();
+    }
+  }
+  ,
   mounted(){
     this.setFoodToEdit()
   },
-  updated(){
-    this.setFoodToEdit()
-  }
 }
 </script>

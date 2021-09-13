@@ -1,10 +1,12 @@
 <template>
-  <div id="edit">
-    <edit-form v-if="showForm" :menuToEditProps="menu"/>
+  <div id="edit" >
+    <edit-form v-if="showForm" :menuToEditProps="menu" @cancel-form = "showForm=false" />
+    <div v-else>
    <category @SelectCate="selectCate"/>
      <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold">Our Menu</h1>
      <div class="xl:grid-rows-none lg:grid lg:grid-cols-4 lg:grid-rows-3 md:grid md:grid-cols-2 md:grid-rows-2 sm:flex sm:flex-row">
-      <food-list class="card p-2 sm:flex-1" v-for="menu in menuFilterList" :menu="menu" :key="menu.id" @edit-food="showEditForm"/>
+      <food-list  class="card p-2 sm:flex-1" v-for="inmenu in menuFilterList" :menu="inmenu" :key="inmenu.id"  @edit-food="showEditForm"/>
+    </div>
     </div>
   </div>
 </template>
@@ -20,7 +22,7 @@ export default {
     return {
       cateId: null,
       showForm:false,
-      menu : null
+      menu : null,
     };
   },
   methods: {
