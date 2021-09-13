@@ -42,7 +42,7 @@
       </div>
       <div class="md:col-span-2 md:p-2 md:mr-0 flex flex-row mx-auto pt-5">
         <button type="submit" class="btn md:mx-5 mx-2">Save Form</button>
-        <button class="btn btn-primary md:mx-5 mx-2" @click="$router.go(-1)">Cancel</button>
+        <button class="btn btn-primary md:mx-5 mx-2" @click="$router.push('/menu')">Cancel</button>
       </div>
     </form>
 
@@ -72,7 +72,7 @@ export default {
   methods: {
     submitform() {
       this.checkForm();
-      if (!this.validateName && !this.validatePrice && !this.validateDescript && !this.validateCategory) return;
+      if (!this.validateName || !this.validatePrice || !this.validateDescript || !this.validateCategory) return;
       if (this.$route.params.id != null) this.editMenu();
       if (this.$route.params.id == null) this.addNewMenu();
     },
