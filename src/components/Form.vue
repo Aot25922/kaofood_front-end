@@ -33,7 +33,8 @@
         </div>
         <div class="md:col-span-2 md:p-2 md:mr-0 flex flex-row mx-auto pt-5">
           <button type="submit" class="btn md:mx-5 mx-2">Save Form</button>
-          <button class="btn btn-primary md:mx-5 mx-2">Cancel</button>
+          <!-- TODO: Must v-if cancel of edit menu -->
+          <button @click="reset" class="btn btn-primary md:mx-5 mx-2">Cancel</button>
         </div>
       </form>
   </div>
@@ -56,6 +57,7 @@ export default {
            category : null,
            image : ""
         },
+        edit: this.isEdit,
         file: null,
         validateName: true,
         validatePrice: true,
@@ -162,13 +164,13 @@ export default {
       var image = document.getElementById("output");
       image.src = URL.createObjectURL(event.target.files[0]);
       this.file = event.target.files[0];
-    },
+    }
   },
   mounted(){
     this.setFoodToEdit()
-},
-updated(){
+  },
+  updated(){
     this.setFoodToEdit()
-}
+  }
 }
 </script>
