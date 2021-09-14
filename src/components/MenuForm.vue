@@ -1,10 +1,16 @@
 <template>
-  <div id="form" class="lg:px-16 md:px-10 py-5 px-6">
-    <div v-if="account==null||account.role!='Admin'">
-      ไม่มีสิทธ์
+  <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning">
+    <!-- No permission display -->
+    <div v-if="account==null||account.role!='Admin'" class="mt-20 flex flex-row">
+      <div class="flex-1 text-yellow-500 font-bold">
+        <svg svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current"> 
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>                         
+        </svg> 
+        <span class="flex-1">You haven't permission to get this page!</span>
+      </div>
     </div>
 
-    <form v-else @submit.prevent="submitform()" class="bg-salmon card p-5 md:my-5 md:grid md:grid-cols-2">
+    <form v-else @submit.prevent="submitform()" class="bg-salmon card p-5 lg:mt-32 md:mt-24 mt-20 mb-5 md:grid md:grid-cols-2">
       <div class="mt-4 flex flex-col md:p-2">
         <label for="menuName" class="font-semibold text-lg pb-2">Menu name</label>
         <input v-model.trim="form.name"

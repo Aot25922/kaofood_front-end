@@ -1,12 +1,12 @@
 <template>
-  <div id="FoodList" class="md:mx-3">
+  <div id="FoodList" class="md:mx-3 m-2 card bordered">
     <div class="relative">
       <img id="img-id" class="rounded w-full xl:h-80 h-56 object-cover"
            :src=" this.$store.state.backendUrl+this.menu.image" :alt="menu.name"/>
-      <span class="font-medium absolute bottom-0 left-0 rounded bg-primary text-white md:text-2xl text-xl p-1">{{menu.price }} ฿</span>
+      <span class="font-medium absolute bottom-0 left-0 rounded bg-primary text-white xl:text-xl md:text-lg p-1">{{menu.price }} ฿</span>
     </div>
     <div class="card-body xl:p-8 lg:p-5">
-      <h2 class="card-title xl:text-xl lg:text-lg">{{ menu.name }}
+      <h2 class="card-title lg:text-lg">{{ menu.name }}
         <!-- <div class="badge mx-2 badge-secondary lg:text-xl md:text-lg lg:py-4 md:p-3 ">NEW</div> -->
       </h2>
       <div v-if="account!=null&&account.role=='Admin'" class="flex flex-row">

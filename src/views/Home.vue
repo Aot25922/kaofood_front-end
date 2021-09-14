@@ -1,19 +1,13 @@
 <template>
-  <div id="introConcept">
-    <div class="text-center relative text-white">
-      <img src="../assets/header.jpg" alt="Header image" class="filter brightness-50 md:w-full md:h-full h-96 md:object-none object-cover" />
-      <div class="font-medium absolute transform inset-0 top-1/4">
-        <p class="xl:text-8xl md:text-5xl sm:text-4xl text-2xl font-bold uppercase">Kaofood Restaurant</p>
-        <p class="xl:text-3xl md:text-2xl sm:text-base text-xs xl:my-10 sm:mt-5 mt-1 md:px-5 px-2">If you're hungry that's your business not us. We have many menus but we don't have "Anything will do".</p>
-        <router-link to="/menu" class="mt-5 btn btn-accent md:btn-lg sm:btn-md btn-sm xl:text-3xl md:text-2xl sm:text-lg text-xs">Let's Eat!</router-link>
-      </div>
+  <div class="text-center relative text-white md:pt-3 mt-16">
+    <img src="../assets/header.jpg" alt="Header image" class="filter brightness-50 md:w-full md:h-full h-96 md:object-none object-cover" />
+    <div class="absolute transform inset-0 top-1/4">
+      <p class="lg:text-6xl md:text-4xl text-2xl font-bold uppercase">Kaofood Restaurant</p>
+      <p class="xl:text-2xl lg:text-lg md:text-base text-2xs xl:my-16 lg:my-10 my-5 md:px-10 px-5 font-medium">If you're hungry that's your business not us. We have many menus but we don't have "Anything will do".</p>
+      <router-link to="/menu" class="btn btn-accent md:btn-lg btn-sm xl:text-xl lg:text-lg md:text-base text-xs">Let's Eat!</router-link>
     </div>
   </div>
-
   <about class="my-5"/>
-  <div>
-
-  </div>
 </template>
 
 <script>

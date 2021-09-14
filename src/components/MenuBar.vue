@@ -36,9 +36,9 @@
       <div class="px-4">
         <img src="../assets/logo.png" class="lg:w-20 md:w-14 w-0 lg:pr-2 md:pr-1 md:py-1"/>
         <div class="md:items-stretch hidden md:block">
-          <router-link to="/" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Home</router-link>
-          <router-link to="/menu" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Menu</router-link>
-          <router-link to="/contact" class="btn btn-ghost btn-sm rounded-btn md:text-xl">Contact</router-link>
+          <router-link to="/" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Home</router-link>
+          <router-link to="/menu" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Menu</router-link>
+          <router-link to="/contact" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Contact</router-link>
         </div>
       </div>
       <div class="md:flex ml-auto mx-2">

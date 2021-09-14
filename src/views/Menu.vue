@@ -1,12 +1,17 @@
 <template>
   <div id="menu">
-    <!-- !! In pc screen order should have 3 cols not 4cols in admin -->
-
     <!--FoodList with Loop-->
     <category @SelectCate="selectCate" class="lg:mt-24 md:mt-20 mt-16"/>
     <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold">Our Menu</h1>
     <div class="xl:grid-rows-none lg:grid lg:grid-cols-3 lg:grid-rows-3 md:px-6 px-3 md:grid md:grid-cols-2 md:grid-rows-2 sm:flex sm:flex-row">
-      <router-link to="/menu/add" v-if="this.$store.state.account!=null" class="card p-2 sm:flex-1">Add นะจะ</router-link>
+      <router-link to="/menu/add" v-if="this.$store.state.account!=null" class="md:mx-3 md:m-2">
+        <!-- Appear when Phone -->
+        <div class="md:hidden btn btn-accent uppercase w-full">Add New Menu</div>
+        <!-- For MD to XL -->
+        <div class="md:flex hidden card bordered h-full justify-center">
+           <i class="fas fa-plus-circle text-huge mx-auto fill-current text-green"></i>
+        </div>
+      </router-link>
       <food-list class="card p-2 sm:flex-1" v-for="menu in menuFilterList" :menu="menu" :key="menu.id"/>
     </div>
   </div>
