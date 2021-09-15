@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="select-none">
     <menu-bar />
     <router-view />
     <Footer/>

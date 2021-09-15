@@ -1,6 +1,5 @@
 module.exports = {
-  mode: 'jit',
-  purge: { content: ['./public/**/*.html', './src/**/*.vue'] },
+  purge: { content: [ './public/**/*.html','./src/**/*.vue', ] },
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
@@ -21,11 +20,17 @@ module.exports = {
         DEFAULT: "#1D4ED8"
       },
       gray: {
-        light: "#6B7280",
-        DEFAULT: "#9CA3AF"
+        DEFAULT: "#9CA3AF",
+        dark: "#6B7280",
       },
-      salmon: "#ffd1b3"
+      salmon: "#ffd1b3",
+      yellow: "##F59E0B",
+      green: "#10B981"
     },
+    // !If fill this config other text size won't work 
+    // fontSize:{
+    //   'huge': ['10rem', '1']
+    // },
     fontFamily: {
       'writing': 'Allison, cursive'
     }

@@ -1,9 +1,8 @@
 <template>
-  <div class="bg-fire-lightest px-7 py-14">
-    <div class="lg:grid lg:grid-cols-3 lg:mt-44">
-      <img src="../assets/logo.png" class="lg:col-span-1 lg:m-auto md:mt-16 my-10 mx-auto lg:w-3/4 md:w-1/4 w-1/3"/>
-      <div
-          class="lg:col-span-2 lg:w-full xl:max-w-screen-lg max-w-xl mx-auto bg-white p-3 rounded shadow border-8 border-fire-darker">
+  <div class="bg-fire-lightest px-7 py-12">
+    <div class="lg:grid lg:grid-cols-3 lg:mt-32 lg:mb-12">
+      <img src="../assets/logo.png" class="lg:col-span-1 xl:p-16 lg:p-5 lg:m-auto md:mt-16 my-10 mx-auto lg:w-3/4 md:w-1/4 w-1/3"/>
+      <div class="lg:col-span-2 lg:w-full xl:max-w-screen-lg max-w-xl mx-auto bg-white md:px-10 p-3 rounded shadow border-8 border-fire-darker">
         <!-- ส่วนของ Sign Up -->
         <div v-if="mode == 'SignUp'" class="w-full p-3 px-6 py-10">
           <div class="text-center">
@@ -11,43 +10,43 @@
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.firstName"
-                   class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
+                   class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Firstname"/>
             <span v-if="signUpForm.isFirstNameEmpty" class="text-error">Firstname required</span>
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.lastName"
-                   class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
+                   class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Lastname"/>
             <span v-if="signUpForm.isLastNameEmpty" class="text-error">Lastname required</span>
           </div>
           <div class="mt-4 ">
-            <textarea class="h-24 p-2 w-full outline-none border border-gray-light rounded focus:outline-none focus:border-gray"
+            <textarea class="h-24 p-2 w-full outline-none border border-gray-dark rounded focus:outline-none focus:border-gray"
                       placeholder="Your address..." v-model="signUpForm.address"/>
             <span v-if="signUpForm.isAddressEmpty" class="text-error">Address required</span>
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.phone"
-                   class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
+                   class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Phone"/>
             <span v-if="signUpForm.isPhoneEmpty" class="text-error">Phone required</span>
             <span v-if="signUpForm.accountPhoneExist" class="text-error">Phone already exist!</span>
           </div>
           <div class="mt-4">
             <input type="email" v-model.trim="signUpForm.email"
-                   class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
+                   class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Email"/>
             <span v-if="signUpForm.isEmailEmpty" class="text-error">Email required</span>
             <span v-if="signUpForm.accountEmailExist" class="text-error">Email already exist!</span>
           </div>
           <div class="mt-4">
             <input type="password" v-model="signUpForm.password"
-                   class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
+                   class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Password"/>
           </div>
           <div class="mt-4">
             <input type="password" v-model="signUpForm.confirmPassword"
-                   class="py-3 px-2 w-full outline-none border-b border-gray-light rounded focus:outline-none focus:border-gray"
+                   class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Confirm Password"/>
             <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
             <span v-if="signUpForm.passwordNotSame" class="text-error">Password Not Same</span>
@@ -65,27 +64,29 @@
         </div>
 
         <!-- ส่วนของ login -->
-        <div v-else class="xl:mt-20 xl:px-10 px-3 py-5">
+        <div v-else class="xl:mt-20 md:mb-4 md:px-10 px-3 py-5">
           <div v-if="account != null">
             <span class="text-xl uppercase font-semibold">Login</span>
           </div>
-          <div class="mb-3">
+          <div class="mb-3 xl:px-10">
             <input type="email" v-model="loginForm.email"
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Email"/>
             <span v-if="loginForm.isEmailEmpty" class="text-error">Email cannot be empty!</span>
           </div>
-          <div class="mb-3">
+          <div class="mb-3 xl:px-10">
             <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Password</span>
             <input type="password" v-model="loginForm.password"
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Password"/>
             <span v-if="loginForm.isPasswordEmpty" class="text-error">password cannot be empty!</span>
           </div>
-          <div class="flex flex-row-reverse">
-            <router-link class="text-blue-light underline text-sm" to="/signup">Sign Up</router-link>
+          <div class="flex flex-row-reverse xl:px-10 xl:py-5">
+            <router-link class="text-blue underline text-sm" to="/signup">Sign Up</router-link>
           </div>
-          <button @click="login" class="py-3 w-full btn btn-primary rounded text-white mt-3">Login</button>
+          <div class="xl:px-10">
+            <button @click="login" class="py-3 w-full btn btn-primary rounded text-white mt-3">Login</button>
+          </div>
           <span v-if="loginForm.isErrorLogin" class="text-error">Your username or password is wrong.</span>
         </div>
       </div>
@@ -96,6 +97,7 @@
 <script>
 export default {
   name: "AccountForm",
+  props: ['mode'],
   data() {
     return {
       loginForm: {

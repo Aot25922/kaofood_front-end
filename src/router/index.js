@@ -10,10 +10,16 @@ const routes = [
     path: '/menu',
     name: 'Menu',
     component: () => import('../views/Menu.vue'),
-    children:[
-      {path : 'add' , component : () => import('../components/Add.vue')},
-      {path : 'edit' , component : () => import('../components/Edit.vue')} 
-    ]
+  },
+  {
+    path: '/menu/add',
+    name: 'AddMenu',
+    component: () => import('../components/MenuForm.vue'),
+  },
+  {
+    path: '/menu/edit/:id',
+    name: 'EditMenu',
+    component: () => import('../components/MenuForm.vue'),
   },
   {
     path: '/login',

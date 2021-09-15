@@ -10,7 +10,7 @@
         <h2>Why we are the best</h2>
       </div>
     <!-- body -->
-      <p class="text-base text-gray-500 lg:text-left text-center lg:py-5 md:py-3 py-2">
+      <p class="text-base text-gray-dark lg:text-left text-center lg:py-5 md:py-3 py-2">
         A, blandit euismod ullamcorper vestibulum enim habitasse. Ultrices
         tincidunt scelerisque elit enim. A neque malesuada in tortor eget justo
         mauris nec dolor. Consequat risus vitae, ac ac et preparation. He wanted
