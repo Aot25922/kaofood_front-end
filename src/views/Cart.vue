@@ -13,10 +13,13 @@
         <div v-for="item in cartList" :key="item.id" class="flex flex-wrap p-2">
           <div class="w-1/3 font-normal lg:text-lg md:text-base text-sm py-2">
             <div class="grid grid-rows-2">
-              <img :src="this.$store.state.backendUrl+item.image" class="rounded md:w-1/2 w-24 object-cover">
+              <img :src="this.$store.state.backendUrl+item.image" class="rounded md:w-1/2 w-24 mx-auto object-cover">
               <span class="m-auto text-center">{{ item.name }}</span>
             </div>
-            <!-- <button @click="removeCartItem(item)" class="btn btn-error md:btn-sm btn-xs w-1/2 md:justify-center mx-2 mt-2">Remove</button> -->
+            <button @click="removeCartItem(item)" class="btn btn-ghost md:btn-sm btn-xs w-1/2 md:justify-center mx-2 mt-2">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+            
           </div>
           <!-- Subtotal -->
           <div class="w-1/6 grid grid-rows-2 m-auto lg:text-lg md:text-sm text-xs">

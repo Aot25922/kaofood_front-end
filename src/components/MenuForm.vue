@@ -1,21 +1,20 @@
 <template>
   <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning">
     <!-- No permission display -->
-    <div v-if="account==null||account.role!='Admin'" class="mt-20 flex flex-row">
-      <div class="flex-1 text-yellow-500 font-bold">
-        <svg svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current"> 
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>                         
-        </svg> 
-        <span class="flex-1">You haven't permission to get this page!</span>
+    <div v-if="account==null||account.role!='Admin'" class=" lg:mt-28 md:mt-24 mt-20 w-full">
+      <div class="text-center mx-auto text-yellow font-bold">
+        <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl"></i> 
+        <p class="md:text-xl text-lg p-3">You haven't permission to get this page!</p>
+        <img src="@/assets/nopermission.gif" class="rounded-md my-5">
       </div>
     </div>
 
-    <form v-else @submit.prevent="submitform()" class="bg-salmon card p-5 lg:mt-32 md:mt-24 mt-20 mb-5 md:grid md:grid-cols-2">
+    <form v-else @submit.prevent="submitform()" class="bg-salmon w-full text-black card p-5 lg:mt-32 md:mt-24 mt-20 mb-5 md:grid md:grid-cols-2">
       <div class="mt-4 flex flex-col md:p-2">
         <label for="menuName" class="font-semibold text-lg pb-2">Menu name</label>
         <input v-model.trim="form.name"
                class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray"
-               placeholder="Menu Name"/>
+               placeholder="Please enter Menu name..."/>
         <span v-if="!validateName" @blur="checkName" class="text-error">Name required</span>
       </div>
       <div class="mt-4 flex flex-col md:p-2">
@@ -36,9 +35,9 @@
       </div>
       <div class="md:col-span-2 md:p-2 mt-4 flex flex-col">
         <label for="description" class="font-semibold text-lg pb-2">Menu Description</label>
-        <textarea v-model="form.description"
+        <textarea v-model="form.description" rows="5"
                   class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray"
-                  placeholder="Description"/>
+                  placeholder="Please type description..."/>
         <span v-if="!validateDescript" @blur="checkDescript" class="text-error">Description required</span>
       </div>
       <div class="md:col-span-2 md:p-2 mt-4 flex flex-col">

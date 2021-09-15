@@ -24,11 +24,13 @@ module.exports = {
         dark: "#6B7280",
       },
       salmon: "#ffd1b3",
+      yellow: "##F59E0B",
       green: "#10B981"
     },
-    fontSize:{
-      'huge': ['10rem', '1']
-    },
+    // !If fill this config other text size won't work 
+    // fontSize:{
+    //   'huge': ['10rem', '1']
+    // },
     fontFamily: {
       'writing': 'Allison, cursive'
     }
