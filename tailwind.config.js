@@ -25,7 +25,11 @@ module.exports = {
       },
       salmon: "#ffd1b3",
       yellow: "##F59E0B",
-      green: "#10B981"
+      green: {
+        light: "#6EE7B7",
+        DEFAULT:"#10B981",
+        dark: "#047857"
+      }
     },
     // !If fill this config other text size won't work 
     // fontSize:{

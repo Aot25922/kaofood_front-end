@@ -15,11 +15,7 @@
             <div class="grid grid-rows-2">
               <img :src="this.$store.state.backendUrl+item.image" class="rounded md:w-1/2 w-24 mx-auto object-cover">
               <span class="m-auto text-center">{{ item.name }}</span>
-            </div>
-            <button @click="removeCartItem(item)" class="btn btn-ghost md:btn-sm btn-xs w-1/2 md:justify-center mx-2 mt-2">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-            
+            </div>          
           </div>
           <!-- Subtotal -->
           <div class="w-1/6 grid grid-rows-2 m-auto lg:text-lg md:text-sm text-xs">
@@ -36,8 +32,11 @@
             </button>
           </div>
           <!-- total -->
-          <div class="w-1/6 m-auto text-right lg:text-lg md:text-sm text-xs">
-            {{item.price * item.count}}
+          <div class="w-1/6 text-right lg:text-lg md:text-sm text-xs grid-rows-2">
+           <button @click="removeCartItem(item)" class="btn btn-ghost lg:text-lg md:text-sm text-xs w-1/2 row-span-1">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+            <div class="row-span-1 text-center xl:mt-24 lg:my-12 md:my-6 mt-3">{{item.price * item.count}}</div>
           </div>
         </div>
       </div>
