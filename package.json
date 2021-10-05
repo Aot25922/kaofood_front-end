@@ -6,7 +6,6 @@
     "serve": "vue-cli-service serve --port 80",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "backend": "json‐server ‐‐watch db.json ‐‐port 5000"
   },
   "dependencies": {
     "@ocrv/vue-tailwind-pagination": "^0.0.4",
