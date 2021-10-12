@@ -1,5 +1,5 @@
 <template>
-  <div id="menu">
+  <div id="menu" class="bg-salmon-light">
     <!--FoodList with Loop-->
     <category @SelectCate="selectCate" class="lg:mt-24 md:mt-20 mt-16"/>
     <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold">Our Menu</h1>

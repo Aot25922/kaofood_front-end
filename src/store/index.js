@@ -6,6 +6,7 @@ export default createStore({
     backendUrl: "https://kaofood.works/api",
     // backendUrl: "http://localhost:8080",
     account: null,
+    moreInfo: null,
     menus: [],
     categories: [],
     cart: []
@@ -23,6 +24,9 @@ export default createStore({
     SET_ACCOUNT(state, data) {
       if (data == null || data == '') state.account = null;
       state.account = data
+    },
+    SET_INFO(state, data){
+      state.moreInfo = data
     },
     addCartItem(state, item){
       item.count = 1;
@@ -57,6 +61,9 @@ export default createStore({
           })
       console.log("Fetch MENU");
     },
+    menuInfo({ commit }, item){
+      commit('SET_INFO', item);
+    },
     fetchLocalStorage({ commit }) {
       if (localStorage.getItem("account")) {
         try {
@@ -77,7 +84,7 @@ export default createStore({
     },
     addToCart({ commit }, item){
       if(this.state.cart.find(element => (element.id == item.id) ? true : false)){
-        commit('updateCartItem',item);
+        commit('updateCartItem', item);
       }else {
         commit('addCartItem', item);
       }
