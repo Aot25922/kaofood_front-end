@@ -23,7 +23,10 @@ module.exports = {
         DEFAULT: "#9CA3AF",
         dark: "#6B7280",
       },
-      salmon: "#ffd1b3",
+      salmon: {
+        light: "#FEF0EC",
+        DEFAULT:"#ffd1b3"
+      },
       yellow: "##F59E0B",
       green: {
         light: "#6EE7B7",
@@ -31,10 +34,6 @@ module.exports = {
         dark: "#047857"
       }
     },
-    // !If fill this config other text size won't work 
-    // fontSize:{
-    //   'huge': ['10rem', '1']
-    // },
     fontFamily: {
       'writing': 'Allison, cursive'
     }

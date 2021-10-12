@@ -43,6 +43,11 @@ const routes = [
     name: 'Cart',
     component: ()=> import('../views/Cart.vue')
   },
+  {
+    path: '/showMenu',
+    name: 'ShowMenu',
+    component: ()=> import('../components/ShowMenu.vue')
+  }
 ]
 
 const router = createRouter({
