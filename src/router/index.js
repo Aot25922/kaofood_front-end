@@ -47,6 +47,16 @@ const routes = [
     path: '/showMenu',
     name: 'ShowMenu',
     component: ()=> import('../components/ShowMenu.vue')
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: ()=> import('../components/Order.vue')
+  },
+  {
+    path: '/accountManage',
+    name: 'AcoountManage',
+    component: ()=> import('../components/AccountManage.vue')
   }
 ]
 

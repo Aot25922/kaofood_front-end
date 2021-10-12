@@ -1,5 +1,5 @@
 <template>
-  <div id="menuBar">
+  <div id="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">
     <div class="navbar bg-primary-focus text-neutral-content fixed z-50 w-full top-0">
       <!-- Hamburger Dropdown -->
       <div class="dropdown dropdown-right md:hidden">
@@ -11,13 +11,17 @@
         </div>
         <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
           <li>
+            <!-- v-if="account.role!='Admin'" -->
             <router-link to="/">Home</router-link>
           </li>
           <li>
             <router-link to="/menu">Menu</router-link>
           </li>
           <li>
-            <router-link to="/cart">My Order</router-link>
+            <router-link v-if="account!=null" to="/cart">My Order</router-link>
+          </li>
+          <li>
+            <router-link to="/accountManage">Account Manage</router-link>
           </li>
           <li>
             <router-link to="/contact">Contact</router-link>
@@ -36,8 +40,12 @@
       <div class="px-4">
         <img src="../assets/logo.png" class="lg:w-20 md:w-14 w-0 lg:pr-2 md:pr-1 md:py-1"/>
         <div class="md:items-stretch hidden md:block">
+          <!-- v-if="account.role!='Admin'" -->
           <router-link to="/" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Home</router-link>
           <router-link to="/menu" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Menu</router-link>
+          <router-link v-if="account!=null" to="/order" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">My Order</router-link>
+          <!-- v-if="account.role!='Admin'" -->
+          <router-link to="/accountManage" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Account Manage</router-link>
           <router-link to="/contact" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Contact</router-link>
         </div>
       </div>
@@ -56,7 +64,7 @@
         <!-- Account: Toggle when ipad to laptop -->
         <!-- Logout&Ordering -->
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
-          <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div>
+          <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }}</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
             <li>
               <!-- <router-link to="/cart" class="mx-auto">My Order</router-link> -->
@@ -83,7 +91,7 @@
 
 <script>
 export default {
-  name: "MenuBar",
+  name: "btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg",
   methods: {
     logout() {
       this.$store.dispatch("getAccount", null);

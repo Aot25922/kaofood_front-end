@@ -1,5 +1,5 @@
 <template>
-  <div id="FoodList" class="md:mx-3 m-2 card bordered bg-white">
+  <div id="FoodList" class="card bordered bg-white">
     <div class="relative">
       <img id="img-id" class="rounded w-full xl:h-80 h-56 object-cover"
            :src=" this.$store.state.backendUrl+this.menu.image" :alt="menu.name"/>

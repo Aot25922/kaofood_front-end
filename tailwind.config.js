@@ -35,7 +35,8 @@ module.exports = {
       }
     },
     fontFamily: {
-      'writing': 'Allison, cursive'
+      'writing': 'Allison, cursive',
+      'rubik':'Rubik, sans-serif'
     }
   },
   variants: {
