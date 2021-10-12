@@ -126,6 +126,8 @@ export default {
       return list.id == this.$route.params.id
     })
     this.form = tempMenu[0];
+    var image = document.getElementById("output");
+    image.src = URL.createObjectURL(this.$store.state.backendUrl+this.form.image);
   },
   computed: {
     account() {
