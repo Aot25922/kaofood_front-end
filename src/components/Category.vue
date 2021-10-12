@@ -1,5 +1,5 @@
 <template>
-  <div id="category" class="navbar md:flex md:flex-row grid grid-cols-3">
+  <div id="category" class="navbar md:flex md:flex-row grid grid-cols-3 bg-white">
     <!-- All Menu -->
     <button class="bordered focus:bg-base-300 md:flex-1 text-black btn btn-accent btn-ghost m-1 xl:text-lg lg:text-base md:text-sm text-xs" @click="$emit('SelectCate', null)">
       All Menu
