@@ -3,8 +3,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    //backendUrl: "https://kaofood.works/api",
-     backendUrl: "http://localhost:8080",
+    // backendUrl: "https://kaofood.works/api",
+    backendUrl: "http://localhost:8080",
     account: null,
     moreInfo: null,
     menus: [],
@@ -34,7 +34,7 @@ export default createStore({
       if (data == null || data == '') {
       state.account = null;
       return
-    }
+    } 
       state.account = data
     },
     SET_INFO(state, data){
@@ -115,15 +115,16 @@ export default createStore({
       }else {
         await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`,{withCredentials:true})
             .then(response => {
-              commit('SET_JWT', response.data)
+              commit('SET_JWT', response.headers.jwt)
               commit('SET_ACCOUNT', response.data)
+              console.log(response.data)
             })
       }
     },
     async setNewAccount({ commit }, newAccount){
       let data = new FormData();
       data.append("account",newAccount)
-      await axios.post(`${this.state.backendUrl}/user/signup`,data
+      await axios.post(`${this.state.backendUrl}/user/signup`,data,{withCredentials:true}
       ).then(response => {
         if(response.data == "accountEmailExist"){
           commit('SET_ACCOUNT', "accountEmailExist")
@@ -132,7 +133,8 @@ export default createStore({
           commit('SET_ACCOUNT', "accountPhoneExist")
         }
         if(response.data == "success"){
-          commit('SET_ACCOUNT', newAccount)
+          console.log(response.data)
+          commit('SET_ACCOUNT', "success")
         }
       }).catch(function (error) {console.log(error);})
     },

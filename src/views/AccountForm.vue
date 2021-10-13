@@ -65,7 +65,7 @@
 
         <!-- ส่วนของ login -->
         <div v-else class="xl:mt-20 md:mb-4 md:px-10 px-3 py-5">
-          <div v-if="account != null">
+          <div>
             <span class="text-xl uppercase font-semibold">Login</span>
           </div>
           <div class="mb-3 xl:px-10">
@@ -141,7 +141,7 @@ export default {
         return;
       } else {
         this.loginForm.isErrorLogin = false;
-        this.$router.go(-1);
+        this.$router.push("/");
       }
     },
     checkSignUpForm() {
@@ -174,7 +174,7 @@ export default {
         this.loginForm.email = this.signUpForm.email
         this.loginForm.password = this.signUpForm.password
         await this.$store.dispatch("getAccount", this.loginForm);
-        this.$router.go(-1);
+        this.$router.push("/");
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;

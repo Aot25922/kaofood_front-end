@@ -21,4 +21,5 @@ export default {
 <style>
 /* Writing style font */
 @import url('https://fonts.googleapis.com/css2?family=Allison&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 </style>

@@ -10,7 +10,7 @@
         <!-- Appear when Ipad to laptop -->
         <i class="fas fa-plus-circle addMenuCard"></i>
       </router-link>
-      <food-list class="card p-2 sm:flex-1" v-for="menu in menuFilterList" :menu="menu" :key="menu.id"/>
+      <food-list class="card p-2 sm:flex-1 md:mx-3 m-2 md:mb-5" v-for="menu in menuFilterList" :menu="menu" :key="menu.id"/>
     </div>
   </div>
 </template>
