@@ -11,17 +11,10 @@
         </div>
         <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
           <li>
-            <!-- v-if="account.role!='Admin'" -->
             <router-link to="/">Home</router-link>
           </li>
           <li>
             <router-link to="/menu">Menu</router-link>
-          </li>
-          <li>
-            <router-link v-if="account!=null" to="/cart">My Order</router-link>
-          </li>
-          <li>
-            <router-link to="/accountManage">Account Manage</router-link>
           </li>
           <li>
             <router-link to="/contact">Contact</router-link>
@@ -40,12 +33,8 @@
       <div class="px-4">
         <img src="../assets/logo.png" class="lg:w-20 md:w-14 w-0 lg:pr-2 md:pr-1 md:py-1"/>
         <div class="md:items-stretch hidden md:block">
-          <!-- v-if="account.role!='Admin'" -->
           <router-link to="/" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Home</router-link>
           <router-link to="/menu" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Menu</router-link>
-          <router-link v-if="account!=null" to="/order" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">My Order</router-link>
-          <!-- v-if="account.role!='Admin'" -->
-          <router-link to="/accountManage" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Account Manage</router-link>
           <router-link to="/contact" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Contact</router-link>
         </div>
       </div>
@@ -66,8 +55,14 @@
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
           <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }} {{ account.lname.slice(0,1) }}.</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
-            <li>
-              <!-- <router-link to="/cart" class="mx-auto">My Order</router-link> -->
+            <li v-if="this.$store.state.account.role=='Admin'">
+              <router-link to="/accountManage">Account Manage</router-link>
+            </li>
+            <li v-if="this.$store.state.account.role!='Member'">
+              <router-link to="/">Order Manage</router-link>
+            </li>
+            <li v-if="this.$store.state.account.role=='Member'">
+              <router-link to="/cart">My Order</router-link>
             </li>
             <li @click="logout" class="btn btn-ghost font-bold">Logout</li>
           </ul>
@@ -91,7 +86,7 @@
 
 <script>
 export default {
-  name: "btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg",
+  name: "MenuBar",
   methods: {
     logout() {
       this.$store.dispatch("getAccount", null);
@@ -103,5 +98,5 @@ export default {
       return this.$store.state.account;
     }
   }
-}
+};
 </script>

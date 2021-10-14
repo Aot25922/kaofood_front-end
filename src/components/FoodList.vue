@@ -14,7 +14,7 @@
         <button class="btn btn-error lg:text-base text-sm mx-1 flex-1" @click="deleteMenu(menu)">Delete</button>
       </div>
       <div v-else class="justify-center card-actions flex flex-row">
-        <router-link to="/showMenu" @click="menuInfo(menu)" class="btn btn-primary lg:text-base md:text-sm text-xs flex-1">More Info</router-link>
+        <router-link class="btn btn-primary lg:text-base md:text-sm text-xs flex-1" :to="{ name:'MenuInfo' , params: { id : menu.id } }">More Info</router-link>
         <button @click="addToCart" class="btn btn-secondary lg:text-base md:text-sm text-xs flex-1">Add to Cart</button>
       </div>
     </div>
@@ -28,10 +28,6 @@ export default {
     menu: null,
   },
   methods: {
-    menuInfo(item){
-      console.log(item)
-      this.$store.dispatch('menuInfo', item)
-    },
     addToCart() {
       this.$store.dispatch('addToCart', this.menu)
     },

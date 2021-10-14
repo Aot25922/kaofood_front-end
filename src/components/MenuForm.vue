@@ -1,7 +1,7 @@
 <template>
   <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning">
     <!-- No permission display -->
-    <div v-if="account==null||account.role!='Admin'" class=" lg:mt-28 md:mt-24 mt-20 w-full">
+    <div v-if="account==null||account.role=='Member'" class=" lg:mt-28 md:mt-24 mt-20 w-full">
       <div class="text-center mx-auto text-yellow font-bold">
         <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl"></i> 
         <p class="md:text-xl text-lg p-3">You haven't permission to get this page!</p>

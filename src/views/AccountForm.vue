@@ -162,7 +162,7 @@ export default {
         phone : this.signUpForm.phone,
         password : this.signUpForm.password,
         address : this.signUpForm.address,
-        role : "Customer"
+        role : "Member"
       })
       await this.$store.dispatch("setNewAccount", newAccount);
       if (this.$store.state.account == 'success') {
