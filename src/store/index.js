@@ -3,10 +3,9 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    backendUrl: "https://kaofood.works/api",
-    // backendUrl: "http://localhost:8080",
+    // backendUrl: "https://kaofood.works/api",
+    backendUrl: "http://localhost:8080",
     account: null,
-    moreInfo: null,
     users: [],
     menus: [],
     categories: [],
@@ -40,9 +39,6 @@ export default createStore({
       return
     } 
       state.account = data
-    },
-    SET_INFO(state, data){
-      state.moreInfo = data
     },
     addCartItem(state, item){
       item.count = 1;
@@ -78,14 +74,11 @@ export default createStore({
       console.log("Fetch MENU");
     },
     async fetchUserAPI({ commit }) {
-      await axios.get(`${this.state.backendUrl}/user`)
+      await axios.get(`${this.state.backendUrl}/user`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
           .then(response => {
             commit('SET_USER', response.data)
           })  
           console.log("Fetch All User");
-    },
-    menuInfo({ commit }, item) {
-      commit('SET_INFO', item);
     },
     async fetchLocalStorage({ commit }) {
         try {
@@ -122,6 +115,8 @@ export default createStore({
       if (loginForm == null){
         await axios.delete(`${this.state.backendUrl}/user/logout`,{withCredentials:true,headers : {"Authorization": `Bearer ${this.state.JWT}`}})
         commit('SET_ACCOUNT',null);
+        commit('SET_USER',null);
+        commit('SET_JWT',null);
         localStorage.removeItem("cart");
       }else {
         await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`,{withCredentials:true})
