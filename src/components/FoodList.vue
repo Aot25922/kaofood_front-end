@@ -28,10 +28,6 @@ export default {
     menu: null,
   },
   methods: {
-    menuInfo(item){
-      console.log(item)
-      this.$store.dispatch('menuInfo', item)
-    },
     addToCart() {
       this.$store.dispatch('addToCart', this.menu)
     },

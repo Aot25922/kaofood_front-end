@@ -30,7 +30,6 @@ export default createStore({
         state.JWT = null
         return
       }
-      console.log(data)
       state.JWT=data
     },
     SET_ACCOUNT(state, data) {
@@ -39,9 +38,6 @@ export default createStore({
       return
     } 
       state.account = data
-    },
-    SET_INFO(state, data){
-      state.moreInfo = data
     },
     addCartItem(state, item){
       item.count = 1;
