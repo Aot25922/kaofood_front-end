@@ -3,8 +3,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    // backendUrl: "https://kaofood.works/api",
-    backendUrl: "http://localhost:8080",
+    backendUrl: "https://kaofood.works/api",
+    // backendUrl: "http://localhost:8080",
     account: null,
     users: [],
     menus: [],
@@ -30,7 +30,6 @@ export default createStore({
         state.JWT = null
         return
       }
-      console.log(data)
       state.JWT=data
     },
     SET_ACCOUNT(state, data) {
