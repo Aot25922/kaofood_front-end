@@ -1,5 +1,5 @@
 <template>
-  <div id="menuBar">
+  <div id="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">
     <div class="navbar bg-primary-focus text-neutral-content fixed z-50 w-full top-0">
       <!-- Hamburger Dropdown -->
       <div class="dropdown dropdown-right md:hidden">
@@ -15,9 +15,6 @@
           </li>
           <li>
             <router-link to="/menu">Menu</router-link>
-          </li>
-          <li>
-            <router-link to="/cart">My Order</router-link>
           </li>
           <li>
             <router-link to="/contact">Contact</router-link>
@@ -56,10 +53,16 @@
         <!-- Account: Toggle when ipad to laptop -->
         <!-- Logout&Ordering -->
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
-          <div tabindex="0" class="btn btn-ghost rounded-btn"><i class="material-icons">account_circle</i></div>
+          <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }} {{ account.lname.slice(0,1) }}.</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
-            <li>
-              <!-- <router-link to="/cart" class="mx-auto">My Order</router-link> -->
+            <li v-if="this.$store.state.account.role=='Admin'">
+              <router-link to="/accountManage">Account Manage</router-link>
+            </li>
+            <li v-if="this.$store.state.account.role!='Member'">
+              <router-link to="/">Order Manage</router-link>
+            </li>
+            <li v-if="this.$store.state.account.role=='Member'">
+              <router-link to="/cart">My Order</router-link>
             </li>
             <li @click="logout" class="btn btn-ghost font-bold">Logout</li>
           </ul>
@@ -91,8 +94,9 @@ export default {
   },
   computed: {
     account() {
+      console.log(this.$store.state.account)
       return this.$store.state.account;
     }
   }
-}
+};
 </script>

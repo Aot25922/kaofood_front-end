@@ -3,13 +3,14 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    backendUrl: "https://kaofood.works/api",
-    // backendUrl: "http://localhost:8080",
+    // backendUrl: "https://kaofood.works/api",
+    backendUrl: "http://localhost:8080",
     account: null,
-    moreInfo: null,
+    users: [],
     menus: [],
     categories: [],
-    cart: []
+    cart: [],
+    JWT:null
   },
   mutations: {
     SET_MENU(state, data) {
@@ -21,8 +22,22 @@ export default createStore({
     SET_CART(state, data) {
       state.cart = data
     },
+    SET_USER(state, data){
+      state.users = data
+    },
+    SET_JWT(state,data) {
+      if (data == null || data == '') {
+        state.JWT = null
+        return
+      }
+      console.log(data)
+      state.JWT=data
+    },
     SET_ACCOUNT(state, data) {
-      if (data == null || data == '') state.account = null;
+      if (data == null || data == '') {
+      state.account = null;
+      return
+    } 
       state.account = data
     },
     SET_INFO(state, data){
@@ -61,18 +76,23 @@ export default createStore({
           })
       console.log("Fetch MENU");
     },
-    menuInfo({ commit }, item){
-      commit('SET_INFO', item);
+    async fetchUserAPI({ commit }) {
+      await axios.get(`${this.state.backendUrl}/user`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
+          .then(response => {
+            commit('SET_USER', response.data)
+          })  
+          console.log("Fetch All User");
     },
-    fetchLocalStorage({ commit }) {
-      if (localStorage.getItem("account")) {
+    async fetchLocalStorage({ commit }) {
         try {
-          commit('SET_ACCOUNT',JSON.parse(localStorage.getItem("account")));
+          await axios.get(`${this.state.backendUrl}/user/login`,{withCredentials:true}).then(response => {
+            commit('SET_JWT', response.headers.jwt)
+            commit('SET_ACCOUNT', response.data)
+          })
         } catch (e) {
-          localStorage.removeItem("account");
+           console.log(e)
         }
-      }
-
+      
       if(localStorage.getItem("cart")){
         try {
           commit('SET_CART',JSON.parse(localStorage.getItem("cart")));
@@ -96,26 +116,24 @@ export default createStore({
     },
     async getAccount({ commit }, loginForm){
       if (loginForm == null){
+        await axios.delete(`${this.state.backendUrl}/user/logout`,{withCredentials:true,headers : {"Authorization": `Bearer ${this.state.JWT}`}})
         commit('SET_ACCOUNT',null);
-        localStorage.removeItem("account")
+        commit('SET_USER',null);
+        commit('SET_JWT',null);
         localStorage.removeItem("cart");
       }else {
-        await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`)
+        await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`,{withCredentials:true})
             .then(response => {
+              commit('SET_JWT', response.headers.jwt)
               commit('SET_ACCOUNT', response.data)
+              console.log(response.data)
             })
-        localStorage.setItem('account', JSON.stringify(this.state.account))
       }
     },
     async setNewAccount({ commit }, newAccount){
       let data = new FormData();
       data.append("account",newAccount)
-      let config = {
-        headers: {
-          "Access-Control-Allow-Origin":"*",
-        },
-      }
-      await axios.post(`${this.state.backendUrl}/user/signup`,data,config
+      await axios.post(`${this.state.backendUrl}/user/signup`,data,{withCredentials:true}
       ).then(response => {
         if(response.data == "accountEmailExist"){
           commit('SET_ACCOUNT', "accountEmailExist")
@@ -124,10 +142,11 @@ export default createStore({
           commit('SET_ACCOUNT', "accountPhoneExist")
         }
         if(response.data == "success"){
+          console.log(response.data)
           commit('SET_ACCOUNT', "success")
         }
       }).catch(function (error) {console.log(error);})
-    }
+    },
   },
   getters:{},
   modules:{}

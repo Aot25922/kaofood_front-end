@@ -4,6 +4,10 @@
 
 @tailwind utilities;
 
+body {
+    @apply font-rubik
+}
+
 .addMenuCard { 
-    @apply items-center text-9xl fill-current text-green hover:text-green-light focus:text-green-dark focus:bg-green-dark md:flex hidden bordered rounded-lg h-full justify-center border-2 border-green hover:border-green-light
+    @apply items-center text-9xl fill-current bg-white text-green hover:text-green-light focus:text-green-dark focus:bg-green-dark md:flex hidden bordered rounded-lg h-full justify-center border-2 border-green hover:border-green-light
  }

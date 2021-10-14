@@ -12,6 +12,11 @@ const routes = [
     component: () => import('../views/Menu.vue'),
   },
   {
+    path: '/menu/:id',
+    name: 'MenuInfo',
+    component: ()=> import('../components/MenuInfo.vue')
+  },
+  {
     path: '/menu/add',
     name: 'AddMenu',
     component: () => import('../components/MenuForm.vue'),
@@ -20,6 +25,16 @@ const routes = [
     path: '/menu/edit/:id',
     name: 'EditMenu',
     component: () => import('../components/MenuForm.vue'),
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: () => import('../views/Contact.vue'),
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: ()=> import('../views/Cart.vue')
   },
   {
     path: '/login',
@@ -34,19 +49,14 @@ const routes = [
     props: { mode: 'SignUp' }
   },
   {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue'),
+    path: '/order',
+    name: 'Order',
+    component: ()=> import('../components/Order.vue')
   },
   {
-    path: '/cart',
-    name: 'Cart',
-    component: ()=> import('../views/Cart.vue')
-  },
-  {
-    path: '/showMenu',
-    name: 'ShowMenu',
-    component: ()=> import('../components/ShowMenu.vue')
+    path: '/accountManage',
+    name: 'AcoountManage',
+    component: ()=> import('../components/AccountManage.vue')
   }
 ]
 

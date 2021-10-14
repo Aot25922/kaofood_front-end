@@ -6,7 +6,7 @@
         <!-- ส่วนของ Sign Up -->
         <div v-if="mode == 'SignUp'" class="w-full p-3 px-6 py-10">
           <div class="text-center">
-            <span class="text-xl uppercase font-semibold">Register a new account</span>
+            <span class="text-xl uppercase font-semibold label-text">Register a new account</span>
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.firstName"
@@ -54,7 +54,6 @@
           <div class="mt-10">
             <button @click="signUp" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
               Sign Up
-              <i class="fa fa-long-arrow-right"></i>
             </button>
             <div class="mt-5 lg:text-xs text-2xs text-center">
               <hr class="w-full text-gray lg:py-3 py-2">
@@ -64,10 +63,8 @@
         </div>
 
         <!-- ส่วนของ login -->
-        <div v-else class="xl:mt-20 md:mb-4 md:px-10 px-3 py-5">
-          <div v-if="account != null">
-            <span class="text-xl uppercase font-semibold">Login</span>
-          </div>
+        <div v-else class="xl:mt-10 md:mb-4 md:px-10 px-3 py-5">
+          <span class="text-xl block text-center p-2 uppercase font-semibold label-text">Login</span>
           <div class="mb-3 xl:px-10">
             <input type="email" v-model="loginForm.email"
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
@@ -141,7 +138,7 @@ export default {
         return;
       } else {
         this.loginForm.isErrorLogin = false;
-        this.$router.go(-1);
+        this.$router.push("/");
       }
     },
     checkSignUpForm() {
@@ -165,7 +162,7 @@ export default {
         phone : this.signUpForm.phone,
         password : this.signUpForm.password,
         address : this.signUpForm.address,
-        role : "Customer"
+        role : "Member"
       })
       await this.$store.dispatch("setNewAccount", newAccount);
       if (this.$store.state.account == 'success') {
@@ -174,7 +171,7 @@ export default {
         this.loginForm.email = this.signUpForm.email
         this.loginForm.password = this.signUpForm.password
         await this.$store.dispatch("getAccount", this.loginForm);
-        this.$router.go(-1);
+        this.$router.push("/");
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;

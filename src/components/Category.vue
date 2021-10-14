@@ -21,9 +21,6 @@ export default {
     categoryList() {
       return this.$store.state.categories;
     }
-  },
-  beforeCreate() {
-    this.$store.dispatch("fetchCategoryAPI");
   }
 };
 </script>

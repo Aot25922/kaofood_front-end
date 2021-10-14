@@ -1,5 +1,5 @@
 <template>
-  <div id="FoodList" class="md:mx-3 m-2 card bordered bg-white">
+  <div id="FoodList" class="card bordered bg-white">
     <div class="relative">
       <img id="img-id" class="rounded w-full xl:h-80 h-56 object-cover"
            :src=" this.$store.state.backendUrl+this.menu.image" :alt="menu.name"/>
@@ -14,7 +14,7 @@
         <button class="btn btn-error lg:text-base text-sm mx-1 flex-1" @click="deleteMenu(menu)">Delete</button>
       </div>
       <div v-else class="justify-center card-actions flex flex-row">
-        <router-link to="/showMenu" @click="menuInfo(menu)" class="btn btn-primary lg:text-base md:text-sm text-xs flex-1">More Info</router-link>
+        <router-link class="btn btn-primary lg:text-base md:text-sm text-xs flex-1" :to="{ name:'MenuInfo' , params: { id : menu.id } }">More Info</router-link>
         <button @click="addToCart" class="btn btn-secondary lg:text-base md:text-sm text-xs flex-1">Add to Cart</button>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default {
       var result = confirm(`"Want to delete" ${menu.name}?`);
       if (result) {
         try {
-          await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`)
+          await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}})
           await this.$store.dispatch('fetchMenuAPI');
         } catch (error) {
           console.log(`Counld not get! ${error}`);
