@@ -91,7 +91,7 @@
 
 <script>
 export default {
-  name: "btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg",
+  name: "MenuBar",
   methods: {
     logout() {
       this.$store.dispatch("getAccount", null);
