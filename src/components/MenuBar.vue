@@ -94,6 +94,7 @@ export default {
   },
   computed: {
     account() {
+      console.log(this.$store.state.account)
       return this.$store.state.account;
     }
   }
