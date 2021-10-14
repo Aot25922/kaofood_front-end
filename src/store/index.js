@@ -39,6 +39,9 @@ export default createStore({
     } 
       state.account = data
     },
+    SET_INFO(state, data){
+      state.moreInfo = data
+    },
     addCartItem(state, item){
       item.count = 1;
       state.cart.push(item);
