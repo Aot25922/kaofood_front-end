@@ -64,7 +64,7 @@
         <!-- Account: Toggle when ipad to laptop -->
         <!-- Logout&Ordering -->
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
-          <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }}</div>
+          <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }} {{ account.lname.slice(0,1) }}.</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
             <li>
               <!-- <router-link to="/cart" class="mx-auto">My Order</router-link> -->
@@ -99,6 +99,7 @@ export default {
   },
   computed: {
     account() {
+      console.log(this.$store.state.account)
       return this.$store.state.account;
     }
   }

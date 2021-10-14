@@ -7,6 +7,7 @@ export default createStore({
     backendUrl: "http://localhost:8080",
     account: null,
     moreInfo: null,
+    users: [],
     menus: [],
     categories: [],
     cart: []
@@ -20,6 +21,9 @@ export default createStore({
     },
     SET_CART(state, data) {
       state.cart = data
+    },
+    SET_USER(state, data){
+      state.users = data
     },
     SET_ACCOUNT(state, data) {
       if (data == null || data == '') state.account = null;
@@ -61,7 +65,15 @@ export default createStore({
           })
       console.log("Fetch MENU");
     },
-    menuInfo({ commit }, item){
+    async fetchUserAPI({ commit }) {
+      await axios.get(`${this.state.backendUrl}/user`)
+          .then(response => {
+            commit('SET_USER', response.data)
+            console.log(response.data)
+          })  
+          console.log("Fetch All User");
+    },
+    menuInfo({ commit }, item) {
       commit('SET_INFO', item);
     },
     fetchLocalStorage({ commit }) {

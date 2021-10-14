@@ -11,32 +11,32 @@
 
     <form v-else @submit.prevent="submitform()" class="bg-salmon w-full text-black card p-5 lg:mt-32 md:mt-24 mt-20 mb-5 md:grid md:grid-cols-2">
       <div class="mt-4 flex flex-col md:p-2">
-        <label for="menuName" class="font-semibold text-lg pb-2">Menu name</label>
+        <label for="menuName" class="font-semibold text-lg pb-2 label-text">Menu name</label>
         <input v-model.trim="form.name"
-               class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray"
+               class="py-3 px-2 w-full input"
                placeholder="Please enter Menu name..."/>
         <span v-if="!validateName" @blur="checkName" class="text-error">Name required</span>
       </div>
       <div class="mt-4 flex flex-col md:p-2">
-        <label for="category" class="font-semibold text-lg pb-2">Category</label>
+        <label for="category" class="font-semibold text-lg pb-2 label-text">Category</label>
         <select id="category" v-model="form.category" name="category"
-                class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray">
-          <option value="" disabled select class="font-semibold">-- Please select one --</option>
+                class="py-3 px-2 w-full select">
+          <option value="" disabled="" selected="" class="font-semibold">-- Please select one --</option>
           <option :value="category" v-for="category in this.$store.state.categories" :key="category.id">{{ category.name }}</option>
         </select>
         <span v-if="!validateCategory" @blur="checkCategory" class="text-error">Category required</span>
       </div>
       <div class="md:col-span-2 md:p-2 mt-4 flex flex-col">
-        <label for="category" class="font-semibold text-lg pb-2">Price</label>
+        <label for="category" class="font-semibold text-lg pb-2 label-text">Price</label>
         <input v-model="form.price"
-               class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray md:w-1/2"
+               class="py-3 px-2 w-full input md:w-1/2"
                placeholder="Price"/>
         <span v-if="!validatePrice" @blur="checkPrice" class="text-error">Price required</span>
       </div>
       <div class="md:col-span-2 md:p-2 mt-4 flex flex-col">
-        <label for="description" class="font-semibold text-lg pb-2">Menu Description</label>
-        <textarea v-model="form.description" rows="5"
-                  class="py-3 px-2 w-full outline-none border-0 rounded focus:outline-none focus:border-gray"
+        <label for="description" class="font-semibold text-lg pb-2 label-text">Menu Description</label>
+        <textarea v-model="form.description"
+                  class="py-3 px-2 w-full textarea min-h-16"
                   placeholder="Please type description..."/>
         <span v-if="!validateDescript" @blur="checkDescript" class="text-error">Description required</span>
       </div>
