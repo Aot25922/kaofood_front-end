@@ -44,5 +44,8 @@ export default {
       return this.$store.state.user
     }
   },
+  beforeCreate(){
+    this.$store.dispatch("fetchUserAPI");
+  }
 };
 </script>

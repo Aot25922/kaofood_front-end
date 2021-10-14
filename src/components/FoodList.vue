@@ -40,7 +40,7 @@ export default {
       var result = confirm(`"Want to delete" ${menu.name}?`);
       if (result) {
         try {
-          await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`)
+          await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}})
           await this.$store.dispatch('fetchMenuAPI');
         } catch (error) {
           console.log(`Counld not get! ${error}`);

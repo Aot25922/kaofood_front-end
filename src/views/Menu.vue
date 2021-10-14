@@ -43,7 +43,6 @@ export default {
   beforeCreate() {
     this.$store.dispatch("fetchCategoryAPI");
     this.$store.dispatch("fetchMenuAPI");
-    this.$store.dispatch("fetchUserAPI");
   }
 };
 </script>
