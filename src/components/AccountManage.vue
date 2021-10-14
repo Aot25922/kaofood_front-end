@@ -17,7 +17,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-for="user in userList" :key="user.id">
             <tr>
               <th>{{ user.id }}</th>
               <td>{{ user.fname }} {{ user.lname }}</td>
@@ -39,12 +39,11 @@
 export default {
   name: "AccountManage",
   computed: {
-    user(){
-      console.log(this.$store.state.user)
-      return this.$store.state.user
+    userList() {
+      return this.$store.state.users
     }
   },
-  beforeCreate(){
+  beforeCreate() {
     this.$store.dispatch("fetchUserAPI");
   }
 };

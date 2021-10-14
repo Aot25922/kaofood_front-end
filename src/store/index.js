@@ -25,7 +25,6 @@ export default createStore({
     },
     SET_USER(state, data){
       state.users = data
-      console.log(data)
     },
     SET_JWT(state,data) {
       if (data == null || data == '') {
@@ -82,7 +81,6 @@ export default createStore({
       await axios.get(`${this.state.backendUrl}/user`)
           .then(response => {
             commit('SET_USER', response.data)
-            console.log(response.data)
           })  
           console.log("Fetch All User");
     },
