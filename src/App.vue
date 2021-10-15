@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="select-none h-screen">
-    <menu-bar />
+<!--    <menu-bar />-->
     <router-view />
-    <Footer/>
+<!--    <Footer/>-->
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import MenuBar from "@/components/MenuBar.vue";
 import Footer from "@/components/Footer.vue";
 export default {
   name: "App",
-  components: { MenuBar, Footer },
+  // components: { MenuBar, Footer },
   beforeCreate() {
     this.$store.dispatch("fetchLocalStorage");
   }
