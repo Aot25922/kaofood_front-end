@@ -5,7 +5,7 @@
       <div class="text-center mx-auto text-yellow font-bold">
         <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl"></i> 
         <p class="md:text-xl text-lg p-3">You haven't permission to get this page!</p>
-        <img src="@/assets/nopermission.gif" class="rounded-md my-5">
+        <img src="@/assets/pikachu.gif" class="rounded-md my-5">
       </div>
     </div>
 
