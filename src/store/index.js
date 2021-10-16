@@ -4,13 +4,14 @@ import axios from 'axios'
 export default createStore({
   state: {
     // backendUrl: "https://kaofood.works/api",
-    backendUrl: "https://dev.kaofood.works/api",
-    // backendUrl: "http://localhost:8080",
+    //backendUrl: "https://dev.kaofood.works/api",
+     backendUrl: "http://localhost:8080",
     account: null,
     users: [],
     menus: [],
     categories: [],
     cart: [],
+    role:["Admin","Staff","Member"],
     JWT:null
   },
   mutations: {
@@ -74,7 +75,7 @@ export default createStore({
       console.log("Fetch MENU");
     },
     async fetchUserAPI({ commit }) {
-      await axios.get(`${this.state.backendUrl}/user`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
+      await axios.get(`${this.state.backendUrl}/admin/allAccount`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
           .then(response => {
             commit('SET_USER', response.data)
           })  

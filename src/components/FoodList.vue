@@ -9,7 +9,7 @@
       <h2 class="card-title xl:text-2xl md:text-xl">{{ menu.name }}
         <!-- <div class="badge mx-2 badge-secondary lg:text-xl md:text-lg lg:py-4 md:p-3 ">NEW</div> -->
       </h2>
-      <div v-if="account!=null&&account.role=='Admin'" class="flex flex-row">
+      <div v-if="account!=null&&(account.role=='Admin'||account.role=='Staff')" class="flex flex-row">
         <router-link class="btn btn-warning lg:text-base text-sm mx-1 flex-1" :to="{ name:'EditMenu' , params: { id : menu.id } }">Edit</router-link>
         <button class="btn btn-error lg:text-base text-sm mx-1 flex-1" @click="deleteMenu(menu)">Delete</button>
       </div>
