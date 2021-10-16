@@ -57,7 +57,12 @@ const routes = [
     path: '/accountManage',
     name: 'AcoountManage',
     component: ()=> import('../components/AccountManage.vue')
-  }
+  },
+  // {
+  //   path: '/accountManage/edit/:id',
+  //   name: 'AcoountManage',
+  //   component: ()=> import('../components/AccountManage.vue')
+  // }
 ]
 
 const router = createRouter({

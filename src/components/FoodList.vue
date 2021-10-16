@@ -13,9 +13,8 @@
         <router-link class="btn btn-warning lg:text-base text-sm mx-1 flex-1" :to="{ name:'EditMenu' , params: { id : menu.id } }">Edit</router-link>
         <button class="btn btn-error lg:text-base text-sm mx-1 flex-1" @click="deleteMenu(menu)">Delete</button>
       </div>
-      <div v-else class="justify-center card-actions flex flex-row">
-        <router-link class="btn btn-primary lg:text-base md:text-sm text-xs flex-1" :to="{ name:'MenuInfo' , params: { id : menu.id } }">More Info</router-link>
-        <button @click="addToCart" class="btn btn-secondary lg:text-base md:text-sm text-xs flex-1">Add to Cart</button>
+      <div v-else class="justify-center card-actions">
+        <button @click="addToCart" class="btn btn-secondary lg:text-base md:text-sm text-xs w-full">Add to Cart</button>
       </div>
     </div>
   </div>
@@ -33,13 +32,13 @@ export default {
     },
     async deleteMenu(menu) {
       const axios = require('axios');
-      var result = confirm(`"Want to delete" ${menu.name}?`);
+      var result = confirm(`Want to delete ${menu.name}?`);
       if (result) {
         try {
           await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}})
           await this.$store.dispatch('fetchMenuAPI');
         } catch (error) {
-          console.log(`Counld not get! ${error}`);
+          console.log(`Could not get! ${error}`);
         }
       }
     },

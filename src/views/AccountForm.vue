@@ -52,7 +52,7 @@
             <span v-if="signUpForm.passwordNotSame" class="text-error">Password Not Same</span>
           </div>
           <div class="mt-10">
-            <button @click="signUp" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
+            <button @keyup.enter="signUp" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
               Sign Up
             </button>
             <div class="mt-5 lg:text-xs text-2xs text-center">
@@ -82,7 +82,7 @@
             <router-link class="text-blue underline text-sm" to="/signup">Sign Up</router-link>
           </div>
           <div class="xl:px-10">
-            <button @click="login" class="py-3 w-full btn btn-primary rounded text-white mt-3">Login</button>
+            <button @keyup.enter="login" class="py-3 w-full btn btn-primary rounded text-white mt-3">Login</button>
           </div>
           <span v-if="loginForm.isErrorLogin" class="text-error">Your username or password is wrong.</span>
         </div>
