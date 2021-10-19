@@ -33,9 +33,9 @@ export default {
     selectCate(id) {
       this.cateId = id;
     },
-    onChangePage(pageOfItems){
-      this.pageOfItems = pageOfItems;
-    }
+    // onChangePage(pageOfItems){
+    //   this.pageOfItems = pageOfItems;
+    // }
   },
   computed: {
     menuFilterList() {
