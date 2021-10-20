@@ -1,5 +1,5 @@
 <template>
-  <div id="userManage" class="pt-32 p-5 bg-salmon-light h-screen">
+  <div id="userManage" class="lg:pt-32 md:pt-24 pt-20 lg:pb-8 md:pb-6 p-5 bg-salmon-light">
     <!-- No permission -->
     <div v-if="account==null||account.role=='Member'||account.role=='Staff'" class="w-full">
       <div class="text-center mx-auto text-yellow font-bold">

@@ -12,6 +12,7 @@ export default createStore({
     categories: [],
     cart: [],
     role:["Admin","Staff","Member"],
+    orderDetail: [],
     JWT:null
   },
   mutations: {
@@ -40,6 +41,10 @@ export default createStore({
       return
     } 
       state.account = data
+    },
+    SET_OrderDetail(state, data) {
+      state.orderDetail = data
+      console.log(data)
     },
     addCartItem(state, item){
       item.count = 1;
@@ -75,11 +80,19 @@ export default createStore({
       console.log("Fetch MENU");
     },
     async fetchUserAPI({ commit }) {
-      await axios.get(`${this.state.backendUrl}/admin/allAccount`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
+      await axios.get(`${this.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
           .then(response => {
             commit('SET_USER', response.data)
           })  
           console.log("Fetch All User");
+    },
+    async fetchOrderDetailAPI({commit}) {
+      await axios.get(`${this.state.backendUrl}/orderdetail`, {withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
+          .then(response => {
+            commit('SET_OrderDetail', response.data)
+            console.log(response.data)
+          })
+          console.log("Fetch Order Details")
     },
     async fetchLocalStorage({ commit }) {
         try {
@@ -124,7 +137,6 @@ export default createStore({
             .then(response => {
               commit('SET_JWT', response.headers.jwt)
               commit('SET_ACCOUNT', response.data)
-              console.log(response.data)
             })
       }
     },

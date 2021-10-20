@@ -49,9 +49,9 @@ const routes = [
     props: { mode: 'SignUp' }
   },
   {
-    path: '/order',
-    name: 'Order',
-    component: ()=> import('../components/Order.vue')
+    path: '/orderManage',
+    name: 'OrderManage',
+    component: ()=> import('../components/OrderManage.vue')
   },
   {
     path: '/accountManage',
