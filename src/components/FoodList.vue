@@ -29,6 +29,7 @@ export default {
   methods: {
     addToCart() {
       this.$store.dispatch('addToCart', this.menu)
+      console.log(this.menu)
     },
     async deleteMenu(menu) {
       const axios = require('axios');

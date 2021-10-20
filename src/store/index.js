@@ -4,8 +4,8 @@ import axios from 'axios'
 export default createStore({
   state: {
     // backendUrl: "https://kaofood.works/api",
-    backendUrl: "https://dev.kaofood.works/api",
-     //backendUrl: "http://localhost:8080",
+    //backendUrl: "https://dev.kaofood.works/api",
+     backendUrl: "http://localhost:8080",
     account: null,
     users: [],
     menus: [],
@@ -42,8 +42,8 @@ export default createStore({
       state.account = data
     },
     addCartItem(state, item){
-      item.count = 1;
-      state.cart.push(item);
+      console.log(item)
+      console.log(item)
     },
     updateCartItem(state, item){
       state.cart.find(element => (element.id == item.id)).count+=1
