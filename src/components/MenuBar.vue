@@ -25,6 +25,20 @@
           <li>
             <router-link to="/signup" class="mt-10 font-bold" v-if="account==null">Sign Up</router-link>
           </li>
+          <!-- When login will toggle by permission -->
+          <div v-if="account!=null">
+            <li class="mt-5 px-5 font-bold">{{ account.fname }} {{ account.lname.slice(0,1) }}.</li>
+            <li><router-link to="/">Edit Account</router-link></li>
+            <li v-if="this.$store.state.account.role=='Admin'">
+              <router-link to="/accountManage" class="w-full">Account Manage</router-link>
+            </li>
+            <li v-if="this.$store.state.account.role!='Member'">
+              <router-link to="/orderManage" class="w-full">Order Manage</router-link>
+            </li>
+            <li v-if="this.$store.state.account.role=='Member'">
+              <router-link to="/cart" class="mx-auto w-full">My Order</router-link>
+            </li>
+          </div>
           <li><span @click="logout" v-if="account!=null" class="font-bold">Logout</span></li>
         </ul>
       </div>
@@ -53,16 +67,18 @@
         <!-- Account: Toggle when ipad to laptop -->
         <!-- Logout&Ordering -->
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
+          <!-- <div tabindex="0" class="btn btn-ghost rounded-btn md:hidden w-14 px-3"><img src="../assets/user.png"></div> -->
           <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }} {{ account.lname.slice(0,1) }}.</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
+            <li><router-link to="/">Edit Account</router-link></li>
             <li v-if="this.$store.state.account.role=='Admin'">
-              <router-link to="/accountManage" class="mx-auto">Account Manage</router-link>
+              <router-link to="/accountManage" class="w-full">Account Manage</router-link>
             </li>
             <li v-if="this.$store.state.account.role!='Member'">
-              <router-link to="/" class="mx-auto">Order Manage</router-link>
+              <router-link to="/orderManage" class="w-full">Order Manage</router-link>
             </li>
             <li v-if="this.$store.state.account.role=='Member'">
-              <router-link to="/cart">My Order</router-link>
+              <router-link to="/cart" class="mx-auto w-full">My Order</router-link>
             </li>
             <li @click="logout" class="btn btn-ghost font-bold">Logout</li>
           </ul>
@@ -90,6 +106,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("getAccount", null);
+      this.$router.push("/");
     }
   },
   computed: {

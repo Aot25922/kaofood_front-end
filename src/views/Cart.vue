@@ -62,7 +62,7 @@
               <div>Total:</div>
               <div class="text-right mb-2">{{total}} ฿</div>
             </div>
-            <button class="btn btn-accent w-full">Checkout</button>
+            <button class="btn btn-accent w-full" @click="checkout()">Checkout</button>
           </div>
         </div>
       </div>
@@ -74,10 +74,13 @@ export default {
   name: "Cart",
   data() {
     return {
+      order :[]
     }
   },
   methods: {
     increaseAmount(item) {
+      // this.order.push({"menu":50,"price":50})
+      // console.log(this.order)
       if(item.count == null ||  item.count == '' ) item.count=0;
       item.count += 1;
       localStorage.setItem('cart',JSON.stringify(this.$store.state.cart))
@@ -90,6 +93,26 @@ export default {
     },
     removeCartItem(item){
       this.$store.dispatch('removeCart',item)
+    },
+    async checkout(){
+      const axios = require('axios');
+      for(let i of this.cartList){
+        this.order.push({"menuId":i.id,"count":i.count})
+      }
+      // let test = JSON.stringify(this.order)
+      //  let data = new FormData();
+      //  data.append("menuList",test)
+      console.log(this.order)
+      try{
+         await axios.post(`${this.$store.state.backendUrl}/order/new?userId=${this.$store.state.account.id}&allPrice=${this.total}`,this.order,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}})
+      } catch(error){
+        console.log(error)
+      }
+      this.order=[]
+      localStorage.removeItem("cart");
+      for(let i of this.cartList){
+        this.$store.dispatch('removeCart',i)
+      }
     }
   },
   computed: {

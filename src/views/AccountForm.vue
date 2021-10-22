@@ -9,50 +9,50 @@
             <span class="text-xl uppercase font-semibold label-text">Register a new account</span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.firstName"
+            <input v-model.trim="signUpForm.firstName" @keyup.enter="signUp"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Firstname"/>
             <span v-if="signUpForm.isFirstNameEmpty" class="text-error">Firstname required</span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.lastName"
+            <input v-model.trim="signUpForm.lastName" @keyup.enter="signUp"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Lastname"/>
             <span v-if="signUpForm.isLastNameEmpty" class="text-error">Lastname required</span>
           </div>
           <div class="mt-4 ">
             <textarea class="h-24 p-2 w-full outline-none border border-gray-dark rounded focus:outline-none focus:border-gray"
-                      placeholder="Your address..." v-model="signUpForm.address"/>
+                      placeholder="Your address..." v-model="signUpForm.address" @keyup.enter="signUp"/>
             <span v-if="signUpForm.isAddressEmpty" class="text-error">Address required</span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.phone"
+            <input v-model.trim="signUpForm.phone" @keyup.enter="signUp"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Phone"/>
             <span v-if="signUpForm.isPhoneEmpty" class="text-error">Phone required</span>
             <span v-if="signUpForm.accountPhoneExist" class="text-error">Phone already exist!</span>
           </div>
           <div class="mt-4">
-            <input type="email" v-model.trim="signUpForm.email"
+            <input type="email" v-model.trim="signUpForm.email" @keyup.enter="signUp"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Email"/>
             <span v-if="signUpForm.isEmailEmpty" class="text-error">Email required</span>
             <span v-if="signUpForm.accountEmailExist" class="text-error">Email already exist!</span>
           </div>
           <div class="mt-4">
-            <input type="password" v-model="signUpForm.password"
+            <input type="password" v-model="signUpForm.password" @keyup.enter="signUp"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Password"/>
           </div>
+          <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
           <div class="mt-4">
-            <input type="password" v-model="signUpForm.confirmPassword"
+            <input type="password" v-model="signUpForm.confirmPassword" @keyup.enter="signUp"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
-                   placeholder="Confirm Password"/>
-            <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
+                   placeholder="Confirm Password"/>         
             <span v-if="signUpForm.passwordNotSame" class="text-error">Password Not Same</span>
           </div>
           <div class="mt-10">
-            <button @keyup.enter="signUp" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
+            <button @click="signUp" @keypress.enter="signUp" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
               Sign Up
             </button>
             <div class="mt-5 lg:text-xs text-2xs text-center">
@@ -66,14 +66,14 @@
         <div v-else class="xl:mt-10 md:mb-4 md:px-10 px-3 py-5">
           <span class="text-xl block text-center p-2 uppercase font-semibold label-text">Login</span>
           <div class="mb-3 xl:px-10">
-            <input type="email" v-model="loginForm.email"
+            <input type="email" v-model="loginForm.email"  @keyup.enter="login"
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Email"/>
             <span v-if="loginForm.isEmailEmpty" class="text-error">Email cannot be empty!</span>
           </div>
           <div class="mb-3 xl:px-10">
             <span class="ml-2 bg-white px-2 absolute -top-3 text-sm">Password</span>
-            <input type="password" v-model="loginForm.password"
+            <input type="password" v-model="loginForm.password"  @keyup.enter="login"
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Password"/>
             <span v-if="loginForm.isPasswordEmpty" class="text-error">password cannot be empty!</span>
@@ -82,7 +82,7 @@
             <router-link class="text-blue underline text-sm" to="/signup">Sign Up</router-link>
           </div>
           <div class="xl:px-10">
-            <button @keyup.enter="login" class="py-3 w-full btn btn-primary rounded text-white mt-3">Login</button>
+            <button @click="login" @keypress.enter="login" class="py-3 w-full btn btn-primary rounded text-white mt-3">Login</button>
           </div>
           <span v-if="loginForm.isErrorLogin" class="text-error">Your username or password is wrong.</span>
         </div>
