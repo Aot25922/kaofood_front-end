@@ -29,13 +29,14 @@ export default {
   methods: {
     addToCart() {
       this.$store.dispatch('addToCart', this.menu)
+      console.log(this.menu)
     },
     async deleteMenu(menu) {
       const axios = require('axios');
       var result = confirm(`Want to delete ${menu.name}?`);
       if (result) {
         try {
-          await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}})
+          await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           await this.$store.dispatch('fetchMenuAPI');
         } catch (error) {
           console.log(`Could not get! ${error}`);

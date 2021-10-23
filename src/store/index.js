@@ -4,7 +4,7 @@ import axios from 'axios'
 export default createStore({
   state: {
     // backendUrl: "https://kaofood.works/api",
-    // backendUrl: "https://dev.kaofood.works/api",
+    //backendUrl: "https://dev.kaofood.works/api",
     backendUrl: "http://localhost:8080",
     account: null,
     users: [],
@@ -12,8 +12,8 @@ export default createStore({
     categories: [],
     cart: [],
     role:["Admin","Staff","Member"],
-    orderDetail: [],
-    JWT:null
+    orderDetail: null,
+    order:null
   },
   mutations: {
     SET_MENU(state, data) {
@@ -28,13 +28,6 @@ export default createStore({
     SET_USER(state, data){
       state.users = data
     },
-    SET_JWT(state,data) {
-      if (data == null || data == '') {
-        state.JWT = null
-        return
-      }
-      state.JWT=data
-    },
     SET_ACCOUNT(state, data) {
       if (data == null || data == '') {
       state.account = null;
@@ -42,13 +35,18 @@ export default createStore({
     } 
       state.account = data
     },
-    SET_OrderDetail(state, data) {
+    SET_ORDERDETAIL(state, data) {
       state.orderDetail = data
       console.log(data)
     },
+    SET_ORDER(state,data){
+      state.order = data
+      console.log(state.order)
+    },
     addCartItem(state, item){
-      item.count = 1;
-      state.cart.push(item);
+      if(item == null) return;
+      item.count=1
+      state.cart.push(item)
     },
     updateCartItem(state, item){
       state.cart.find(element => (element.id == item.id)).count+=1
@@ -80,16 +78,24 @@ export default createStore({
       console.log("Fetch MENU");
     },
     async fetchUserAPI({ commit }) {
-      await axios.get(`${this.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
+      await axios.get(`${this.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => {
             commit('SET_USER', response.data)
           })  
           console.log("Fetch All User");
     },
     async fetchOrderDetailAPI({commit}) {
-      await axios.get(`${this.state.backendUrl}/orderdetail`, {withCredentials:true , headers : {"Authorization": `Bearer ${this.state.JWT}`}})
+      await axios.get(`${this.state.backendUrl}/orderdetail`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => {
-            commit('SET_OrderDetail', response.data)
+            commit('SET_ORDERDETAIL', response.data)
+            console.log(response.data)
+          })
+          console.log("Fetch Order Details")
+    },
+    async fetchOrderAPI({commit}) {
+      await axios.get(`${this.state.backendUrl}/admin/allOrder`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+          .then(response => {
+            commit('SET_ORDER', response.data)
             console.log(response.data)
           })
           console.log("Fetch Order Details")
@@ -97,7 +103,9 @@ export default createStore({
     async fetchLocalStorage({ commit }) {
         try {
           await axios.get(`${this.state.backendUrl}/user/login`,{withCredentials:true}).then(response => {
-            commit('SET_JWT', response.headers.jwt)
+            if(localStorage.getItem('JWT')==null){
+              localStorage.setItem('JWT',response.headers.jwt)
+            }
             commit('SET_ACCOUNT', response.data)
           })
         } catch (e) {
@@ -127,16 +135,17 @@ export default createStore({
     },
     async getAccount({ commit }, loginForm){
       if (loginForm == null){
-        await axios.delete(`${this.state.backendUrl}/user/logout`,{withCredentials:true,headers : {"Authorization": `Bearer ${this.state.JWT}`}})
+        await axios.delete(`${this.state.backendUrl}/user/logout`,{withCredentials:true,headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
         commit('SET_ACCOUNT',null);
         commit('SET_USER',null);
-        commit('SET_JWT',null);
+        localStorage.removeItem('JWT')
         localStorage.removeItem("cart");
       }else {
         await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`,{withCredentials:true})
             .then(response => {
               commit('SET_JWT', response.headers.jwt)
               commit('SET_ACCOUNT', response.data)
+              localStorage.setItem('JWT',response.headers.jwt)
             })
       }
     },

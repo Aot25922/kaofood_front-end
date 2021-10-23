@@ -55,7 +55,7 @@
             <span v-if="signUpForm.passwordNotSame" class="text-error">Password Not Same</span>
           </div>
           <div class="mt-10">
-            <button @click="signUp" @keypress.enter="signUp" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
+            <button @click="saveForm" @keypress.enter="saveForm" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
               <span v-if="mode == 'SignUp'">Sign Up</span>
               <span v-else>Save</span>
             </button>
@@ -155,7 +155,7 @@ export default {
       this.signUpForm.passwordNotSame = (this.signUpForm.password != this.signUpForm.confirmPassword) ? true : false
     },
     async signUp() {
-      this.checkSignUpForm();
+      // this.checkSignUpForm();
       if (this.signUpForm.isFirstNameEmpty || this.signUpForm.isLastNameEmpty || this.signUpForm.isAddressEmpty
           || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty ||
           this.signUpForm.passwordNotSame) return;
@@ -180,20 +180,25 @@ export default {
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
     },
-    checkEditFrom() {
-      this.signUpForm.isFirstNameEmpty = (this.signUpForm.firstName == "") ? true : false
-      this.signUpForm.isLastNameEmpty = (this.signUpForm.lastName == "") ? true : false
-      this.signUpForm.isAddressEmpty = (this.signUpForm.address == "") ? true : false
-      this.signUpForm.isPhoneEmpty = (this.signUpForm.phone == "") ? true : false
-      this.signUpForm.isEmailEmpty = (this.signUpForm.email == "") ? true : false
+    saveForm() {
+      this.checkSignUpForm();
+      if(this.$route.params.id != null) this.editAccount();
+      if(this.$route.params.id == null) this.signUp();
     },
+    // checkEditFrom() {
+    //   this.signUpForm.isFirstNameEmpty = (this.signUpForm.firstName == "") ? true : false
+    //   this.signUpForm.isLastNameEmpty = (this.signUpForm.lastName == "") ? true : false
+    //   this.signUpForm.isAddressEmpty = (this.signUpForm.address == "") ? true : false
+    //   this.signUpForm.isPhoneEmpty = (this.signUpForm.phone == "") ? true : false
+    //   this.signUpForm.isEmailEmpty = (this.signUpForm.email == "") ? true : false
+    // },
     async editAccount() {
       const axios = require('axios');
       let editAccount = JSON.stringify(this.signUpForm)
       let data = new FormData()
       data.append("account", editAccount)
       try {
-        await axios.put(`${this.$store.state.backendUrl}/editAccount`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}});
+        await axios.put(`${this.$store.state.backendUrl}/user/edit`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$router.push('/')
       } catch(error) {
         console.log(error)
