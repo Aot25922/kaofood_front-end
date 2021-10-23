@@ -14,17 +14,17 @@ const routes = [
   {
     path: '/menu/:id',
     name: 'MenuInfo',
-    component: ()=> import('../components/MenuInfo.vue')
+    component: ()=> import('../components/RestaurantMenu/MenuInfo.vue')
   },
   {
     path: '/menu/add',
     name: 'AddMenu',
-    component: () => import('../components/MenuForm.vue'),
+    component: () => import('../components/RestaurantMenu/MenuForm.vue'),
   },
   {
     path: '/menu/edit/:id',
     name: 'EditMenu',
-    component: () => import('../components/MenuForm.vue'),
+    component: () => import('../components/RestaurantMenu/MenuForm.vue'),
   },
   {
     path: '/contact',

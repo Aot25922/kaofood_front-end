@@ -86,8 +86,16 @@ export default {
       console.log("Get Status Form API")
     }
   },
+  computed: {
+    accountRole() {
+      if(this.$store.state.account==null) return false;
+      if(this.$store.state.account.role=='Admin') return true;
+      if(this.$store.state.account.role=='Staff') return true;
+      return false;
+    },
+  },
   created() {
-    if(this.$store.state.account.role == 'Admin' || this.$store.state.account.role == 'Staff'){
+    if(this.accountRole){
       this.getOrderList();
       this.getOrderDetailList();
       this.getStatus();

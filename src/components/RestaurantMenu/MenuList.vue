@@ -1,5 +1,5 @@
 <template>
-  <div id="FoodList" class="card bordered bg-white">
+  <div id="MenuList" class="card bordered bg-white">
     <div class="relative">
       <img id="img-id" class="rounded w-full xl:h-80 h-56 object-cover"
            :src=" this.$store.state.backendUrl+this.menu.image" :alt="menu.name"/>
@@ -9,7 +9,7 @@
       <h2 class="card-title xl:text-2xl md:text-xl">{{ menu.name }}
         <!-- <div class="badge mx-2 badge-secondary lg:text-xl md:text-lg lg:py-4 md:p-3 ">NEW</div> -->
       </h2>
-      <div v-if="account!=null&&(account.role=='Admin'||account.role=='Staff')" class="flex flex-row">
+      <div v-if="accountRole" class="flex flex-row">
         <router-link class="btn btn-warning lg:text-base text-sm mx-1 flex-1" :to="{ name:'EditMenu' , params: { id : menu.id } }">Edit</router-link>
         <button class="btn btn-error lg:text-base text-sm mx-1 flex-1" @click="deleteMenu(menu)">Delete</button>
       </div>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: "FoodList",
+  name: "MenuList",
   props: {
     menu: null,
   },
@@ -35,18 +35,17 @@ export default {
       const axios = require('axios');
       var result = confirm(`Want to delete ${menu.name}?`);
       if (result) {
-        try {
-          await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-          await this.$store.dispatch('fetchMenuAPI');
-        } catch (error) {
-          console.log(`Could not get! ${error}`);
-        }
+        await axios.delete(`${this.$store.state.backendUrl}/menu/delete/${menu.id}`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+        await this.$store.dispatch('fetchMenuAPI');
       }
     },
   },
   computed: {
-    account() {
-      return this.$store.state.account;
+    accountRole() {
+      if(this.$store.state.account==null) return false;
+      if(this.$store.state.account.role=='Admin') return true;
+      if(this.$store.state.account.role=='Staff') return true;
+      return false;
     },
   },
 };

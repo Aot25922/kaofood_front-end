@@ -11,18 +11,18 @@
         <!-- Appear when Ipad to laptop -->
         <i class="fas fa-plus-circle addMenuCard"></i>
       </router-link>
-      <food-list class="card p-2 sm:flex-1 md:mx-3 m-2 md:mb-5" v-for="menu in menuFilterList" :menu="menu" :key="menu.id"/>
+      <menu-list class="card p-2 sm:flex-1 md:mx-3 m-2 md:mb-5" v-for="menu in menuFilterList" :menu="menu" :key="menu.id"/>
     </div>
   </div>
 </template>
 
 <script>
-import Category from "@/components/Category.vue";
-import FoodList from "@/components/FoodList.vue";
+import Category from "@/components/RestaurantMenu/Category.vue";
+import MenuList from "@/components/RestaurantMenu/MenuList.vue";
 
 export default {
   name: "Menu",
-  components: { Category, FoodList },
+  components: { Category, MenuList },
   data() {
     return {
       cateId: null,

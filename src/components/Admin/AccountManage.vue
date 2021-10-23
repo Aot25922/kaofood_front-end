@@ -1,7 +1,7 @@
 <template>
   <div id="userManage" class="lg:pt-32 md:pt-24 pt-20 lg:pb-8 md:pb-6 p-5 bg-salmon-light">
     <!-- No permission -->
-    <div v-if="this.$store.state.account.role!='Admin'" class="w-full">
+    <div v-if="!accountRole" class="w-full">
       <div class="text-center mx-auto text-yellow font-bold">
         <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl text-warning"></i> 
         <p class="lg:text-xl md:text-lg p-3 text-warning">You want to get in This page?</p>
@@ -86,8 +86,15 @@ export default {
       }
     }
   },
+  computed: {
+    accountRole() {
+      if(this.$store.state.account==null) return false;
+      if(this.$store.state.account.role=='Admin') return true;
+      return false;
+    },
+  },
   created() {
-    if(this.$store.state.account.role == 'Admin'){
+    if(this.accountRole){
       this.getUserList();
     }
   }
