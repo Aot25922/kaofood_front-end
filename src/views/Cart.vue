@@ -104,7 +104,7 @@ export default {
       //  data.append("menuList",test)
       console.log(this.order)
       try{
-         await axios.post(`${this.$store.state.backendUrl}/order/new?userId=${this.$store.state.account.id}&allPrice=${this.total}`,this.order,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}})
+         await axios.post(`${this.$store.state.backendUrl}/order/new?userId=${this.$store.state.account.id}`,this.order,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
       } catch(error){
         console.log(error)
       }

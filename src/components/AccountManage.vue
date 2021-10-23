@@ -55,7 +55,7 @@ export default {
       var result = confirm(`Are you sure to delete ${user.fname} ${user.lname}?`);
       if (result) {
         try {
-          await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}});
+          await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
           await this.$store.dispatch('fetchUserAPI');
         } catch (error) {
           console.log(`Could not get! ${error}`)
@@ -69,7 +69,7 @@ export default {
       var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role}`);
       if(result){
         try{
-        await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}`,`role=${role}`, {withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}})
+        await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}`,`role=${role}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
         .then(response => {
             console.log(response);
           })  

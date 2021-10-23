@@ -100,7 +100,7 @@ export default {
       data.append("menu", newMenu)
       data.append("multipartFile", this.file);
       try {
-        await axios.post(`${this.$store.state.backendUrl}/menu/add`, data,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}});
+        await axios.post(`${this.$store.state.backendUrl}/menu/add`, data,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$router.push('/menu');
       } catch (error) {
         console.log(`Counld not get! ${error}`);
@@ -113,7 +113,7 @@ export default {
       data.append("menu", editMenu)
       data.append("multipartFile", this.file);
       try {
-        await axios.put(`${this.$store.state.backendUrl}/menu/edit`, data ,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}});
+        await axios.put(`${this.$store.state.backendUrl}/menu/edit`, data ,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$router.push('/menu');
       } catch (error) {
         console.log(error)

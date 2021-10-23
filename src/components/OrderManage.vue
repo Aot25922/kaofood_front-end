@@ -1,11 +1,11 @@
 <template>
   <div id="orderManage" class="lg:pt-28 md:pt-24 pt-20 bg-fire-lightest p-5">
     <p class="font-bold p-5 text-2xl">Order Management</p>
-    <div class="card p-5 bg-white">
+    <div class="card p-5 bg-white mb-8" v-for="order in orderList" :key="order.id">
       <div class="collapse w-full border rounded-box border-base-300 collapse-arrow">
         <input type="checkbox" />
         <div class="collapse-title text-xl font-medium ">
-          Order Id: KF000001
+          {{order.id}}
         </div>
         <div class="collapse-content">
           <div class="overflow-x-auto">
@@ -20,25 +20,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th>1</th>
-                  <td>Some Name</td>
-                  <td>20 ฿</td>
-                  <td>6</td>
-                  <td>120 ฿</td>
+                <tr v-for="orderDetail in orderDetailList.filter(list => {return list.orders.id == order.id})" :key="orderDetail.id" >
+                  <th>{{orderDetail.id}}</th>
+                  <td>{{orderDetail.menu.name}}</td>
+                  <td>{{orderDetail.menu.price}} ฿</td>
+                  <td>{{orderDetail.count}}</td>
+                  <td>{{orderDetail.menu.price*orderDetail.count}} ฿</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="divider"></div>
-          <p class=""><b>Total:</b> 120 ฿</p>
+          <p class=""><b>Total:</b> {{order.totalPrice}} ฿</p>
         </div>
       </div>
       <ul class="w-full steps pt-5">
-        <li class="step step-primary">Ordered</li>
-        <li class="step step-primary">Cooking</li>
-        <li class="step">Delivering</li>
-        <li class="step">Arrived</li>
+        <li class="step" :class="{'step-primary':order.status.id>=status.id}" v-for="status in statusList " :key="status.id" @click="changeOrderStatus(order,status)">{{status.name}}</li>
       </ul>
     </div>
   </div>
@@ -47,8 +44,47 @@
 <script>
 export default {
   name: "OrderManage",
+  data(){
+     return {
+       statusList : null
+     }
+  },
+  methods : {
+    async changeOrderStatus(order,status){
+      const axios = require('axios');
+       order.status=status
+       console.log(localStorage.getItem('JWT'))
+       try{
+         axios.put(`${this.$store.state.backendUrl}/admin/edit/order?orderId=${order.id}&statusId=${status.id}`,null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})  
+      }catch(error){
+        console.log(error)
+      }
+    },
+async getStatus(){
+      const axios = require('axios');
+      try{
+         axios.get(`${this.$store.state.backendUrl}/status`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+         .then(response => {
+           this.statusList = response.data
+           console.log(this.statusList)
+          })  
+      }catch(error){
+        console.log(error)
+      }
+    }
+  },
+  computed: {
+    orderList() {
+      return this.$store.state.order;
+    },
+    orderDetailList(){
+      return this.$store.state.orderDetail
+    }
+  },
   created() {
     this.$store.dispatch("fetchOrderDetailAPI");
+    this.$store.dispatch("fetchOrderAPI");
+    this.getStatus()
   },
 };
 </script>
