@@ -7,7 +7,6 @@ export default createStore({
     //backendUrl: "https://dev.kaofood.works/api",
     backendUrl: "http://localhost:8080",
     account: null,
-    users: [],
     menus: [],
     categories: [],
     cart: [],
@@ -24,9 +23,6 @@ export default createStore({
     },
     SET_CART(state, data) {
       state.cart = data
-    },
-    SET_USER(state, data){
-      state.users = data
     },
     SET_ACCOUNT(state, data) {
       if (data == null || data == '') {
@@ -76,13 +72,6 @@ export default createStore({
             commit('SET_MENU', response.data)
           })
       console.log("Fetch MENU");
-    },
-    async fetchUserAPI({ commit }) {
-      await axios.get(`${this.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-          .then(response => {
-            commit('SET_USER', response.data)
-          })  
-          console.log("Fetch All User");
     },
     async fetchOrderDetailAPI({commit}) {
       await axios.get(`${this.state.backendUrl}/orderdetail`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})

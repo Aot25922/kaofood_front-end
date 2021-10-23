@@ -57,12 +57,12 @@ const routes = [
   {
     path: '/orderManage',
     name: 'OrderManage',
-    component: ()=> import('../components/OrderManage.vue')
+    component: ()=> import('../components/Admin/OrderManage.vue')
   },
   {
     path: '/accountManage',
     name: 'AcoountManage',
-    component: ()=> import('../components/AccountManage.vue')
+    component: ()=> import('../components/Admin/AccountManage.vue')
   }
 ]
 

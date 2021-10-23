@@ -1,7 +1,7 @@
 <template>
   <div id="userManage" class="lg:pt-32 md:pt-24 pt-20 lg:pb-8 md:pb-6 p-5 bg-salmon-light">
     <!-- No permission -->
-    <div v-if="account==null||account.role=='Member'||account.role=='Staff'" class="w-full">
+    <div v-if="account.role!='Admin'" class="w-full">
       <div class="text-center mx-auto text-yellow font-bold">
         <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl text-warning"></i> 
         <p class="lg:text-xl md:text-lg p-3 text-warning">You want to get in This page?</p>
@@ -47,33 +47,46 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "AccountManage",
+  data() {
+    return {
+      userList: null
+    }
+  },
   methods:{
+    //โหลดข้อมูล userList
+    async getUserList() {
+      await axios.get(`${this.$store.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+          .then(response => { this.userList = response.data })
+      console.log("Get UserList Form API");
+    },
+
     async deleteUser(user) {
       const axios = require('axios');
       var result = confirm(`Are you sure to delete ${user.fname} ${user.lname}?`);
       if (result) {
         try {
           await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
-          await this.$store.dispatch('fetchUserAPI');
+          await this.getUserList();
         } catch (error) {
           console.log(`Could not get! ${error}`)
         }
       }
     },
+
     async editRoleUser(user,role){
       const axios = require('axios');
       // let data = new FormData()
       // data.append("role", role)
       var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role}`);
-      if(result){
+      if (result) {
         try{
-        await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}`,`role=${role}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-        .then(response => {
-            console.log(response);
-          })  
-        await this.$store.dispatch('fetchUserAPI');
+          await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}`,`role=${role}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+            .then(response => { console.log(response); })
+          await this.getUserList();
         }catch(error){
           console.log(`Could not get! ${error}`)
         }
@@ -81,15 +94,14 @@ export default {
     }
   },
   computed: {
-    userList() {
-      return this.$store.state.users
-    },
     account() {
       return this.$store.state.account
     }
   },
-  created() {
-    this.$store.dispatch("fetchUserAPI");
+  async created() {
+    if(this.account.role == 'Admin'){
+      await this.getUserList();
+    }
   }
 };
 </script>
