@@ -6,7 +6,10 @@
         <!-- ส่วนของ Sign Up -->
         <div v-if="mode == 'SignUp' || mode == 'Edit'" class="w-full p-3 px-6 py-10">
           <div class="text-center">
-            <span class="text-xl uppercase font-semibold label-text">Register a new account</span>
+            <span class="text-xl uppercase font-semibold label-text">
+              <span v-if="mode == 'SignUp'">Register a new account</span>
+              <span v-else>Edit Your Account</span>
+            </span>
           </div>
           <div class="mt-4">
             <input v-model.trim="signUpForm.firstName" @keyup.enter="signUp"
@@ -39,13 +42,13 @@
             <span v-if="signUpForm.isEmailEmpty" class="text-error">Email required</span>
             <span v-if="signUpForm.accountEmailExist" class="text-error">Email already exist!</span>
           </div>
-          <div class="mt-4">
+          <div class="mt-4" v-if="mode == 'SignUp'">
             <input type="password" v-model="signUpForm.password" @keyup.enter="signUp"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Password"/>
+              <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
           </div>
-          <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
-          <div class="mt-4">
+          <div class="mt-4" v-if="mode == 'SignUp'">
             <input type="password" v-model="signUpForm.confirmPassword" @keyup.enter="signUp"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Confirm Password"/>         
@@ -53,9 +56,10 @@
           </div>
           <div class="mt-10">
             <button @click="signUp" @keypress.enter="signUp" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
-              Sign Up
+              <span v-if="mode == 'SignUp'">Sign Up</span>
+              <span v-else>Save</span>
             </button>
-            <div class="mt-5 lg:text-xs text-2xs text-center">
+            <div class="mt-5 lg:text-xs text-2xs text-center" v-if="mode == 'SignUp'">
               <hr class="w-full text-gray lg:py-3 py-2">
             <span>Already have account, please </span><router-link to="/login" class="text-blue underline">LogIn</router-link>
           </div>
@@ -175,7 +179,36 @@ export default {
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
+    },
+    checkEditFrom() {
+      this.signUpForm.isFirstNameEmpty = (this.signUpForm.firstName == "") ? true : false
+      this.signUpForm.isLastNameEmpty = (this.signUpForm.lastName == "") ? true : false
+      this.signUpForm.isAddressEmpty = (this.signUpForm.address == "") ? true : false
+      this.signUpForm.isPhoneEmpty = (this.signUpForm.phone == "") ? true : false
+      this.signUpForm.isEmailEmpty = (this.signUpForm.email == "") ? true : false
+    },
+    async editAccount() {
+      const axios = require('axios');
+      let editAccount = JSON.stringify(this.signUpForm)
+      let data = new FormData()
+      data.append("account", editAccount)
+      try {
+        await axios.put(`${this.$store.state.backendUrl}/editAccount`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}});
+        this.$router.push('/')
+      } catch(error) {
+        console.log(error)
+      }
+     }
+  },
+  mounted() {
+    if(this.mode == 'Edit') {
+      let account = this.$store.state.account
+      this.signUpForm.firstName = account.fname
+      this.signUpForm.lastName = account.lname
+      this.signUpForm.email = account.email
+      this.signUpForm.phone = account.phone
+      this.signUpForm.address = account.address
     }
-  }
+  },
 }
 </script>

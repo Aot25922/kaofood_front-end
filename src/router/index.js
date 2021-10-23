@@ -51,7 +51,7 @@ const routes = [
   {
     path: '/editAccount/:id',
     name: 'EditAccount',
-    component: () => import('../view/AccountForm.vue'),
+    component: () => import('../views/AccountForm.vue'),
     props: { mode: 'Edit' }
   },
   {
