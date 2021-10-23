@@ -49,6 +49,12 @@ const routes = [
     props: { mode: 'SignUp' }
   },
   {
+    path: '/editAccount/:id',
+    name: 'EditAccount',
+    component: () => import('../view/AccountForm.vue'),
+    props: { mode: 'Edit' }
+  },
+  {
     path: '/orderManage',
     name: 'OrderManage',
     component: ()=> import('../components/OrderManage.vue')
@@ -57,12 +63,7 @@ const routes = [
     path: '/accountManage',
     name: 'AcoountManage',
     component: ()=> import('../components/AccountManage.vue')
-  },
-  // {
-  //   path: '/accountManage/edit/:id',
-  //   name: 'AcoountManage',
-  //   component: ()=> import('../components/AccountManage.vue')
-  // }
+  }
 ]
 
 const router = createRouter({

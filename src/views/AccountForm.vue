@@ -4,7 +4,7 @@
       <img src="../assets/logo.png" class="lg:col-span-1 xl:p-16 lg:p-5 lg:m-auto md:mt-16 my-10 mx-auto lg:w-3/4 md:w-1/4 w-1/3"/>
       <div class="lg:col-span-2 lg:w-full xl:max-w-screen-lg max-w-xl mx-auto bg-white md:px-10 p-3 rounded shadow border-8 border-fire-darker">
         <!-- ส่วนของ Sign Up -->
-        <div v-if="mode == 'SignUp'" class="w-full p-3 px-6 py-10">
+        <div v-if="mode == 'SignUp' || mode == 'Edit'" class="w-full p-3 px-6 py-10">
           <div class="text-center">
             <span class="text-xl uppercase font-semibold label-text">Register a new account</span>
           </div>
@@ -66,7 +66,7 @@
         <div v-else class="xl:mt-10 md:mb-4 md:px-10 px-3 py-5">
           <span class="text-xl block text-center p-2 uppercase font-semibold label-text">Login</span>
           <div class="mb-3 xl:px-10">
-            <input type="email" v-model="loginForm.email"  @keyup.enter="login"
+            <input type="email" v-model="loginForm.email" @keyup.enter="login"
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Email"/>
             <span v-if="loginForm.isEmailEmpty" class="text-error">Email cannot be empty!</span>

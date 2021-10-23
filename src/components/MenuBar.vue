@@ -28,7 +28,7 @@
           <!-- When login will toggle by permission -->
           <div v-if="account!=null">
             <li class="mt-5 px-5 font-bold">{{ account.fname }} {{ account.lname.slice(0,1) }}.</li>
-            <li><router-link to="/">Edit Account</router-link></li>
+            <li><router-link :to="{ name:'EditAccount', params: { id : account.id} }">Edit Account</router-link></li>
             <li v-if="this.$store.state.account.role=='Admin'">
               <router-link to="/accountManage" class="w-full">Account Manage</router-link>
             </li>
