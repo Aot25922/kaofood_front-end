@@ -1,7 +1,7 @@
 <template>
   <div id="userManage" class="lg:pt-32 md:pt-24 pt-20 lg:pb-8 md:pb-6 p-5 bg-salmon-light">
     <!-- No permission -->
-    <div v-if="account.role!='Admin'" class="w-full">
+    <div v-if="this.$store.state.account.role!='Admin'" class="w-full">
       <div class="text-center mx-auto text-yellow font-bold">
         <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl text-warning"></i> 
         <p class="lg:text-xl md:text-lg p-3 text-warning">You want to get in This page?</p>
@@ -33,7 +33,7 @@
               <td>{{ user.email }}</td>
               <td>
                 <select v-model="user.role" id="role" name="role" @change="editRoleUser(user,user.role)">
-                <option :value="role" v-for="role in this.$store.state.role" :key="role">{{ role }}</option>
+                <option :value="role" v-for="role in this.roleList" :key="role">{{ role }}</option>
                 </select></td>
               <td>
                 <button v-if="user.role!='Admin'" class="lg:text-lg text-primary-focus" @click="deleteUser(user)"><i class="fas fa-trash-alt"></i></button>
@@ -53,7 +53,8 @@ export default {
   name: "AccountManage",
   data() {
     return {
-      userList: null
+      userList : null,
+      roleList : ["Admin","Staff","Member"]
     }
   },
   methods:{
@@ -68,12 +69,8 @@ export default {
       const axios = require('axios');
       var result = confirm(`Are you sure to delete ${user.fname} ${user.lname}?`);
       if (result) {
-        try {
-          await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
-          await this.getUserList();
-        } catch (error) {
-          console.log(`Could not get! ${error}`)
-        }
+        await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
+        await this.getUserList();
       }
     },
 
@@ -83,24 +80,15 @@ export default {
       // data.append("role", role)
       var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role}`);
       if (result) {
-        try{
-          await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}`,`role=${role}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-            .then(response => { console.log(response); })
-          await this.getUserList();
-        }catch(error){
-          console.log(`Could not get! ${error}`)
-        }
+        await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}`,`role=${role}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+          .then(response => { console.log(response); })
+        await this.getUserList();
       }
     }
   },
-  computed: {
-    account() {
-      return this.$store.state.account
-    }
-  },
-  async created() {
-    if(this.account.role == 'Admin'){
-      await this.getUserList();
+  created() {
+    if(this.$store.state.account.role == 'Admin'){
+      this.getUserList();
     }
   }
 };

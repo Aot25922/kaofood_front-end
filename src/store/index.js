@@ -10,9 +10,6 @@ export default createStore({
     menus: [],
     categories: [],
     cart: [],
-    role:["Admin","Staff","Member"],
-    orderDetail: null,
-    order:null
   },
   mutations: {
     SET_MENU(state, data) {
@@ -30,14 +27,6 @@ export default createStore({
       return
     } 
       state.account = data
-    },
-    SET_ORDERDETAIL(state, data) {
-      state.orderDetail = data
-      console.log(data)
-    },
-    SET_ORDER(state,data){
-      state.order = data
-      console.log(state.order)
     },
     addCartItem(state, item){
       if(item == null) return;
@@ -72,22 +61,6 @@ export default createStore({
             commit('SET_MENU', response.data)
           })
       console.log("Fetch MENU");
-    },
-    async fetchOrderDetailAPI({commit}) {
-      await axios.get(`${this.state.backendUrl}/orderdetail`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-          .then(response => {
-            commit('SET_ORDERDETAIL', response.data)
-            console.log(response.data)
-          })
-          console.log("Fetch Order Details")
-    },
-    async fetchOrderAPI({commit}) {
-      await axios.get(`${this.state.backendUrl}/admin/allOrder`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-          .then(response => {
-            commit('SET_ORDER', response.data)
-            console.log(response.data)
-          })
-          console.log("Fetch Order Details")
     },
     async fetchLocalStorage({ commit }) {
         try {

@@ -42,49 +42,56 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "OrderManage",
   data(){
      return {
-       statusList : null
+       statusList : null,
+       orderList : null,
+       orderDetailList : null
      }
   },
-  methods : {
+  methods:{
     async changeOrderStatus(order,status){
-      const axios = require('axios');
-       order.status=status
-       console.log(localStorage.getItem('JWT'))
-       try{
-         axios.put(`${this.$store.state.backendUrl}/admin/edit/order?orderId=${order.id}&statusId=${status.id}`,null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})  
-      }catch(error){
-        console.log(error)
-      }
+      order.status = status
+      console.log(localStorage.getItem('JWT'))
+      axios.put(`${this.$store.state.backendUrl}/admin/edit/order?orderId=${order.id}&statusId=${status.id}`,null,
+          {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
     },
-async getStatus(){
-      const axios = require('axios');
-      try{
-         axios.get(`${this.$store.state.backendUrl}/status`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-         .then(response => {
-           this.statusList = response.data
-           console.log(this.statusList)
-          })  
-      }catch(error){
-        console.log(error)
-      }
-    }
-  },
-  computed: {
-    orderList() {
-      return this.$store.state.order;
+
+    async getOrderList() {
+      await axios.get(`${this.$store.state.backendUrl}/admin/allOrder`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+          .then(response => {
+            this.orderList = response.data
+          })
+      console.log("Get Order Form API")
     },
-    orderDetailList(){
-      return this.$store.state.orderDetail
+
+    async getOrderDetailList() {
+      await axios.get(`${this.$store.state.backendUrl}/orderdetail`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+          .then(response => {
+            this.orderDetailList = response.data
+          })
+      console.log("Get OrderDetail Form API")
+    },
+
+    async getStatus(){
+      await axios.get(`${this.$store.state.backendUrl}/status`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+        .then(response => {
+          this.statusList = response.data
+          // console.log(this.statusList)
+      })
+      console.log("Get Status Form API")
     }
   },
   created() {
-    this.$store.dispatch("fetchOrderDetailAPI");
-    this.$store.dispatch("fetchOrderAPI");
-    this.getStatus()
+    if(this.$store.state.account.role == 'Admin' || this.$store.state.account.role == 'Staff'){
+      this.getOrderList();
+      this.getOrderDetailList();
+      this.getStatus();
+    }
   },
 };
 </script>
