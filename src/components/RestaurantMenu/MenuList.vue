@@ -1,9 +1,11 @@
 <template>
   <div id="MenuList" class="card bordered bg-white">
     <div class="relative">
-      <img id="img-id" class="rounded w-full xl:h-80 h-56 object-cover"
+      <router-link :to="{ name:'MenuInfo' , params: { id : menu.id } }">
+        <img id="img-id" class="rounded w-full xl:h-80 h-56 object-cover"
            :src=" this.$store.state.backendUrl+this.menu.image" :alt="menu.name"/>
-      <span class="font-medium absolute bottom-0 left-0 rounded bg-primary text-white xl:text-xl md:text-lg p-1">{{ menu.price }} ฿</span>
+        <span class="font-medium absolute bottom-0 left-0 rounded bg-primary text-white xl:text-xl md:text-lg p-1">{{ menu.price }} ฿</span>
+      </router-link>
     </div>
     <div class="card-body xl:p-8 lg:p-5 p-3">
       <h2 class="card-title xl:text-2xl md:text-xl">{{ menu.name }}
