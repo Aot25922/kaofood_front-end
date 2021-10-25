@@ -29,7 +29,7 @@
           <div v-if="account!=null">
             <li class="mt-5 px-5 font-bold">{{ account.fname }} {{ account.lname.slice(0,1) }}.</li>
             <li><router-link :to="{ name:'EditAccount', params: { id : account } }">Edit Account</router-link></li>
-            <li v-if="this.$store.state.account.role=='Admin'">
+            <li v-if="this.$store.state.account.role=='AdminConsole'">
               <router-link to="/accountManage" class="w-full">Account Manage</router-link>
             </li>
             <li v-if="this.$store.state.account.role!='Member'">
@@ -71,7 +71,7 @@
           <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }} {{ account.lname.slice(0,1) }}.</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
             <li><router-link :to="{ name:'EditAccount', params: { id : account.id } }">Edit Account</router-link></li>
-            <li v-if="this.$store.state.account.role=='Admin'">
+            <li v-if="this.$store.state.account.role=='AdminConsole'">
               <router-link to="/accountManage" class="w-full">Account Manage</router-link>
             </li>
             <li v-if="this.$store.state.account.role!='Member'">

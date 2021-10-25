@@ -37,7 +37,7 @@
                 <option :value="role" v-for="role in this.roleList" :key="role">{{ role }}</option>
                 </select></td>
               <td>
-                <button v-if="user.role!='Admin'" class="lg:text-lg text-primary-focus" @click="deleteUser(user)"><i class="fas fa-trash-alt"></i></button>
+                <button v-if="user.role!='AdminConsole'" class="lg:text-lg text-primary-focus" @click="deleteUser(user)"><i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>
@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       userList : null,
-      roleList : ["Admin","Staff","Member"]
+      roleList : ["AdminConsole","Staff","Member"]
     }
   },
   methods:{
@@ -88,7 +88,7 @@ export default {
   computed: {
     accountRole() {
       if(this.$store.state.account==null) return false;
-      if(this.$store.state.account.role=='Admin') return true;
+      if(this.$store.state.account.role=='AdminConsole') return true;
       return false;
     },
   },
