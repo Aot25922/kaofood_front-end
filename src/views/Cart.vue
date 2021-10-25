@@ -60,9 +60,8 @@
                 <hr class="w-full text-gray">
               </div>
             </div>
-            <div class="card-body text-fire-darkest text-lg font-semibold px-5 pt-3 flex-col">
-              <!-- Summary -->
-              <div>Quantity: <span class="text-right mb-2">{{quantity}}</span></div>
+            <div class="card-body text-fire-darkest text-lg font-semibold px-5 flex-col">
+              <!-- Total Price -->
               <div>Price: <span class="text-right mb-2">{{total}} ฿</span></div>
             </div>
             <button class="btn btn-accent w-full" @click="checkout()">Checkout</button>
@@ -128,13 +127,6 @@ export default {
         total += i.count*i.price;
       }
       return total;
-    },
-    quantity(){
-      let quantity = 0
-      for(let i of this.cartList){
-        quantity += i.count 
-      }
-      return quantity
     },
     account(){
       return this.$store.state.account

@@ -62,7 +62,7 @@
         <router-link to="/cart" class="mx-auto">
           <button class="md:flex btn btn-square btn-ghost relative">
             <i class="material-icons"> shopping_cart </i>
-            <span class="bg-fire-lighter rounded-full absolute z-10 -top-1 -right-1 w-6 h-6 flex justify-center items-center">{{ count }}</span>
+            <span v-if="count!=0" class="bg-fire-lighter rounded-full absolute z-10 -top-1 -right-1 w-6 h-6 flex justify-center items-center">{{ count }}</span>
           </button>
         </router-link>   
         <!-- Account: Toggle when ipad to laptop -->
