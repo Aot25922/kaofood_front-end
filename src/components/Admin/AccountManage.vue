@@ -2,12 +2,13 @@
   <div id="userManage" class="lg:pt-32 md:pt-24 pt-20 lg:pb-8 md:pb-6 p-5 bg-salmon-light">
     <!-- No permission -->
     <div v-if="!accountRole" class="w-full">
-      <div class="text-center mx-auto text-yellow font-bold">
+      <!-- <div class="text-center mx-auto text-yellow font-bold">
         <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl text-warning"></i> 
         <p class="lg:text-xl md:text-lg p-3 text-warning">You want to get in This page?</p>
         <img src="@/assets/batman.gif" class="xl:w-2/5 mx-auto rounded-md my-5 ">
         <p class="lg:text-xl md:text-lg p-3 text-error">No way bro! Thinking WHY?</p>
-      </div>
+      </div> -->
+      <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif"></ErrorPage>
     </div>
 
     <div v-else class="card bordered bg-white p-5">
@@ -48,9 +49,11 @@
 
 <script>
 import axios from "axios";
+import ErrorPage from '@/components/ErrorPage.vue';
 
 export default {
   name: "AccountManage",
+  components: { ErrorPage },
   data() {
     return {
       userList : null,
