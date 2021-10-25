@@ -63,6 +63,12 @@ const routes = [
     path: '/accountManage',
     name: 'AcoountManage',
     component: ()=> import('../components/Admin/AccountManage.vue')
+  },
+  {
+    path: '/orderConfirm',
+    name: 'OrderConfirm',
+    component: ()=> import('../components/OrderConfirm.vue')
+
   }
 ]
 
