@@ -60,10 +60,11 @@
 
         <!-- Cart -->
         <router-link to="/cart" class="mx-auto">
-          <button class="md:flex btn btn-square btn-ghost">
+          <button class="md:flex btn btn-square btn-ghost relative">
             <i class="material-icons"> shopping_cart </i>
+            <span v-if="count!=0" class="bg-fire-lighter rounded-full absolute z-10 -top-1 -right-1 w-6 h-6 flex justify-center items-center">{{ count }}</span>
           </button>
-        </router-link>
+        </router-link>   
         <!-- Account: Toggle when ipad to laptop -->
         <!-- Logout&Ordering -->
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
@@ -112,7 +113,14 @@ export default {
   computed: {
     account() {
       return this.$store.state.account;
-    }
-  }
+    },
+    count(){
+      let count = 0
+      for(let i of this.$store.state.cart){
+        count += i.count 
+      }
+      return count
+    },
+  },
 };
 </script>
