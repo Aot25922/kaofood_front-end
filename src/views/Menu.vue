@@ -1,10 +1,11 @@
 <template>
+  <Introduction intro="Choose Your Items" header="Our Menu" msg="Menu" />
   <div id="menu" class="bg-salmon-light">
     <!--FoodList with Loop-->
-    <category @SelectCate="selectCate" class="lg:mt-24 md:mt-20 mt-16"/>
-    <h1 class="text-center xl:text-3xl lg:text-2xl md:text-xl text-lg xl:py-4 lg:py-3 py-2 font-semibold">Our Menu</h1>
+    <category @SelectCate="selectCate" class="py-2" />
+    <!-- class="lg:mt-24 md:mt-20 mt-16" -->
     <!-- <jw-pagination :items="menu" @changePage="onChangePage"></jw-pagination> -->
-    <div class="xl:grid-rows-none lg:grid lg:grid-cols-3 lg:grid-rows-3 md:px-6 px-3 md:grid md:grid-cols-2 md:grid-rows-2 sm:flex sm:flex-row">
+    <div class="xl:grid-rows-none lg:grid lg:grid-cols-3 lg:grid-rows-3 md:px-6 px-3 py-2 md:grid md:grid-cols-2 md:grid-rows-2 sm:flex sm:flex-row">
       <router-link to="/menu/add" v-if="this.$store.state.account!=null && this.$store.state.account.role!='Member'" class="md:m-3 md:px-1">
         <!-- Appear when Phone and hiiden un Ipad -->
         <div class="md:hidden btn btn-accent uppercase w-full">Add New Menu</div>
@@ -19,10 +20,11 @@
 <script>
 import Category from "@/components/RestaurantMenu/Category.vue";
 import MenuList from "@/components/RestaurantMenu/MenuList.vue";
+import Introduction from '@/components/Introduction.vue';
 
 export default {
   name: "Menu",
-  components: { Category, MenuList },
+  components: { Category, MenuList, Introduction },
   data() {
     return {
       cateId: null,

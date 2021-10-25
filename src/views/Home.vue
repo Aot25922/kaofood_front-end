@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center relative text-white md:pt-3 mt-16">
+  <div class="text-center relative text-white md:pt-3 pt-16">
     <img src="../assets/header.jpg" alt="Header image" class="filter brightness-50 md:w-full md:h-full h-96 md:object-none object-cover" />
     <div class="absolute transform inset-0 top-1/4">
       <p class="lg:text-6xl md:text-4xl text-2xl font-bold uppercase">Kaofood Restaurant</p>
