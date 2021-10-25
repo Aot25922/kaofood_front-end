@@ -50,17 +50,20 @@
         </div>
         <!-- Checkout -->
         <div class="md:grid md:grid-cols-4">
+          <div class="card border" v-if="this.$store.state.account != null">
+            {{ account.fname }}
+          </div>
           <div class="card bordered md:w-full my-5 py-5 p-3 md:flex md:flex-wrap flex flex-col lg:col-start-4 md:col-start-3 md:col-end-5 bg-white">
-            <div class="p-5">
-              <span class="card-title text-xl"><i class="fas fa-utensils p-2"></i>Cart totals</span>
+            <div class="p-5 pb-2">
+              <span class="card-title text-xl"><i class="fas fa-utensils p-2"></i>Cart Totals</span>
               <div class="text-center">
                 <hr class="w-full text-gray">
               </div>
             </div>
-            <div class="card-body text-fire-darkest text-lg font-semibold p-5 grid grid-cols-2">
-              <!-- Total price -->
-              <div>Total:</div>
-              <div class="text-right mb-2">{{total}} ฿</div>
+            <div class="card-body text-fire-darkest text-lg font-semibold px-5 pt-3 flex-col">
+              <!-- Summary -->
+              <div>Quantity: <span class="text-right mb-2">{{quantity}}</span></div>
+              <div>Price: <span class="text-right mb-2">{{total}} ฿</span></div>
             </div>
             <button class="btn btn-accent w-full" @click="checkout()">Checkout</button>
           </div>
@@ -125,6 +128,16 @@ export default {
         total += i.count*i.price;
       }
       return total;
+    },
+    quantity(){
+      let quantity = 0
+      for(let i of this.cartList){
+        quantity += i.count 
+      }
+      return quantity
+    },
+    account(){
+      return this.$store.state.account
     }
   }
 };
