@@ -29,13 +29,13 @@
           <div v-if="account!=null">
             <li class="mt-5 px-5 font-bold">{{ account.fname }} {{ account.lname.slice(0,1) }}.</li>
             <li><router-link :to="{ name:'EditAccount', params: { id : account } }">Edit Account</router-link></li>
-            <li v-if="this.$store.state.account.role=='Admin'">
+            <li v-if="this.$store.state.account.role.name=='Admin'">
               <router-link to="/accountManage" class="w-full">Account Manage</router-link>
             </li>
-            <li v-if="this.$store.state.account.role!='Member'">
+            <li v-if="this.$store.state.account.role.name!='Member'">
               <router-link to="/orderManage" class="w-full">Order Manage</router-link>
             </li>
-            <li v-if="this.$store.state.account.role=='Member'">
+            <li v-if="this.$store.state.account.role.name=='Member'">
               <router-link to="/cart" class="mx-auto w-full">My Order</router-link>
             </li>
           </div>
