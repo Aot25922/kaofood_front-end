@@ -33,10 +33,10 @@
               <td>{{ user.email }}</td>
               <td>
                 <select v-model="user.role" id="role" name="role" @change="editRoleUser(user,user.role)">
-                <option :value="role" v-for="role in this.roleList" :key="role">{{ role }}</option>
+                <option :value="role" v-for="role in this.roleList" :key="role.id">{{ role.name }}</option>
                 </select></td>
               <td>
-                <button v-if="user.role!='Admin'" class="lg:text-lg text-primary-focus" @click="deleteUser(user)"><i class="fas fa-trash-alt"></i></button>
+                <button v-if="user.role.name!='Admin'" class="lg:text-lg text-primary-focus" @click="deleteUser(user)"><i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>
@@ -54,14 +54,15 @@ export default {
   data() {
     return {
       userList : null,
-      roleList : ["Admin","Staff","Member"]
+      roleList : null
     }
   },
   methods:{
     //โหลดข้อมูล userList
     async getUserList() {
       await axios.get(`${this.$store.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-          .then(response => { this.userList = response.data })
+          .then(response => { this.userList = response.data
+ })
       console.log("Get UserList Form API");
     },
 
@@ -69,29 +70,35 @@ export default {
       var result = confirm(`Are you sure to delete ${user.fname} ${user.lname}?`);
       if (result) {
         await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
-        await this.getUserList();
+        this.userList = this.userList.filter(list => {return list.id != user.id})
       }
     },
 
     async editRoleUser(user,role){
       var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role}`);
       if (result) {
-        await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}`,`role=${role}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+        await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => { console.log(response); })
-        await this.getUserList();
       }
+    },
+    async getStatus(){
+      await axios.get(`${this.$store.state.backendUrl}/role`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+      .then(response => { 
+        this.roleList = response.data
+      })
     }
   },
   computed: {
     accountRole() {
       if(this.$store.state.account==null) return false;
-      if(this.$store.state.account.role=='Admin') return true;
+      if(this.$store.state.account.role.name=='Admin') return true;
       return false;
     },
   },
   created() {
     if(this.accountRole){
       this.getUserList();
+      this.getStatus();
     }
   }
 };

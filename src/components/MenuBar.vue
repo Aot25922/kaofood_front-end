@@ -71,13 +71,13 @@
           <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }} {{ account.lname.slice(0,1) }}.</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
             <li><router-link :to="{ name:'EditAccount', params: { id : account.id } }">Edit Account</router-link></li>
-            <li v-if="this.$store.state.account.role=='Admin'">
+            <li v-if="this.$store.state.account.role.name=='Admin'">
               <router-link to="/accountManage" class="w-full">Account Manage</router-link>
             </li>
-            <li v-if="this.$store.state.account.role!='Member'">
+            <li v-if="this.$store.state.account.role.name!='Member'">
               <router-link to="/orderManage" class="w-full">Order Manage</router-link>
             </li>
-            <li v-if="this.$store.state.account.role=='Member'">
+            <li v-if="this.$store.state.account.role.name=='Member'">
               <router-link to="/cart" class="mx-auto w-full">My Order</router-link>
             </li>
             <li @click="logout" class="btn btn-ghost font-bold">Logout</li>

@@ -69,6 +69,7 @@ export default createStore({
               localStorage.setItem('JWT',response.headers.jwt)
             }
             commit('SET_ACCOUNT', response.data)
+            console.log(this.state.account)
           })
         } catch (e) {
            console.log(e)
@@ -105,8 +106,8 @@ export default createStore({
       }else {
         await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`,{withCredentials:true})
             .then(response => {
-              commit('SET_JWT', response.headers.jwt)
               commit('SET_ACCOUNT', response.data)
+              console.log(this.state.account)
               localStorage.setItem('JWT',response.headers.jwt)
             })
       }

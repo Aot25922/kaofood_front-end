@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "MenuForm",
   data() {
@@ -94,7 +95,6 @@ export default {
       this.file = event.target.files[0];
     },
     async addNewMenu() {
-      const axios = require('axios');
       let newMenu = JSON.stringify(this.form)
       let data = new FormData()
       data.append("menu", newMenu)
@@ -107,7 +107,6 @@ export default {
       }
     },
     async editMenu() {
-      const axios = require('axios');
       let editMenu = JSON.stringify(this.form)
       let data = new FormData()
       data.append("menu", editMenu)

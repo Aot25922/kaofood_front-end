@@ -79,8 +79,6 @@ export default {
   },
   methods: {
     increaseAmount(item) {
-      // this.order.push({"menu":50,"price":50})
-      // console.log(this.order)
       if(item.count == null ||  item.count == '' ) item.count=0;
       item.count += 1;
       localStorage.setItem('cart',JSON.stringify(this.$store.state.cart))
@@ -99,9 +97,6 @@ export default {
       for(let i of this.cartList){
         this.order.push({"menuId":i.id,"count":i.count})
       }
-      // let test = JSON.stringify(this.order)
-      //  let data = new FormData();
-      //  data.append("menuList",test)
       console.log(this.order)
       try{
          await axios.post(`${this.$store.state.backendUrl}/order/new?userId=${this.$store.state.account.id}`,this.order,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})

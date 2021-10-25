@@ -19,7 +19,7 @@
                   <th>Subtotal</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody v-if="orderDetailList!=null">
                 <tr v-for="orderDetail in orderDetailList.filter(list => {return list.orders.id == order.id})" :key="orderDetail.id" >
                   <th>{{orderDetail.id}}</th>
                   <td>{{orderDetail.menu.name}}</td>
@@ -62,7 +62,7 @@ export default {
     },
 
     async getOrderList() {
-      await axios.get(`${this.$store.state.backendUrl}/admin/allOrder`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+      await axios.get(`${this.$store.state.backendUrl}/order`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => {
             this.orderList = response.data
           })
@@ -89,8 +89,7 @@ export default {
   computed: {
     accountRole() {
       if(this.$store.state.account==null) return false;
-      if(this.$store.state.account.role=='Admin') return true;
-      if(this.$store.state.account.role=='Staff') return true;
+      if(this.$store.state.account.role.name!='Member') return true;
       return false;
     },
   },
