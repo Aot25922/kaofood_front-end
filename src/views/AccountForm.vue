@@ -57,7 +57,7 @@
           <div class="mt-10">
             <button @click="saveForm" @keypress.enter="saveForm" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
               <span v-if="mode == 'SignUp'">Sign Up</span>
-              <span v-else>Save</span>
+              <span v-else @click="editAccount()">Save</span>
             </button>
             <div class="mt-5 lg:text-xs text-2xs text-center" v-if="mode == 'SignUp'">
               <hr class="w-full text-gray lg:py-3 py-2">
@@ -166,7 +166,7 @@ export default {
         phone : this.signUpForm.phone,
         password : this.signUpForm.password,
         address : this.signUpForm.address,
-        role : "Member"
+        role : {'id':1,'name':'Member'}
       })
       await this.$store.dispatch("setNewAccount", newAccount);
       if (this.$store.state.account == 'success') {
@@ -185,20 +185,21 @@ export default {
       if(this.$route.params.id != null) this.editAccount();
       if(this.$route.params.id == null) this.signUp();
     },
-    // checkEditFrom() {
-    //   this.signUpForm.isFirstNameEmpty = (this.signUpForm.firstName == "") ? true : false
-    //   this.signUpForm.isLastNameEmpty = (this.signUpForm.lastName == "") ? true : false
-    //   this.signUpForm.isAddressEmpty = (this.signUpForm.address == "") ? true : false
-    //   this.signUpForm.isPhoneEmpty = (this.signUpForm.phone == "") ? true : false
-    //   this.signUpForm.isEmailEmpty = (this.signUpForm.email == "") ? true : false
-    // },
     async editAccount() {
       const axios = require('axios');
-      let editAccount = JSON.stringify(this.signUpForm)
+      let editAccount = JSON.stringify({
+        fname : this.signUpForm.firstName,
+        lname : this.signUpForm.lastName,
+        email : this.signUpForm.email,
+        phone : this.signUpForm.phone,
+        address : this.signUpForm.address
+      })
+      // console.log(editAccount)
       let data = new FormData()
       data.append("account", editAccount)
       try {
-        await axios.put(`${this.$store.state.backendUrl}/user/edit`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
+        await axios.put(`${this.$store.state.backendUrl}/user/edit/profile`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
+        this.$store.dispatch("fetchLocalStorage")
         this.$router.push('/')
       } catch(error) {
         console.log(error)

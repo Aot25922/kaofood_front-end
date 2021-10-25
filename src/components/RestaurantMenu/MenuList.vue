@@ -44,8 +44,8 @@ export default {
   computed: {
     accountRole() {
       if(this.$store.state.account==null) return false;
-      if(this.$store.state.account.role=='AdminConsole') return true;
-      if(this.$store.state.account.role=='Staff') return true;
+      if(this.$store.state.account.role.name=='Admin') return true;
+      if(this.$store.state.account.role.name=='Staff') return true;
       return false;
     },
   },
