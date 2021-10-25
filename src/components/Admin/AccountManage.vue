@@ -66,7 +66,6 @@ export default {
     },
 
     async deleteUser(user) {
-      const axios = require('axios');
       var result = confirm(`Are you sure to delete ${user.fname} ${user.lname}?`);
       if (result) {
         await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
@@ -75,9 +74,6 @@ export default {
     },
 
     async editRoleUser(user,role){
-      const axios = require('axios');
-      // let data = new FormData()
-      // data.append("role", role)
       var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role}`);
       if (result) {
         await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}`,`role=${role}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
