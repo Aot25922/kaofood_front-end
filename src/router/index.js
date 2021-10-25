@@ -14,17 +14,17 @@ const routes = [
   {
     path: '/menu/:id',
     name: 'MenuInfo',
-    component: ()=> import('../components/RestaurantMenu/MenuInfo.vue')
+    component: ()=> import('../views/RestaurantMenu/MenuInfo.vue')
   },
   {
     path: '/menu/add',
     name: 'AddMenu',
-    component: () => import('../components/RestaurantMenu/MenuForm.vue'),
+    component: () => import('../views/RestaurantMenu/MenuForm.vue'),
   },
   {
     path: '/menu/edit/:id',
     name: 'EditMenu',
-    component: () => import('../components/RestaurantMenu/MenuForm.vue'),
+    component: () => import('../views/RestaurantMenu/MenuForm.vue'),
   },
   {
     path: '/contact',
@@ -57,12 +57,12 @@ const routes = [
   {
     path: '/orderManage',
     name: 'OrderManage',
-    component: ()=> import('../components/Admin/OrderManage.vue')
+    component: ()=> import('../views/AdminConsole/OrderManage.vue')
   },
   {
     path: '/accountManage',
     name: 'AcoountManage',
-    component: ()=> import('../components/Admin/AccountManage.vue')
+    component: ()=> import('../views/AdminConsole/AccountManage.vue')
   }
 ]
 
