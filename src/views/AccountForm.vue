@@ -59,10 +59,15 @@
               <span v-if="mode == 'SignUp'">Sign Up</span>
               <span v-else @click="editAccount()">Save</span>
             </button>
-            <div class="mt-5 lg:text-xs text-2xs text-center" v-if="mode == 'SignUp'">
+            <div class="mt-5 lg:text-xs text-2xs text-center">
               <hr class="w-full text-gray lg:py-3 py-2">
-            <span>Already have account, please </span><router-link to="/login" class="text-blue underline">LogIn</router-link>
-          </div>
+            <div v-if="mode == 'SignUp'">
+              <span>Already have account, please </span><router-link to="/login" class="text-blue underline">LogIn</router-link>
+            </div>
+            <div v-if="mode=='Edit'">
+              <i class="fas fa-key px-1"></i>Change your password
+            </div>
+            </div>
           </div>
         </div>
 

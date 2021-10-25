@@ -49,11 +49,25 @@
           </div>
         </div>
         <!-- Checkout -->
-        <div class="md:grid md:grid-cols-4">
-          <div class="card border" v-if="this.$store.state.account != null">
-            {{ account.fname }}
+        <div class="md:grid md:grid-cols-5">
+          <div class="card bordered md:w-full my-5 py-5 p-3 bg-white md:col-start-1 md:col-end-3" v-if="this.$store.state.account != null">
+            <div class="p-5 pb-2"> 
+              <span class="card-title text-xl">User Information</span>
+              <router-link :to="{ name:'EditAccount', params: { id : account } }"><i class="far fa-edit absolute right-7"></i></router-link>
+              <div class="text-center">
+                <hr class="w-full text-gray">
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="lg:grid lg:grid-cols-2">
+                <p class="font-medium">FirstName: <span class="font-normal">{{ account.fname }}</span></p> 
+                <p class="font-medium">LastName: <span class="font-normal">{{ account.lname }}</span></p>
+              </div>
+              <h3 class="font-semibold pt-2 text-lg">Your Address</h3>
+              <p>&emsp;{{ account.address }}</p>
+            </div>
           </div>
-          <div class="card bordered md:w-full my-5 py-5 p-3 md:flex md:flex-wrap flex flex-col lg:col-start-4 md:col-start-3 md:col-end-5 bg-white">
+          <div class="card bordered md:w-full my-5 py-5 p-3 md:flex md:flex-wrap flex flex-col lg:col-start-4 md:col-start-4 md:col-end-6 bg-white">
             <div class="p-5 pb-2">
               <span class="card-title text-xl"><i class="fas fa-utensils p-2"></i>Cart Totals</span>
               <div class="text-center">

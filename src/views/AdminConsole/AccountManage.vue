@@ -2,13 +2,7 @@
   <div id="userManage" class="lg:pt-32 md:pt-24 pt-20 lg:pb-8 md:pb-6 p-5 bg-salmon-light">
     <!-- No permission -->
     <div v-if="!accountRole" class="w-full">
-      <!-- <div class="text-center mx-auto text-yellow font-bold">
-        <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl text-warning"></i> 
-        <p class="lg:text-xl md:text-lg p-3 text-warning">You want to get in This page?</p>
-        <img src="@/assets/batman.gif" class="xl:w-2/5 mx-auto rounded-md my-5 ">
-        <p class="lg:text-xl md:text-lg p-3 text-error">No way bro! Thinking WHY?</p>
-      </div> -->
-      <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif"></ErrorPage>
+      <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif" css="xl:w-2/5 mx-auto rounded-md my-5 "></ErrorPage>
     </div>
 
     <div v-else class="card bordered bg-white p-5">
@@ -78,7 +72,7 @@ export default {
     },
 
     async editRoleUser(user,role){
-      var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role}`);
+      var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role.name}`);
       if (result) {
         await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => { console.log(response); })

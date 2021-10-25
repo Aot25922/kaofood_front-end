@@ -68,7 +68,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  // Always going to top of website
+  scrollBehavior () {
+    document.getElementById('app').scrollIntoView();
+  }
 })
 
 export default router

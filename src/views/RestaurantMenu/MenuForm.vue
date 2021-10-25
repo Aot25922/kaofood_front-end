@@ -1,13 +1,8 @@
 <template>
   <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning">
     <!-- No permission display -->
-    <div v-if="account==null||account.role=='Member'" class=" lg:mt-28 md:mt-24 mt-20 w-full">
-      <!-- <div class="text-center mx-auto text-yellow font-bold">
-        <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl"></i> 
-        <p class="md:text-xl text-lg p-3">You haven't permission to get this page!</p>
-        <img src="@/assets/pikachu.gif" class="rounded-md my-5">
-      </div> -->
-      <ErrorPage msg="No no no, That isn't any pokemon here." image="pikachu.gif"></ErrorPage>
+    <div v-if="account==null||this.$store.state.account.role.name=='Member'" class=" lg:mt-28 md:mt-24 mt-20 w-full">
+      <ErrorPage msg="No no no, That isn't any pokemon here." image="pikachu.gif" css="rounded-md my-5"></ErrorPage>
     </div>
 
     <form v-else @submit.prevent="submitform()" class="bg-salmon w-full text-black card p-5 lg:mt-32 md:mt-24 mt-20 mb-5 md:grid md:grid-cols-2">
@@ -120,6 +115,9 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    scrollToTop() {
+      window.scrollTo(0,0);
     }
   },
   mounted() {
