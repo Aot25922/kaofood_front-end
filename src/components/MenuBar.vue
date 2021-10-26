@@ -59,7 +59,7 @@
         </button>
 
         <!-- Cart -->
-        <router-link to="/cart" class="mx-auto">
+        <router-link to="/cart" class="mx-auto" v-if="account==null || account.role.name=='Member'">
           <button class="md:flex btn btn-square btn-ghost relative">
             <i class="material-icons"> shopping_cart </i>
             <span v-if="count!=0" class="bg-fire-lighter rounded-full absolute z-10 -top-1 -right-1 w-6 h-6 flex justify-center items-center">{{ count }}</span>
@@ -68,7 +68,6 @@
         <!-- Account: Toggle when ipad to laptop -->
         <!-- Logout&Ordering -->
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
-          <!-- <div tabindex="0" class="btn btn-ghost rounded-btn md:hidden w-14 px-3"><img src="../assets/user.png"></div> -->
           <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }} {{ account.lname.slice(0,1) }}.</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
             <li><router-link :to="{ name:'EditAccount', params: { id : account.id } }">Edit Account</router-link></li>

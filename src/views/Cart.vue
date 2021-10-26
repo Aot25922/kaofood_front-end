@@ -74,11 +74,18 @@
                 <hr class="w-full text-gray">
               </div>
             </div>
+            <label v-if="account!=null" class="label px-5">
+                <span class="">Cash Deliverly</span> 
+                <input type="radio" name="opt" checked="checked" class="radio">
+            </label>
             <div class="card-body text-fire-darkest text-lg font-semibold px-5 flex-col">
               <!-- Total Price -->
-              <div>Price: <span class="text-right mb-2">{{total}} ฿</span></div>
+              <div>Total Price: <span class="text-right mb-2">{{total}} ฿</span></div>
             </div>
-            <button class="btn btn-accent w-full" @click="checkout()">Checkout</button>
+            <button class="btn btn-accent w-full" >
+              <span v-if="account!=null" @click="checkout()">Checkout</span>
+              <router-link v-else to="/login">Login to proceed order</router-link>
+            </button>
           </div>
         </div>
       </div>

@@ -12,47 +12,49 @@
             </span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.firstName" @keyup.enter="signUp"
+            <input v-model.trim="signUpForm.firstName" @keyup.enter="saveForm"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Firstname"/>
             <span v-if="signUpForm.isFirstNameEmpty" class="text-error">Firstname required</span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.lastName" @keyup.enter="signUp"
+            <input v-model.trim="signUpForm.lastName" @keyup.enter="saveForm"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Lastname"/>
             <span v-if="signUpForm.isLastNameEmpty" class="text-error">Lastname required</span>
           </div>
           <div class="mt-4 ">
             <textarea class="h-24 p-2 w-full outline-none border border-gray-dark rounded focus:outline-none focus:border-gray"
-                      placeholder="Your address..." v-model="signUpForm.address" @keyup.enter="signUp"/>
+                      placeholder="Your address..." v-model="signUpForm.address" @keyup.enter="saveForm"/>
             <span v-if="signUpForm.isAddressEmpty" class="text-error">Address required</span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.phone" @keyup.enter="signUp"
+            <input v-model.trim="signUpForm.phone" @keyup.enter="saveForm"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Phone"/>
             <span v-if="signUpForm.isPhoneEmpty" class="text-error">Phone required</span>
             <span v-if="signUpForm.accountPhoneExist" class="text-error">Phone already exist!</span>
           </div>
           <div class="mt-4">
-            <input type="email" v-model.trim="signUpForm.email" @keyup.enter="signUp"
+            <input type="email" v-model.trim="signUpForm.email" @keyup.enter="saveForm"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Email"/>
             <span v-if="signUpForm.isEmailEmpty" class="text-error">Email required</span>
             <span v-if="signUpForm.accountEmailExist" class="text-error">Email already exist!</span>
           </div>
-          <div class="mt-4" v-if="mode == 'SignUp'">
-            <input type="password" v-model="signUpForm.password" @keyup.enter="signUp"
-                   class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
-                   placeholder="Password"/>
-              <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
-          </div>
-          <div class="mt-4" v-if="mode == 'SignUp'">
-            <input type="password" v-model="signUpForm.confirmPassword" @keyup.enter="signUp"
-                   class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
-                   placeholder="Confirm Password"/>         
-            <span v-if="signUpForm.passwordNotSame" class="text-error">Password Not Same</span>
+          <div v-if="changePass || mode=='SignUp'">
+            <div class="mt-4">
+              <input type="password" v-model="signUpForm.password" @keyup.enter="saveForm"
+                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
+                    placeholder="Password"/>
+                <span v-if="signUpForm.isPasswordEmpty" class="text-error">Password required</span>
+            </div>
+            <div class="mt-4">
+              <input type="password" v-model="signUpForm.confirmPassword" @keyup.enter="saveForm"
+                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
+                    placeholder="Confirm Password"/>         
+              <span v-if="signUpForm.passwordNotSame" class="text-error">Password Not Same</span>
+            </div>
           </div>
           <div class="mt-10">
             <button @click="saveForm" @keypress.enter="saveForm" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
@@ -64,9 +66,11 @@
             <div v-if="mode == 'SignUp'">
               <span>Already have account, please </span><router-link to="/login" class="text-blue underline">LogIn</router-link>
             </div>
-            <div v-if="mode=='Edit'">
-              <i class="fas fa-key px-1"></i>Change your password
-            </div>
+              <button v-if="mode=='Edit'" @click="changePass=!changePass">
+                <i class="fas fa-key px-1"></i>
+                  <span v-if="!changePass">Change Your Password</span>
+                  <span v-else>Not Change My Password</span>
+              </button>
             </div>
           </div>
         </div>
@@ -106,6 +110,7 @@ export default {
   props: ['mode'],
   data() {
     return {
+      changePass: false,
       loginForm: {
         email: '',
         password: '',
@@ -197,7 +202,8 @@ export default {
         lname : this.signUpForm.lastName,
         email : this.signUpForm.email,
         phone : this.signUpForm.phone,
-        address : this.signUpForm.address
+        address : this.signUpForm.address,
+        password: this.signUpForm.password
       })
       // console.log(editAccount)
       let data = new FormData()
@@ -209,7 +215,7 @@ export default {
       } catch(error) {
         console.log(error)
       }
-     }
+     },
   },
   mounted() {
     if(this.mode == 'Edit') {

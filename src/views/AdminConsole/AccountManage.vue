@@ -2,7 +2,7 @@
   <div id="userManage" class="lg:pt-32 md:pt-24 pt-20 lg:pb-8 md:pb-6 p-5 bg-salmon-light">
     <!-- No permission -->
     <div v-if="!accountRole" class="w-full">
-      <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif" css="xl:w-2/5 mx-auto rounded-md my-5 "></ErrorPage>
+      <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif" css="xl:w-2/5 mx-auto rounded-md my-5"></ErrorPage>
     </div>
 
     <div v-else class="card bordered bg-white p-5">
