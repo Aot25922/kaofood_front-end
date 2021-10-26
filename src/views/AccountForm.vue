@@ -59,7 +59,7 @@
           <div class="mt-10">
             <button @click="saveForm" @keypress.enter="saveForm" class="py-3 w-full btn btn-secondary text-white rounded hover:bg-red">
               <span v-if="mode == 'SignUp'">Sign Up</span>
-              <span v-else @click="editAccount()">Save</span>
+              <span v-else>Save</span>
             </button>
             <div class="mt-5 lg:text-xs text-2xs text-center">
               <hr class="w-full text-gray lg:py-3 py-2">
@@ -164,8 +164,19 @@ export default {
       this.signUpForm.isPasswordEmpty = (this.signUpForm.password == "") ? true : false
       this.signUpForm.passwordNotSame = (this.signUpForm.password != this.signUpForm.confirmPassword) ? true : false
     },
+    checkEditForm(){
+      this.signUpForm.isFirstNameEmpty = (this.signUpForm.firstName == "") ? true : false
+      this.signUpForm.isLastNameEmpty = (this.signUpForm.lastName == "") ? true : false
+      this.signUpForm.isAddressEmpty = (this.signUpForm.address == "") ? true : false
+      this.signUpForm.isPhoneEmpty = (this.signUpForm.phone == "") ? true : false
+      this.signUpForm.isEmailEmpty = (this.signUpForm.email == "") ? true : false
+      if(this.changePass==true) {
+        this.signUpForm.isPasswordEmpty = (this.signUpForm.password == "") ? true : false
+        this.signUpForm.passwordNotSame = (this.signUpForm.password != this.signUpForm.confirmPassword) ? true : false
+      }
+    },
     async signUp() {
-      // this.checkSignUpForm();
+      this.checkSignUpForm();
       if (this.signUpForm.isFirstNameEmpty || this.signUpForm.isLastNameEmpty || this.signUpForm.isAddressEmpty
           || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty ||
           this.signUpForm.passwordNotSame) return;
@@ -176,7 +187,7 @@ export default {
         phone : this.signUpForm.phone,
         password : this.signUpForm.password,
         address : this.signUpForm.address,
-        role : {'id':1,'name':'Member'}
+        role : {'id':3,'name':'Member'}
       })
       await this.$store.dispatch("setNewAccount", newAccount);
       if (this.$store.state.account == 'success') {
@@ -191,11 +202,14 @@ export default {
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
     },
     saveForm() {
-      this.checkSignUpForm();
       if(this.$route.params.id != null) this.editAccount();
       if(this.$route.params.id == null) this.signUp();
     },
     async editAccount() {
+      this.checkEditForm();
+      if (this.signUpForm.isFirstNameEmpty || this.signUpForm.isLastNameEmpty || this.signUpForm.isAddressEmpty
+        || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty ||
+        this.signUpForm.passwordNotSame) return;
       const axios = require('axios');
       let editAccount = JSON.stringify({
         fname : this.signUpForm.firstName,
