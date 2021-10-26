@@ -219,7 +219,7 @@ export default {
         address : this.signUpForm.address,
         password: this.signUpForm.password
       })
-      // console.log(editAccount)
+      console.log(editAccount)
       let data = new FormData()
       data.append("account", editAccount)
       try {
@@ -239,6 +239,7 @@ export default {
       this.signUpForm.email = account.email
       this.signUpForm.phone = account.phone
       this.signUpForm.address = account.address
+      this.signUpForm.password = ""
     }
   },
 }

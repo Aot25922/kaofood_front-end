@@ -4,8 +4,8 @@ import axios from 'axios'
 export default createStore({
   state: {
     // backendUrl: "https://kaofood.works/api",
-    backendUrl: "https://dev.kaofood.works/api",
-    // backendUrl: "http://localhost:8080",
+    // backendUrl: "https://dev.kaofood.works/api",
+    backendUrl: "http://localhost:8080",
     account: null,
     menus: [],
     categories: [],
@@ -100,7 +100,6 @@ export default createStore({
       if (loginForm == null){
         await axios.delete(`${this.state.backendUrl}/user/logout`,{withCredentials:true,headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
         commit('SET_ACCOUNT',null);
-        commit('SET_USER',null);
         localStorage.removeItem('JWT')
         localStorage.removeItem("cart");
       }else {
