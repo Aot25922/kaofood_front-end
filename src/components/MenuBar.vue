@@ -78,7 +78,7 @@
               <router-link to="/orderManage" class="w-full">Order Manage</router-link>
             </li>
             <li v-if="this.$store.state.account.role.name=='Member'">
-              <router-link to="/cart" class="mx-auto w-full">My Order</router-link>
+              <router-link to="/order" class="mx-auto w-full">My Order</router-link>
             </li>
             <li @click="logout" class="btn btn-ghost font-bold">Logout</li>
           </ul>

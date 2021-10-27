@@ -57,12 +57,17 @@ const routes = [
   {
     path: '/orderManage',
     name: 'OrderManage',
-    component: ()=> import('../views/AdminConsole/OrderManage.vue')
+    component: () => import('../views/AdminConsole/OrderManage.vue')
   },
   {
     path: '/accountManage',
     name: 'AcoountManage',
-    component: ()=> import('../views/AdminConsole/AccountManage.vue')
+    component: () => import('../views/AdminConsole/AccountManage.vue')
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: () => import('@/views/Order.vue')
   }
 ]
 
