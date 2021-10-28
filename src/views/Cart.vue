@@ -131,6 +131,7 @@ export default {
       for(let i of this.cartList){
         this.$store.dispatch('removeCart',i)
       }
+      this.$router.push("/");
     }
   },
   computed: {
