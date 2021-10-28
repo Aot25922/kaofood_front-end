@@ -74,7 +74,7 @@ export default {
     async editRoleUser(user,role){
       var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role.name}`);
       if (result) {
-        await axios.put(`${this.$store.state.backendUrl}/admin/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+        await axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => { console.log(response); })
       }
     },
