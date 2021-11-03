@@ -71,16 +71,9 @@ const routes = [
   }
 ]
 
-const navigationFallback = [
-  {
-    rewrite: "/index.html",
-    exclude: ["/images/*.{png,jpg,gif}", "/css/*"]
-  }
-]
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,navigationFallback,
+  routes,
   // Always going to top of website
   scrollBehavior () {
     document.getElementById('app').scrollIntoView();
