@@ -1,12 +1,8 @@
 <template>
   <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning">
     <!-- No permission display -->
-    <div v-if="account==null||account.role=='Member'" class=" lg:mt-28 md:mt-24 mt-20 w-full">
-      <div class="text-center mx-auto text-yellow font-bold">
-        <i class="fas fa-exclamation-circle p-3 md:text-6xl text-5xl"></i> 
-        <p class="md:text-xl text-lg p-3">You haven't permission to get this page!</p>
-        <img src="@/assets/nopermission.gif" class="rounded-md my-5">
-      </div>
+    <div v-if="account==null||this.$store.state.account.role.name=='Member'" class=" lg:mt-28 md:mt-24 mt-20 w-full">
+      <ErrorPage msg="No no no, That isn't any pokemon here." image="pikachu.gif" css="rounded-md my-5"></ErrorPage>
     </div>
 
     <form v-else @submit.prevent="submitform()" class="bg-salmon w-full text-black card p-5 lg:mt-32 md:mt-24 mt-20 mb-5 md:grid md:grid-cols-2">
@@ -55,8 +51,11 @@
 </template>
 
 <script>
+import axios from "axios";
+import ErrorPage from '@/components/ErrorPage.vue'
 export default {
   name: "MenuForm",
+  components: { ErrorPage },
   data() {
     return {
       form: {
@@ -94,30 +93,31 @@ export default {
       this.file = event.target.files[0];
     },
     async addNewMenu() {
-      const axios = require('axios');
       let newMenu = JSON.stringify(this.form)
       let data = new FormData()
       data.append("menu", newMenu)
       data.append("multipartFile", this.file);
       try {
-        await axios.post(`${this.$store.state.backendUrl}/menu/add`, data,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}});
+        await axios.post(`${this.$store.state.backendUrl}/menu/add`, data,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$router.push('/menu');
       } catch (error) {
         console.log(`Counld not get! ${error}`);
       }
     },
     async editMenu() {
-      const axios = require('axios');
       let editMenu = JSON.stringify(this.form)
       let data = new FormData()
       data.append("menu", editMenu)
       data.append("multipartFile", this.file);
       try {
-        await axios.put(`${this.$store.state.backendUrl}/menu/edit`, data ,{withCredentials:true , headers : {"Authorization": `Bearer ${this.$store.state.JWT}`}});
+        await axios.put(`${this.$store.state.backendUrl}/menu/edit`, data ,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$router.push('/menu');
       } catch (error) {
         console.log(error)
       }
+    },
+    scrollToTop() {
+      window.scrollTo(0,0);
     }
   },
   mounted() {

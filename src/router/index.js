@@ -14,17 +14,17 @@ const routes = [
   {
     path: '/menu/:id',
     name: 'MenuInfo',
-    component: ()=> import('../components/MenuInfo.vue')
+    component: ()=> import('../views/RestaurantMenu/MenuInfo.vue')
   },
   {
     path: '/menu/add',
     name: 'AddMenu',
-    component: () => import('../components/MenuForm.vue'),
+    component: () => import('../views/RestaurantMenu/MenuForm.vue'),
   },
   {
     path: '/menu/edit/:id',
     name: 'EditMenu',
-    component: () => import('../components/MenuForm.vue'),
+    component: () => import('../views/RestaurantMenu/MenuForm.vue'),
   },
   {
     path: '/contact',
@@ -49,20 +49,35 @@ const routes = [
     props: { mode: 'SignUp' }
   },
   {
-    path: '/order',
-    name: 'Order',
-    component: ()=> import('../components/Order.vue')
+    path: '/editAccount/:id',
+    name: 'EditAccount',
+    component: () => import('../views/AccountForm.vue'),
+    props: { mode: 'Edit' }
+  },
+  {
+    path: '/orderManage',
+    name: 'OrderManage',
+    component: () => import('../views/AdminConsole/OrderManage.vue')
   },
   {
     path: '/accountManage',
     name: 'AcoountManage',
-    component: ()=> import('../components/AccountManage.vue')
+    component: () => import('../views/AdminConsole/AccountManage.vue')
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: () => import('@/views/Order.vue')
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  // Always going to top of website
+  scrollBehavior () {
+    document.getElementById('app').scrollIntoView();
+  }
 })
 
 export default router

@@ -25,6 +25,20 @@
           <li>
             <router-link to="/signup" class="mt-10 font-bold" v-if="account==null">Sign Up</router-link>
           </li>
+          <!-- When login will toggle by permission -->
+          <div v-if="account!=null">
+            <li class="mt-5 px-5 font-bold">{{ account.fname }} {{ account.lname.slice(0,1) }}.</li>
+            <li><router-link :to="{ name:'EditAccount', params: { id : account } }">Edit Account</router-link></li>
+            <li v-if="this.$store.state.account.role.name=='Admin'">
+              <router-link to="/accountManage" class="w-full">Account Manage</router-link>
+            </li>
+            <li v-if="this.$store.state.account.role.name!='Member'">
+              <router-link to="/orderManage" class="w-full">Order Manage</router-link>
+            </li>
+            <li v-if="this.$store.state.account.role.name=='Member'">
+              <router-link to="/cart" class="mx-auto w-full">My Order</router-link>
+            </li>
+          </div>
           <li><span @click="logout" v-if="account!=null" class="font-bold">Logout</span></li>
         </ul>
       </div>
@@ -45,24 +59,26 @@
         </button>
 
         <!-- Cart -->
-        <router-link to="/cart" class="mx-auto">
-          <button class="md:flex btn btn-square btn-ghost">
+        <router-link to="/cart" class="mx-auto" v-if="account==null || account.role.name=='Member'">
+          <button class="md:flex btn btn-square btn-ghost relative">
             <i class="material-icons"> shopping_cart </i>
+            <span v-if="count!=0" class="bg-fire-lighter rounded-full absolute z-10 -top-1 -right-1 w-6 h-6 flex justify-center items-center">{{ count }}</span>
           </button>
-        </router-link>
+        </router-link>   
         <!-- Account: Toggle when ipad to laptop -->
         <!-- Logout&Ordering -->
         <div v-if="account!=null" class="md:flex hidden dropdown dropdown-end">
           <div tabindex="0" class="btn btn-ghost rounded-btn">{{ account.fname }} {{ account.lname.slice(0,1) }}.</div>
           <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
-            <li v-if="this.$store.state.account.role=='Admin'">
-              <router-link to="/accountManage">Account Manage</router-link>
+            <li><router-link :to="{ name:'EditAccount', params: { id : account.id } }">Edit Account</router-link></li>
+            <li v-if="this.$store.state.account.role.name=='Admin'">
+              <router-link to="/accountManage" class="w-full">Account Manage</router-link>
             </li>
-            <li v-if="this.$store.state.account.role!='Member'">
-              <router-link to="/">Order Manage</router-link>
+            <li v-if="this.$store.state.account.role.name!='Member'">
+              <router-link to="/orderManage" class="w-full">Order Manage</router-link>
             </li>
-            <li v-if="this.$store.state.account.role=='Member'">
-              <router-link to="/cart">My Order</router-link>
+            <li v-if="this.$store.state.account.role.name=='Member'">
+              <router-link to="/order" class="mx-auto w-full">My Order</router-link>
             </li>
             <li @click="logout" class="btn btn-ghost font-bold">Logout</li>
           </ul>
@@ -90,13 +106,20 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("getAccount", null);
+      this.$router.push("/");
     }
   },
   computed: {
     account() {
-      console.log(this.$store.state.account)
       return this.$store.state.account;
-    }
-  }
+    },
+    count(){
+      let count = 0
+      for(let i of this.$store.state.cart){
+        count += i.count 
+      }
+      return count
+    },
+  },
 };
 </script>
