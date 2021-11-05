@@ -3,7 +3,7 @@
     <div class="relative">
       <router-link :to="{ name:'MenuInfo' , params: { id : menu.id } }">
         <img id="img-id" class="rounded w-full xl:h-80 h-56 object-cover"
-           :src=" this.$store.state.backendUrl+this.menu.image" :alt="menu.name"/>
+           :src="this.$store.state.backendUrl+this.menu.image" :alt="menu.name"/>
         <span class="font-medium absolute bottom-0 left-0 rounded bg-primary text-white xl:text-xl md:text-lg p-1">{{ menu.price }} ฿</span>
       </router-link>
     </div>

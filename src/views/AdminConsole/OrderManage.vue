@@ -1,42 +1,48 @@
 <template>
   <div id="orderManage" class="lg:pt-28 md:pt-24 pt-20 bg-fire-lightest p-5">
-    <p class="font-bold p-5 text-2xl">Order Management</p>
-    <div class="card p-5 bg-white mb-8" v-for="order in orderList" :key="order.id">
-      <div class="collapse w-full border rounded-box border-base-300 collapse-arrow">
-        <input type="checkbox" />
-        <div class="collapse-title text-xl font-medium ">
-          {{order.id}}
-        </div>
-        <div class="collapse-content">
-          <div class="overflow-x-auto">
-            <table class="table text-center w-full">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Quantyty</th>
-                  <th>Subtotal</th>
-                </tr>
-              </thead>
-              <tbody v-if="orderDetailList!=null">
-                <tr v-for="orderDetail in orderDetailList.filter(list => {return list.orders.id == order.id})" :key="orderDetail.id" >
-                  <th>{{orderDetail.id}}</th>
-                  <td>{{orderDetail.menu.name}}</td>
-                  <td>{{orderDetail.menu.price}} ฿</td>
-                  <td>{{orderDetail.count}}</td>
-                  <td>{{orderDetail.menu.price*orderDetail.count}} ฿</td>
-                </tr>
-              </tbody>
-            </table>
+    <!-- No Login -->
+    <div v-if="!accountRole" class="w-full">
+      <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif" css="xl:w-2/5 mx-auto rounded-md my-5"></ErrorPage>
+    </div>
+    <div v-else>
+      <p class="font-bold p-5 text-2xl">Order Management</p>
+      <div class="card p-5 bg-white mb-8" v-for="order in orderList" :key="order.id">
+        <div class="collapse w-full border rounded-box border-base-300 collapse-arrow">
+          <input type="checkbox" />
+          <div class="collapse-title text-xl font-medium ">
+            Order Id: {{order.id}}
           </div>
-          <div class="divider"></div>
-          <p class=""><b>Total:</b> {{order.totalPrice}} ฿</p>
+          <div class="collapse-content">
+            <div class="overflow-x-auto">
+              <table class="table text-center w-full">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantyty</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody v-if="orderDetailList!=null">
+                  <tr v-for="orderDetail in orderDetailList.filter(list => {return list.orders.id == order.id})" :key="orderDetail.id" >
+                    <th>{{orderDetail.id}}</th>
+                    <td>{{orderDetail.menu.name}}</td>
+                    <td>{{orderDetail.menu.price}} ฿</td>
+                    <td>{{orderDetail.count}}</td>
+                    <td>{{orderDetail.menu.price*orderDetail.count}} ฿</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="divider"></div>
+            <p class=""><b>Total:</b> {{order.totalPrice}} ฿</p>
+          </div>
         </div>
+        <ul class="w-full steps pt-5">
+          <li class="step" :class="{'step-primary':order.status.id>=status.id}" v-for="status in statusList" :key="status.id" @click="changeOrderStatus(order,status)">{{status.name}}</li>
+        </ul>
       </div>
-      <ul class="w-full steps pt-5">
-        <li class="step" :class="{'step-primary':order.status.id>=status.id}" v-for="status in statusList " :key="status.id" @click="changeOrderStatus(order,status)">{{status.name}}</li>
-      </ul>
     </div>
   </div>
 </template>
@@ -56,7 +62,6 @@ export default {
   methods:{
     async changeOrderStatus(order,status){
       order.status = status
-      console.log(localStorage.getItem('JWT'))
       axios.put(`${this.$store.state.backendUrl}/admin/edit/order?orderId=${order.id}&statusId=${status.id}`,null,
           {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
     },
