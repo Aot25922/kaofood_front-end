@@ -5,7 +5,7 @@
       <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif" css="xl:w-2/5 mx-auto rounded-md my-5"></ErrorPage>
     </div>
     <div v-else>
-      <p class="font-bold p-5 text-2xl">Order Management</p>
+      <p class="font-bold p-5 text-2xl">Order Status</p>
       <div class="card p-5 bg-white mb-8" v-for="order in orderList" :key="order.id">
         <div class="collapse w-full border rounded-box border-base-300 collapse-arrow">
           <input type="checkbox" />
