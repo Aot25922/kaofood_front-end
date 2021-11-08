@@ -54,9 +54,16 @@
       </div>
       <div class="md:flex ml-auto mx-2">
         <!-- Search -->
-        <button class=" btn btn-square btn-ghost">
-          <i class="material-icons">search</i>
-        </button>
+        <label for="my-modal-2" class="btn btn-square btn-ghost modal-button text-lg"><i class="fas fa-search"></i></label> 
+        <input type="checkbox" id="my-modal-2" class="modal-toggle"> 
+        <div class="modal bg-black bg-opacity-75">
+          <div class="modal-box flex">
+            <input type="text" v-model="search" @keypress.enter="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black">
+             <div class="modal-action">
+              <label for="my-modal-2" class="btn btn-ghost text-black -mt-5"><i class="fas fa-times"></i></label>
+            </div>
+          </div>
+        </div>
 
         <!-- Cart -->
         <router-link to="/cart" class="mx-auto" v-if="account==null || account.role.name=='Member'">
@@ -103,11 +110,20 @@
 <script>
 export default {
   name: "MenuBar",
+  data(){
+    return{
+      search: ''
+    }
+  },
   methods: {
     logout() {
       this.$store.dispatch("getAccount", null);
       this.$router.push("/");
-    }
+    },
+    searchMenu() {
+      this.$store.dispatch("searchMenu", this.search);
+      this.$router.push("/menu");
+    },
   },
   computed: {
     account() {

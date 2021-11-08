@@ -10,6 +10,7 @@ export default createStore({
     menus: [],
     categories: [],
     cart: [],
+    search: null
   },
   mutations: {
     SET_MENU(state, data) {
@@ -27,6 +28,9 @@ export default createStore({
       return
     } 
       state.account = data
+    },
+    SET_SEARCH(state, data){
+      state.search = data
     },
     addCartItem(state, item){
       if(item == null) return;
@@ -128,6 +132,10 @@ export default createStore({
         }
       }).catch(function (error) {console.log(error);})
     },
+    searchMenu({ commit }, items) {
+      commit('SET_SEARCH', items)
+      console.log(this.state.search)
+    }
   },
   getters:{},
   modules:{}

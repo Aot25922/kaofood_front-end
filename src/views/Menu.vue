@@ -37,6 +37,10 @@ export default {
   },
   computed: {
     menuFilterList() {
+      if (this.$store.state.search) return this.$store.state.menus.filter(list => {
+        list = list.name.toLowerCase()
+        return list.indexOf(this.$store.state.search.toLowerCase()) > -1
+      })
       if (this.cateId == null) return this.$store.state.menus;
       return this.$store.state.menus.filter(list => {
         return list.category.id == this.cateId
