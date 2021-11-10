@@ -17,7 +17,7 @@
             <router-link to="/menu">Menu</router-link>
           </li>
           <li>
-            <router-link to="/contact">Contact</router-link>
+            <router-link to="/aboutus">About Us</router-link>
           </li>
           <li>
             <router-link to="/login" v-if="account==null">Login</router-link>
@@ -49,22 +49,27 @@
         <div class="md:items-stretch hidden md:block">
           <router-link to="/" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Home</router-link>
           <router-link to="/menu" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Menu</router-link>
-          <router-link to="/contact" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">Contact</router-link>
+          <router-link to="/aboutus" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">About Us</router-link>
         </div>
       </div>
       <div class="md:flex ml-auto mx-2">
+
         <!-- Search -->
-        <label for="my-modal-2" class="btn btn-square btn-ghost modal-button text-lg"><i class="fas fa-search"></i></label> 
+        <!-- <label for="my-modal-2" class="btn btn-square btn-ghost modal-button text-lg"><i class="fas fa-search"></i></label>
         <input type="checkbox" id="my-modal-2" class="modal-toggle"> 
         <div class="modal bg-black bg-opacity-75">
           <div class="modal-box flex">
-            <input type="text" v-model="search" @keypress.enter="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black">
-             <div class="modal-action">
+            <input type="text" v-model="search" autofocus @keypress.enter="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black">
+             <div @click="onClose" id="onClose" class="modal-action">
               <label for="my-modal-2" class="btn btn-ghost text-black -mt-5"><i class="fas fa-times"></i></label>
             </div>
           </div>
-        </div>
-
+        </div> -->
+        <label @click="() => this.showInput = !showInput" class="btn btn-square btn-ghost modal-button text-lg"><i class="fas fa-search"></i></label>
+          <div v-if="showInput" class="flex relative">
+            <input type="text" v-model="search" autofocus @keypress.enter="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black">
+            <label class="btn btn-ghost text-gray-dark absolute right-0"><i class="fas fa-times"></i></label>
+          </div>
         <!-- Cart -->
         <router-link to="/cart" class="mx-auto" v-if="account==null || account.role.name=='Member'">
           <button class="md:flex btn btn-square btn-ghost relative">
@@ -112,7 +117,8 @@ export default {
   name: "MenuBar",
   data(){
     return{
-      search: ''
+      search: '',
+      showInput: false
     }
   },
   methods: {
@@ -123,7 +129,12 @@ export default {
     searchMenu() {
       this.$store.dispatch("searchMenu", this.search);
       this.$router.push("/menu");
+      // this.onClose();
     },
+    onClose(){
+      this.search = ''
+      // document.getElementById('onClose').click()
+    }
   },
   computed: {
     account() {

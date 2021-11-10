@@ -12,7 +12,7 @@
             </span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.firstName" @keyup.enter="saveForm"
+            <input v-model.trim="signUpForm.firstName" @keyup.enter="saveForm" autofocus
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Firstname"/>
             <span v-if="signUpForm.isFirstNameEmpty" class="text-error">Firstname required</span>
@@ -79,7 +79,7 @@
         <div v-else class="xl:mt-10 md:mb-4 md:px-10 px-3 py-5">
           <span class="text-xl block text-center p-2 uppercase font-semibold label-text">Login</span>
           <div class="mb-3 xl:px-10">
-            <input type="email" v-model="loginForm.email" @keyup.enter="login"
+            <input type="email" v-model="loginForm.email" @keyup.enter="login" autofocus
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Email"/>
             <span v-if="loginForm.isEmailEmpty" class="text-error">Email cannot be empty!</span>
