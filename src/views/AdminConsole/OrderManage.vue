@@ -35,13 +35,11 @@
               </tbody>
             </table>
           </div>
-          <div class="divider"></div>
-          <p class=""><b>Total:</b> {{order.totalPrice}} ฿</p>
         </div>
+        <ul class="w-full steps pt-5">
+          <li class="step" :class="{'step-primary':order.status.id>=status.id}" v-for="status in statusList" :key="status.id" @click="changeOrderStatus(order,status)">{{status.name}}</li>
+        </ul>
       </div>
-      <ul class="w-full steps pt-5">
-        <li class="step" :class="{'step-primary':order.status.id>=status.id}" v-for="status in statusList " :key="status.id" @click="changeOrderStatus(order,status)">{{status.name}}</li>
-      </ul>
     </div>
     </div>
   </div>
@@ -64,7 +62,6 @@ export default {
   methods:{
     async changeOrderStatus(order,status){
       order.status = status
-      console.log(localStorage.getItem('JWT'))
       axios.put(`${this.$store.state.backendUrl}/admin/edit/order?orderId=${order.id}&statusId=${status.id}`,null,
           {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
     },

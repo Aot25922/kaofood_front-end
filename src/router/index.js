@@ -27,9 +27,9 @@ const routes = [
     component: () => import('../views/RestaurantMenu/MenuForm.vue'),
   },
   {
-    path: '/contact',
-    name: 'Contact',
-    component: () => import('../views/Contact.vue'),
+    path: '/aboutus',
+    name: 'AboutUs',
+    component: () => import('../views/AboutUs.vue'),
   },
   {
     path: '/cart',

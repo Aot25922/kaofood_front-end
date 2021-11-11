@@ -1,7 +1,6 @@
 <template>
-    <Introduction intro="Contact With Us" header="Contact" msg="Contact" />
+    <Introduction intro="Contact With Us" header="About Us" msg="About Us" />
     <div class="xl:px-10 lg:p-5 p-3 lg:grid lg:grid-cols-2">
-      <!-- lg:mt-24 md:mt-20 mt-16 -->
       <!-- About img Iphone to Ipad -->
       <img src="../assets/about-2.png" alt="About" class="mx-auto lg:hidden md:w-1/2 w-3/4"/>
       <div class="lg:col-span-1 xl:mt-20">
@@ -36,7 +35,7 @@ import About from '@/components/About.vue'
 import Introduction from '@/components/Introduction.vue'
 
 export default {
-  name: "Contact",
+  name: "AboutUs",
   components: { About, Introduction },
   data() {
     return {

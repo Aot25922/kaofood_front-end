@@ -8,7 +8,7 @@
     <form v-else @submit.prevent="submitform()" class="bg-salmon w-full text-black card p-5 lg:mt-32 md:mt-24 mt-20 mb-5 md:grid md:grid-cols-2">
       <div class="mt-4 flex flex-col md:p-2">
         <label for="menuName" class="font-semibold text-lg pb-2 label-text">Menu name</label>
-        <input v-model.trim="form.name"
+        <input v-model.trim="form.name" autofocus
                class="py-3 px-2 w-full input"
                placeholder="Please enter Menu name..."/>
         <span v-if="!validateName" @blur="checkName" class="text-error">Name required</span>
