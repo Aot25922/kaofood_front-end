@@ -53,23 +53,12 @@
         </div>
       </div>
       <div class="md:flex ml-auto mx-2">
-
-        <!-- Search -->
-        <!-- <label for="my-modal-2" class="btn btn-square btn-ghost modal-button text-lg"><i class="fas fa-search"></i></label>
-        <input type="checkbox" id="my-modal-2" class="modal-toggle"> 
-        <div class="modal bg-black bg-opacity-75">
-          <div class="modal-box flex">
-            <input type="text" v-model="search" autofocus @keypress.enter="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black">
-             <div @click="onClose" id="onClose" class="modal-action">
-              <label for="my-modal-2" class="btn btn-ghost text-black -mt-5"><i class="fas fa-times"></i></label>
-            </div>
-          </div>
-        </div> -->
         <label @click="() => this.showInput = !showInput" class="btn btn-square btn-ghost modal-button text-lg"><i class="fas fa-search"></i></label>
           <div v-if="showInput" class="flex relative">
-            <input type="text" v-model="search" autofocus @keypress.enter="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black">
-            <label class="btn btn-ghost text-gray-dark absolute right-0"><i class="fas fa-times"></i></label>
+            <input type="text" v-model="search" autofocus @keypress.enter="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black lg:pr-12 pr-10">
+            <label @click="clear" class="btn btn-ghost text-gray-dark absolute right-0"><i class="fas fa-times"></i></label>
           </div>
+
         <!-- Cart -->
         <router-link to="/cart" class="mx-auto" v-if="account==null || account.role.name=='Member'">
           <button class="md:flex btn btn-square btn-ghost relative">
@@ -129,11 +118,10 @@ export default {
     searchMenu() {
       this.$store.dispatch("searchMenu", this.search);
       this.$router.push("/menu");
-      // this.onClose();
     },
-    onClose(){
+    clear(){
       this.search = ''
-      // document.getElementById('onClose').click()
+      this.$store.dispatch("searchMenu", this.search)
     }
   },
   computed: {
