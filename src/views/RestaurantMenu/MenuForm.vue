@@ -1,7 +1,7 @@
 <template>
   <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning">
     <!-- No permission display -->
-    <div v-if="account==null||this.$store.state.account.role.name=='Member'" class=" lg:mt-28 md:mt-24 mt-20 w-full">
+    <div v-if="account==null||this.$store.state.account.role.name=='Member'||this.error==true" class=" lg:mt-28 md:mt-24 mt-20 w-full">
       <ErrorPage msg="No no no, That isn't any pokemon here." image="pikachu.gif" css="rounded-md my-5"></ErrorPage>
     </div>
 
@@ -58,6 +58,7 @@ export default {
   components: { ErrorPage },
   data() {
     return {
+      error:false,
       form: {
         name: "",
         price: 0,
@@ -101,7 +102,12 @@ export default {
         await axios.post(`${this.$store.state.backendUrl}/menu/add`, data,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$router.push('/menu');
       } catch (error) {
-        console.log(`Counld not get! ${error}`);
+        if(error.response.status==500){
+          alert("Image is too large or IO problem")
+        }
+        else{
+        alert(error.response.data);
+        }
       }
     },
     async editMenu() {
@@ -109,12 +115,14 @@ export default {
       let data = new FormData()
       data.append("menu", editMenu)
       data.append("multipartFile", this.file);
-      try {
-        await axios.put(`${this.$store.state.backendUrl}/menu/edit`, data ,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
-        this.$router.push('/menu');
-      } catch (error) {
-        console.log(error)
-      }
+        await axios.put(`${this.$store.state.backendUrl}/menu/edit`, data ,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+        .catch(function (error) {
+          if(error.response.status==500){
+            alert("Image is too large or IO problem")
+        }
+          else{
+            alert(error.response.data); }});
+        this.$router.push('/menu');   
     },
     scrollToTop() {
       window.scrollTo(0,0);
@@ -126,6 +134,11 @@ export default {
       return list.id == this.$route.params.id
     })
     this.form = tempMenu[0];
+    console.log(typeof this.form)
+    if(typeof this.form === 'undefined'){
+       this.error =true
+       return 
+    }
     var image = document.getElementById("output");
     image.src = this.$store.state.backendUrl+this.form.image;
   },
