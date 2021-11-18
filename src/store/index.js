@@ -3,8 +3,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    // backendUrl: "https://kaofood.works/api",
-     backendUrl: "https://dev.kaofood.works/api",
+    backendUrl: "https://kaofood.works/api",
+    // backendUrl: "https://dev.kaofood.works/api",
     //backendUrl: "http://localhost:8080",
     account: null,
     menus: [],
@@ -112,15 +112,9 @@ export default createStore({
               commit('SET_ACCOUNT', response.data)
               console.log(this.state.account)
               localStorage.setItem('JWT',response.headers.jwt)
-<<<<<<< HEAD
-            })
-      }
-    },
-=======
             }).catch(function (error) {console.log(error);})
     }
   },
->>>>>>> dev
     async setNewAccount({ commit }, newAccount){
       let data = new FormData();
       data.append("account",newAccount)
