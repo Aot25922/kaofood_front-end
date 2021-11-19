@@ -10,7 +10,7 @@
       <div class="collapse w-full border rounded-box border-base-300 collapse-arrow">
         <input type="checkbox" />
         <div class="collapse-title text-xl font-medium ">
-          {{order.id}}
+          Order Id: {{order.id}}
         </div>
         <div class="collapse-content">
           <div class="overflow-x-auto">
@@ -24,8 +24,8 @@
                   <th>Subtotal</th>
                 </tr>
               </thead>
-              <tbody v-if="orderDetailList!=null">
-                <tr v-for="orderDetail in orderDetailList.filter(list => {return list.orders.id == order.id})" :key="orderDetail.id" >
+              <tbody>
+                <tr v-for="orderDetail in order.orderDetail" :key="orderDetail.id">
                   <th>{{orderDetail.id}}</th>
                   <td>{{orderDetail.menu.name}}</td>
                   <td>{{orderDetail.menu.price}} ฿</td>
@@ -74,19 +74,11 @@ export default {
       console.log("Get Order Form API")
     },
 
-    async getOrderDetailList() {
-      await axios.get(`${this.$store.state.backendUrl}/orderdetail`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-          .then(response => {
-            this.orderDetailList = response.data
-          })
-      console.log("Get OrderDetail Form API")
-    },
-
     async getStatus(){
       await axios.get(`${this.$store.state.backendUrl}/status`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
         .then(response => {
           this.statusList = response.data
-          // console.log(this.statusList)
+          console.log(this.statusList)
       })
       console.log("Get Status Form API")
     }
@@ -101,7 +93,6 @@ export default {
   created() {
     if(this.accountRole){
       this.getOrderList();
-      this.getOrderDetailList();
       this.getStatus();
     }
   },
