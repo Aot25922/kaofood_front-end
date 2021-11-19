@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+
 export default {
   name: "MenuBar",
   data(){
@@ -114,6 +116,18 @@ export default {
     logout() {
       this.$store.dispatch("getAccount", null);
       this.$router.push("/");
+      this.alertLogout();
+    },
+    alertLogout(){
+      {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Successfully Logout!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     },
     searchMenu() {
       this.$store.dispatch("searchMenu", this.search);

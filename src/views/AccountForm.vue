@@ -90,6 +90,7 @@
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Password"/>
             <span v-if="loginForm.isPasswordEmpty" class="text-error">password cannot be empty!</span>
+            <span v-if="loginForm.isErrorLogin" class="text-error">Your username or password is wrong.</span>
           </div>
           <div class="flex flex-row-reverse xl:px-10 xl:py-5">
             <router-link class="text-blue underline text-sm" to="/signup">Sign Up</router-link>
@@ -97,7 +98,6 @@
           <div class="xl:px-10">
             <button @click="login" @keypress.enter="login" class="py-3 w-full btn btn-primary rounded text-white mt-3">Login</button>
           </div>
-          <span v-if="loginForm.isErrorLogin" class="text-error">Your username or password is wrong.</span>
         </div>
       </div>
     </div>
@@ -105,6 +105,8 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+
 export default {
   name: "AccountForm",
   props: ['mode'],
@@ -149,10 +151,12 @@ export default {
       await this.$store.dispatch("getAccount", this.loginForm);
       if (this.$store.state.account == null || this.$store.state.account == '') {
         this.loginForm.isErrorLogin = true;
+        this.loginFail();
         return;
       } else {
         this.loginForm.isErrorLogin = false;
         this.$router.push("/");
+        this.alertComfirm();
       }
     },
     checkSignUpForm() {
@@ -197,6 +201,7 @@ export default {
         this.loginForm.password = this.signUpForm.password
         await this.$store.dispatch("getAccount", this.loginForm);
         this.$router.push("/");
+        this.signUpPass();
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
@@ -230,6 +235,37 @@ export default {
         console.log(error)
       }
      },
+     alertComfirm(){
+      {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Successfully Login!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    },
+    loginFail(){
+      {
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed!',
+          text: 'Username or password wrong!',
+          footer: `If you don't have any account, Please Sign Up first`
+        })
+      }
+    },
+    signUpPass(){
+      {
+        Swal.fire({
+          icon: 'success',
+          title: 'SignUp Complete!',
+          text: `Let's order food that you wanted`,
+        })
+      }
+    },
+
   },
   mounted() {
     if(this.mode == 'Edit') {

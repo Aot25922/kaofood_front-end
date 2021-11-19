@@ -43,6 +43,7 @@
 
 <script>
 import axios from "axios";
+// import Swal from 'sweetalert2'
 import ErrorPage from '@/components/ErrorPage.vue';
 
 export default {
@@ -83,7 +84,18 @@ export default {
       .then(response => { 
         this.roleList = response.data
       })
-    }
+    },
+    // alertComfirm(){
+    //   {
+    //     Swal.fire({
+    //       position: 'top-end',
+    //       icon: 'success',
+    //       title: 'Successfully Login!',
+    //       showConfirmButton: false,
+    //       timer: 1500
+    //     })
+    //   }
+    // },
   },
   computed: {
     accountRole() {

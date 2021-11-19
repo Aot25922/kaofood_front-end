@@ -20,7 +20,7 @@
                   <th>#</th>
                   <th>Name</th>
                   <th>Price</th>
-                  <th>Quantyty</th>
+                  <th>Quantity</th>
                   <th>Subtotal</th>
                 </tr>
               </thead>
@@ -47,6 +47,7 @@
 
 <script>
 import axios from "axios";
+import Swal from 'sweetalert2'
 import ErrorPage from '@/components/ErrorPage.vue';
 
 export default {
@@ -64,6 +65,19 @@ export default {
       order.status = status
       axios.put(`${this.$store.state.backendUrl}/admin/edit/order?orderId=${order.id}&statusId=${status.id}`,null,
           {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+      this.alertComfirm();
+    },
+
+    alertComfirm(){
+      {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your order status has been changed',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     },
 
     async getOrderList() {
