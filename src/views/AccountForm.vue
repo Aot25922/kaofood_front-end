@@ -151,12 +151,27 @@ export default {
       await this.$store.dispatch("getAccount", this.loginForm);
       if (this.$store.state.account == null || this.$store.state.account == '') {
         this.loginForm.isErrorLogin = true;
-        this.loginFail();
+        {
+          Swal.fire({
+            icon: 'error',
+            title: 'Login Failed!',
+            text: 'Email or Password wrong!',
+            footer: `If you don't have any account, Please Sign Up first`
+          })
+        }
         return;
       } else {
         this.loginForm.isErrorLogin = false;
         this.$router.push("/");
-        this.alertComfirm();
+        {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Successfully Login!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
       }
     },
     checkSignUpForm() {
@@ -201,14 +216,28 @@ export default {
         this.loginForm.password = this.signUpForm.password
         await this.$store.dispatch("getAccount", this.loginForm);
         this.$router.push("/");
-        this.signUpPass();
+        {
+          Swal.fire({
+            icon: 'success',
+            title: 'SignUp Complete!',
+            text: `Let's order food that you wanted`,
+          })
+        }
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
+       {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Email or Phone already exist!',
+        })
+      }
     },
     saveForm() {
       if(this.$route.params.id != null) this.editAccount();
       if(this.$route.params.id == null) this.signUp();
+
     },
     async editAccount() {
       this.checkEditForm();
@@ -224,48 +253,23 @@ export default {
         address : this.signUpForm.address,
         password: this.signUpForm.password
       })
-      console.log(editAccount)
+      // console.log(editAccount)
       let data = new FormData()
       data.append("account", editAccount)
-      try {
+      // try {
         await axios.put(`${this.$store.state.backendUrl}/user/edit/profile`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$store.dispatch("fetchLocalStorage")
+        {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully',
+          })
+        }
         this.$router.push('/')
-      } catch(error) {
-        console.log(error)
-      }
+      // } catch(error) {
+      //   console.log(error)
+      // }
      },
-     alertComfirm(){
-      {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Successfully Login!',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    },
-    loginFail(){
-      {
-        Swal.fire({
-          icon: 'error',
-          title: 'Login Failed!',
-          text: 'Username or password wrong!',
-          footer: `If you don't have any account, Please Sign Up first`
-        })
-      }
-    },
-    signUpPass(){
-      {
-        Swal.fire({
-          icon: 'success',
-          title: 'SignUp Complete!',
-          text: `Let's order food that you wanted`,
-        })
-      }
-    },
-
   },
   mounted() {
     if(this.mode == 'Edit') {

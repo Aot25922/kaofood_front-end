@@ -65,10 +65,6 @@ export default {
       order.status = status
       axios.put(`${this.$store.state.backendUrl}/admin/edit/order?orderId=${order.id}&statusId=${status.id}`,null,
           {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-      this.alertComfirm();
-    },
-
-    alertComfirm(){
       {
         Swal.fire({
           position: 'top-end',

@@ -85,17 +85,6 @@ export default {
         this.roleList = response.data
       })
     },
-    // alertComfirm(){
-    //   {
-    //     Swal.fire({
-    //       position: 'top-end',
-    //       icon: 'success',
-    //       title: 'Successfully Login!',
-    //       showConfirmButton: false,
-    //       timer: 1500
-    //     })
-    //   }
-    // },
   },
   computed: {
     accountRole() {

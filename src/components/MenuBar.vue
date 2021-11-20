@@ -116,9 +116,6 @@ export default {
     logout() {
       this.$store.dispatch("getAccount", null);
       this.$router.push("/");
-      this.alertLogout();
-    },
-    alertLogout(){
       {
         Swal.fire({
           position: 'top-end',
