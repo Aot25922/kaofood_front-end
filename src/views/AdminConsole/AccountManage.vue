@@ -31,7 +31,7 @@
                 <option :value="role" v-for="role in this.roleList" :key="role.id">{{ role.name }}</option>
                 </select></td>
               <td>
-                <button v-if="user.role.name!='Admin'" class="lg:text-lg text-primary-focus" @click="deleteUser(user)"><i class="fas fa-trash-alt"></i></button>
+                <button v-if="user.role.name!='Admin'" class="lg:text-lg text-primary-focus" @click="confirmDel(user)"><i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>
@@ -43,7 +43,7 @@
 
 <script>
 import axios from "axios";
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import ErrorPage from '@/components/ErrorPage.vue';
 
 export default {
@@ -60,18 +60,36 @@ export default {
     async getUserList() {
       await axios.get(`${this.$store.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => { this.userList = response.data
- })
+      })
       console.log("Get UserList Form API");
     },
 
     async deleteUser(user) {
-      var result = confirm(`Are you sure to delete ${user.fname} ${user.lname}?`);
-      if (result) {
         await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.userList = this.userList.filter(list => {return list.id != user.id})
+    },
+    confirmDel(user){
+      {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `You won't be able to revert this! You are deleting ${user.fname} ${user.lname}`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+            this.deleteUser(user);
+          }
+        })
       }
     },
-
     async editRoleUser(user,role){
       var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role.name}`);
       if (result) {
