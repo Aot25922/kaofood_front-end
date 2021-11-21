@@ -27,7 +27,7 @@
               <td>{{ user.fname }} {{ user.lname }}</td>
               <td>{{ user.email }}</td>
               <td>
-                <select v-model="user.role" id="role" name="role" @change="editRoleUser(user,user.role)">
+                <select v-model="user.role" id="role" name="role" @change="confirmChangeRole(user, user.role)">
                 <option :value="role" v-for="role in this.roleList" :key="role.id">{{ role.name }}</option>
                 </select></td>
               <td>
@@ -82,7 +82,7 @@ export default {
           if (result.isConfirmed) {
             Swal.fire(
               'Deleted!',
-              'Your file has been deleted.',
+              'Your user has been deleted.',
               'success'
             )
             this.deleteUser(user);
@@ -91,10 +91,29 @@ export default {
       }
     },
     async editRoleUser(user,role){
-      var result = confirm(`Are you sure to change ${user.fname} ${user.lname} role to ${role.name}`);
-      if (result) {
         await axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => { console.log(response); })
+    },
+    confirmChangeRole(user, role){
+      {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `Are you sure to change ${user.fname} ${user.lname} role to ${role.name}`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, change it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Role has been edited!',
+              'Your user has been changed role.',
+              'success'
+            )
+            this.editRoleUser(user, role);
+          }
+        })
       }
     },
     async getStatus(){
