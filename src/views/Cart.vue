@@ -82,10 +82,8 @@
               <!-- Total Price -->
               <div>Total Price: <span class="text-right mb-2">{{total}} ฿</span></div>
             </div>
-            <button class="btn btn-accent w-full" >
-              <span v-if="account!=null" @click="checkout()">Checkout</span>
-              <router-link v-else to="/login">Login to proceed order</router-link>
-            </button>
+            <div v-if="account!=null" @click="checkout()" class="btn btn-accent w-full">Checkout</div>
+            <router-link v-else class="btn btn-accent w-full" to="/login">Login to proceed order</router-link>
           </div>
         </div>
       </div>
@@ -93,6 +91,8 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+
 export default {
   name: "Cart",
   data() {
@@ -132,7 +132,23 @@ export default {
         this.$store.dispatch('removeCart',i)
       }
       this.$router.push("/");
-    }
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Checkout successfully'
+      })
+    },
   },
   computed: {
     cartList() {

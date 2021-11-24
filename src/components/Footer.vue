@@ -18,7 +18,7 @@
         <div class="flex flex-col leading-loose uppercase tracking-widest">
           <router-link class="lg:text-base md:text-sm text-xs pt-1" to="/">Home</router-link>
           <router-link class="lg:text-base md:text-sm text-xs pt-1" to="/menu">Menu</router-link>
-          <router-link class="lg:text-base md:text-sm text-xs pt-1" to="/contact">Contact</router-link>
+          <router-link class="lg:text-base md:text-sm text-xs pt-1" to="/aboutus">Contact</router-link>
         </div>
       </div>
 

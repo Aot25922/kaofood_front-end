@@ -12,7 +12,7 @@
             </span>
           </div>
           <div class="mt-4">
-            <input v-model.trim="signUpForm.firstName" @keyup.enter="saveForm" autofocus
+            <input v-model.trim="signUpForm.firstName" @keyup.enter="saveForm"
                    class="py-3 px-2 w-full outline-none border-b border-gray-dark rounded focus:outline-none focus:border-gray"
                    placeholder="Firstname"/>
             <span v-if="signUpForm.isFirstNameEmpty" class="text-error">Firstname required</span>
@@ -79,7 +79,7 @@
         <div v-else class="xl:mt-10 md:mb-4 md:px-10 px-3 py-5">
           <span class="text-xl block text-center p-2 uppercase font-semibold label-text">Login</span>
           <div class="mb-3 xl:px-10">
-            <input type="email" v-model="loginForm.email" @keyup.enter="login" autofocus
+            <input type="email" v-model="loginForm.email" @keyup.enter="login"
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Email"/>
             <span v-if="loginForm.isEmailEmpty" class="text-error">Email cannot be empty!</span>
@@ -90,6 +90,7 @@
                    class="transition duration-500 outline-none border-b py-3 rounded w-full px-2 mb-2"
                    placeholder="Password"/>
             <span v-if="loginForm.isPasswordEmpty" class="text-error">password cannot be empty!</span>
+            <span v-if="loginForm.isErrorLogin" class="text-error">Your username or password is wrong.</span>
           </div>
           <div class="flex flex-row-reverse xl:px-10 xl:py-5">
             <router-link class="text-blue underline text-sm" to="/signup">Sign Up</router-link>
@@ -97,7 +98,6 @@
           <div class="xl:px-10">
             <button @click="login" @keypress.enter="login" class="py-3 w-full btn btn-primary rounded text-white mt-3">Login</button>
           </div>
-          <span v-if="loginForm.isErrorLogin" class="text-error">Your username or password is wrong.</span>
         </div>
       </div>
     </div>
@@ -105,6 +105,8 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+
 export default {
   name: "AccountForm",
   props: ['mode'],
@@ -149,10 +151,27 @@ export default {
       await this.$store.dispatch("getAccount", this.loginForm);
       if (this.$store.state.account == null || this.$store.state.account == '') {
         this.loginForm.isErrorLogin = true;
+        {
+          Swal.fire({
+            icon: 'error',
+            title: 'Login Failed!',
+            text: 'Email or Password wrong!',
+            footer: `If you don't have any account, Please Sign Up first`
+          })
+        }
         return;
       } else {
         this.loginForm.isErrorLogin = false;
         this.$router.push("/");
+        {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Successfully Login!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
       }
     },
     checkSignUpForm() {
@@ -197,13 +216,28 @@ export default {
         this.loginForm.password = this.signUpForm.password
         await this.$store.dispatch("getAccount", this.loginForm);
         this.$router.push("/");
+        {
+          Swal.fire({
+            icon: 'success',
+            title: 'SignUp Complete!',
+            text: `Let's order food that you wanted`,
+          })
+        }
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
+       {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Email or Phone already exist!',
+        })
+      }
     },
     saveForm() {
       if(this.$route.params.id != null) this.editAccount();
       if(this.$route.params.id == null) this.signUp();
+
     },
     async editAccount() {
       this.checkEditForm();
@@ -219,16 +253,22 @@ export default {
         address : this.signUpForm.address,
         password: this.signUpForm.password
       })
-      console.log(editAccount)
+      // console.log(editAccount)
       let data = new FormData()
       data.append("account", editAccount)
-      try {
+      // try {
         await axios.put(`${this.$store.state.backendUrl}/user/edit/profile`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$store.dispatch("fetchLocalStorage")
+        {
+          Swal.fire({
+            icon: 'success',
+            title: 'Successfully',
+          })
+        }
         this.$router.push('/')
-      } catch(error) {
-        console.log(error)
-      }
+      // } catch(error) {
+      //   console.log(error)
+      // }
      },
   },
   mounted() {
