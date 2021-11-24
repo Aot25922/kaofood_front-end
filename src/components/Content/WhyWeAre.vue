@@ -1,7 +1,7 @@
 <template>
   <div id="about" class="p-3 lg:grid lg:grid-cols-2">
     <div class="lg:col-span-1">
-      <img src="../assets/whyChooseUs.png" alt="Why choose us" class="mx-auto" />
+      <img src="../../assets/whyChooseUs.png" alt="Why choose us" class="mx-auto" />
     </div>
     <!-- Header -->
     <div class="lg:col-span-1">

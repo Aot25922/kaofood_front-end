@@ -7,14 +7,14 @@
       <router-link to="/menu" class="btn btn-accent lg:btn-lg md:btn-md btn-sm xl:text-xl lg:text-lg md:text-base text-xs">Let's Eat!</router-link>
     </div>
   </div>
-  <about class="my-5"/>
+  <WhyWeAre class="my-5"/>
 </template>
 
 <script>
-import About from '@/components/About.vue'
+import WhyWeAre from '@/components/Content/WhyWeAre.vue'
 
 export default {
   name: "Home",
-  components: {About},
+  components: {WhyWeAre},
 }
 </script>

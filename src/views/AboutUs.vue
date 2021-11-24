@@ -27,22 +27,15 @@
         <img src="../assets/about-2.png" alt="About" class="mx-auto xl:w-1/2 lg:w-3/4 w-0"/>
       </div>
     </div>
-    <about class="xl:px-10 lg:p-5"/>
+    <WhyWeAre class="xl:px-10 lg:p-5"/>
 </template>
 
 <script>
-import About from '@/components/About.vue'
-import Introduction from '@/components/Introduction.vue'
+import WhyWeAre from '@/components/Content/WhyWeAre.vue'
+import Introduction from '@/components/Content/Introduction.vue'
 
 export default {
   name: "AboutUs",
-  components: { About, Introduction },
-  data() {
-    return {
-      teamList: [{id: 62130500031, name: 'Thanasap Leelapisuth', img: '', role: ['Frontend', 'Database']},
-        {id: 62130500033, name: 'Tanapat Kullakul', img: '', role: ['Backend', 'Frontend']},
-        {id: 62130500043, name: 'Nithach Vassanapong', img: '', role: ['Full Stack', 'Fixed Bug']}]
-    }
-  },
+  components: { WhyWeAre, Introduction },
 };
 </script>
