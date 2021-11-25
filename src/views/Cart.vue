@@ -1,5 +1,5 @@
 <template>
-  <div class="md:pt-28 pt-20 md:pb-14 pb-5 md:px-5 px-2 bg-salmon-light">
+  <div class="md:py-14 py-5 md:px-5 px-2 bg-salmon-light flex-grow">
     <!-- If no item in cart -->
     <div v-if="cartList.length==0" class="text-center xl:py-32 lg:py-24 md:py-20 py-16">
       <i class="fas fa-box-open xl:text-9xl md:text-7xl text-5xl p-5"></i>

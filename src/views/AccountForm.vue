@@ -226,13 +226,13 @@ export default {
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
-       {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops!',
-          text: 'Email or Phone already exist!',
-        })
-      }
+      //  {
+      //   Swal.fire({
+      //     icon: 'error',
+      //     title: 'Oops!',
+      //     text: 'Email or Phone already exist!',
+      //   })
+      // }
     },
     saveForm() {
       if(this.$route.params.id != null) this.editAccount();

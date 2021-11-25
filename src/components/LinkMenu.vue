@@ -1,6 +1,5 @@
 <template>
-  <div id="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">
-    <div class="navbar bg-primary-focus text-neutral-content fixed z-50 w-full top-0">
+    <div class="navbar bg-primary-focus text-neutral-content sticky top-0 z-50 w-full">
       <!-- Hamburger Dropdown -->
       <div class="dropdown dropdown-right md:hidden">
         <div tabindex="0" class="btn btn-square btn-ghost">
@@ -98,7 +97,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
