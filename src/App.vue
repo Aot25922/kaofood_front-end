@@ -1,17 +1,17 @@
 <template>
   <div id="app" class="select-none h-screen">
-    <menu-bar />
+    <LinkMenu />
     <router-view />
     <Footer/>
   </div>
 </template>
 
 <script>
-import MenuBar from "@/components/MenuBar.vue";
+import LinkMenu from "@/components/LinkMenu.vue";
 import Footer from "@/components/Footer.vue";
 export default {
   name: "App",
-  components: { MenuBar, Footer },
+  components: { LinkMenu, Footer },
   beforeCreate() {
     this.$store.dispatch("fetchLocalStorage");
   }

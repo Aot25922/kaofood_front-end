@@ -19,7 +19,7 @@
 <script>
 import Category from "@/components/RestaurantMenu/Category.vue";
 import MenuList from "@/components/RestaurantMenu/MenuList.vue";
-import Introduction from '@/components/Introduction.vue';
+import Introduction from '@/components/Content/Introduction.vue';
 
 export default {
   name: "Menu",
