@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-fire-lightest px-7 py-12">
+  <div class="bg-fire-lightest px-7 py-12 flex-grow">
     <div class="lg:grid lg:grid-cols-3 lg:mt-32 lg:mb-12">
       <img src="../assets/logo.png" class="lg:col-span-1 xl:p-16 lg:p-5 lg:m-auto md:mt-16 my-10 mx-auto lg:w-3/4 md:w-1/4 w-1/3"/>
       <div class="lg:col-span-2 lg:w-full xl:max-w-screen-lg max-w-xl mx-auto bg-white md:px-10 p-3 rounded shadow border-8 border-fire-darker">

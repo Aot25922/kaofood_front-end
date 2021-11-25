@@ -2,9 +2,7 @@
   <div class="md:py-14 py-5 md:px-5 px-2 bg-salmon-light flex-grow">
     <!-- If no item in cart -->
     <div v-if="cartList.length==0" class="text-center xl:py-32 lg:py-24 md:py-20 py-16">
-      <i class="fas fa-box-open xl:text-9xl md:text-7xl text-5xl p-5"></i>
-      <p class="xl:p-5 md:p-3 p-2 text-gray xl:text-lg text-sm">No any items in your cart</p>
-      <router-link to="/menu" class="btn btn-secondary btn-sm rounded-2xl xl:text-lg xl:m-5 md:m-3 m-2">Choose your menu!</router-link>
+      <NoMenu text="No any items in your cart"/>
     </div>
     <!-- If have item in CartList -->
     <div v-else>
@@ -40,8 +38,8 @@
             </div>
             <!-- total -->
             <div class="w-1/6 text-right lg:text-lg md:text-sm text-xs flex items-center justify-center relative">
-              <button @click="removeCartItem(item)" class="btn btn-ghost w-1/3 absolute top-0 right-0">
-                <i class="fas fa-trash-alt lg:text-lg"></i>
+              <button @click="removeCartItem(item)" class="w-1/3 absolute top-0 right-0 animation">
+                <i class="far fa-times-circle text-2xl"></i>
               </button>
               <!-- xl:mt-40 lg:mt-16 md:mt-5 mt-2 -->
               <div class="text-center">{{item.price * item.count}}</div>
@@ -82,7 +80,7 @@
               <!-- Total Price -->
               <div>Total Price: <span class="text-right mb-2">{{total}} ฿</span></div>
             </div>
-            <div v-if="account!=null" @click="checkout()" class="btn btn-accent w-full">Checkout</div>
+            <div v-if="account!=null" @click="checkout()" class="btn btn-secondary w-full">Checkout</div>
             <router-link v-else class="btn btn-accent w-full" to="/login">Login to proceed order</router-link>
           </div>
         </div>
@@ -91,10 +89,12 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import NoMenu from '@/components/NoMenu.vue'
 
 export default {
   name: "Cart",
+  components: { NoMenu },
   data() {
     return {
       order :[]
@@ -167,3 +167,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .animation{
+    transition-duration: 0.2s;
+  }
+  .animation:active{
+    transform: scale(0.8);
+  }
+</style>

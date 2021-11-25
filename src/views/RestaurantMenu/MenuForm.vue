@@ -1,5 +1,5 @@
 <template>
-  <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning">
+  <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning flex-grow">
     <!-- No permission display -->
     <div v-if="account==null||this.$store.state.account.role.name=='Member'||this.error==true" class=" lg:mt-28 md:mt-24 mt-20 w-full">
       <ErrorPage msg="No no no, That isn't any pokemon here." image="pikachu.gif" css="rounded-md my-5"></ErrorPage>

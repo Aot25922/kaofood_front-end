@@ -1,6 +1,5 @@
 <template>
-
-  <div id="orderManage" class="lg:pt-28 md:pt-24 pt-20 bg-fire-lightest p-5">
+  <div id="orderManage" class="lg:pt-28 md:pt-24 pt-20 bg-fire-lightest p-5 flex-grow">
     <div v-if="!accountRole" class="w-full">
       <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif" css="xl:w-2/5 mx-auto rounded-md my-5"></ErrorPage>
     </div>
