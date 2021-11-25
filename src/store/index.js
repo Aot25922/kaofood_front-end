@@ -3,8 +3,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    // backendUrl: "https://kaofood.works/api",
-    backendUrl: "https://dev.kaofood.works/api",
+    backendUrl: "https://kaofood.works/api",
+    // backendUrl: "https://dev.kaofood.works/api",
     // backendUrl: "http://localhost:8080",
     account: null,
     menus: [],
@@ -68,7 +68,7 @@ export default createStore({
     },
     async fetchLocalStorage({ commit }) {
         try {
-          await axios.get(`${this.state.backendUrl}/user/login`,{withCredentials:true}).then(response => {
+          await axios.post(`${this.state.backendUrl}/user/login`,null,{withCredentials:true}).then(response => {
             if(localStorage.getItem('JWT')==null){
               localStorage.setItem('JWT',response.headers.jwt)
             }
@@ -107,7 +107,10 @@ export default createStore({
         localStorage.removeItem('JWT')
         localStorage.removeItem("cart");
       }else {
-        await axios.get(`${this.state.backendUrl}/user/login?email=${loginForm.email}&password=${loginForm.password}`,{withCredentials:true})
+        const body = new FormData()
+        body.append("email",loginForm.email)
+        body.append("password",loginForm.password)
+        await axios.post(`${this.state.backendUrl}/user/login`,body,{withCredentials:true})
             .then(response => {
               commit('SET_ACCOUNT', response.data)
               console.log(this.state.account)
