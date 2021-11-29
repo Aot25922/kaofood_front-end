@@ -1,6 +1,6 @@
 <template>
   <div class="bg-fire-lightest px-7 py-12 flex-grow">
-    <div class="lg:grid lg:grid-cols-3 lg:mt-32 lg:mb-12">
+    <div class="lg:grid lg:grid-cols-3 lg:py-12">
       <img src="../assets/logo.png" class="lg:col-span-1 xl:p-16 lg:p-5 lg:m-auto md:mt-16 my-10 mx-auto lg:w-3/4 md:w-1/4 w-1/3"/>
       <div class="lg:col-span-2 lg:w-full xl:max-w-screen-lg max-w-xl mx-auto bg-white md:px-10 p-3 rounded shadow border-8 border-fire-darker">
         <!-- ส่วนของ Sign Up -->
@@ -180,8 +180,19 @@ export default {
       this.signUpForm.isAddressEmpty = (this.signUpForm.address == "") ? true : false
       this.signUpForm.isPhoneEmpty = (this.signUpForm.phone == "") ? true : false
       this.signUpForm.isEmailEmpty = (this.signUpForm.email == "") ? true : false
-      this.signUpForm.isPasswordEmpty = (this.signUpForm.password == "") ? true : false
+      // this.signUpForm.isPasswordEmpty = (this.signUpForm.password == "") ? true : false
+      if (this.signUpForm.password == '') {
+        this.signUpForm.isPasswordEmpty = false
+      } else if (this.signUpForm.password.length < 6) {
+        this.signUpForm.isPasswordEmpty = false
+      } else { 
+        this.signUpForm.isPasswordEmpty = true 
+      }
       this.signUpForm.passwordNotSame = (this.signUpForm.password != this.signUpForm.confirmPassword) ? true : false
+    },
+    validEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     },
     checkEditForm(){
       this.signUpForm.isFirstNameEmpty = (this.signUpForm.firstName == "") ? true : false
@@ -226,13 +237,6 @@ export default {
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
-      //  {
-      //   Swal.fire({
-      //     icon: 'error',
-      //     title: 'Oops!',
-      //     text: 'Email or Phone already exist!',
-      //   })
-      // }
     },
     saveForm() {
       if(this.$route.params.id != null) this.editAccount();
