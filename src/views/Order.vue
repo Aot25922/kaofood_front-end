@@ -1,8 +1,11 @@
 <template>
-    <div class="lg:pt-28 md:pt-24 pt-20 bg-fire-lightest p-5">
+    <div class="bg-salmon-light p-5 flex-grow">
     <!-- No Login -->
     <div v-if="account==null" class="w-full">
       <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif" css="xl:w-2/5 mx-auto rounded-md my-5"></ErrorPage>
+    </div>
+    <div v-else-if="this.orderList==null" class="text-center xl:py-32 lg:py-24 md:py-20 py-16">
+      <NoMenu text="You never checkout any order."/>
     </div>
     <div v-else>
       <p class="font-bold p-5 text-2xl">Order Status</p>
@@ -50,10 +53,11 @@
 <script>
 import axios from "axios";
 import ErrorPage from '@/components/ErrorPage.vue';
+import NoMenu from '@/components/NoMenu.vue'
 
 export default {
   name: "Order",
-  components: { ErrorPage },
+  components: { ErrorPage, NoMenu },
   data() {
       return {
        statusList : null,
@@ -69,16 +73,13 @@ export default {
         })
         .then((response) => {
           this.orderList = response.data;
-          console.log(this.orderList)
         });
-      console.log("Get Order Form API");
     },
     async getStatus(){
       await axios.get(`${this.$store.state.backendUrl}/status`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
         .then(response => {
           this.statusList = response.data
       })
-      console.log("Get Status Form API")
     }
   },
   computed: {

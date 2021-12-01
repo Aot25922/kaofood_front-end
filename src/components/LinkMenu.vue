@@ -1,6 +1,5 @@
 <template>
-  <div id="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">
-    <div class="navbar bg-primary-focus text-neutral-content fixed z-50 w-full top-0">
+    <div class="navbar bg-primary-focus text-neutral-content sticky top-0 z-50 w-full">
       <!-- Hamburger Dropdown -->
       <div class="dropdown dropdown-right md:hidden">
         <div tabindex="0" class="btn btn-square btn-ghost">
@@ -42,6 +41,7 @@
           <li><span @click="logout" v-if="account!=null" class="font-bold">Logout</span></li>
         </ul>
       </div>
+        
 
       <!-- Main menu ipad to laptop -->
       <div class="px-4">
@@ -52,10 +52,14 @@
           <router-link to="/aboutus" class="btn btn-ghost btn-sm rounded-btn xl:text-xl text-lg">About Us</router-link>
         </div>
       </div>
+      <!-- Search -->
       <div class="md:flex ml-auto mx-2">
-        <label @click="() => this.showInput = !showInput" class="btn btn-square btn-ghost modal-button text-lg"><i class="fas fa-search"></i></label>
+        <label @click="() => this.showInput = !showInput" class="btn btn-square btn-ghost modal-button text-lg">
+          <i v-if="this.showInput == false" class="fas fa-search"></i>
+          <i v-else class="fas fa-arrow-left"></i>
+        </label>
           <div v-if="showInput" class="flex relative">
-            <input type="text" v-model="search" autofocus @keypress.enter="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black lg:pr-12 pr-10">
+            <input type="text" v-model="search" autofocus @keyup="searchMenu" placeholder="Search..." class="input input-bordered w-full text-black lg:pr-12 pr-10">
             <label @click="clear" class="btn btn-ghost text-gray-dark absolute right-0"><i class="fas fa-times"></i></label>
           </div>
 
@@ -98,7 +102,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

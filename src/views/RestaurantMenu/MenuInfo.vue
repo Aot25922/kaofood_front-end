@@ -1,5 +1,5 @@
 <template>
-  <div class="card lg:pt-28 md:pt-24 pt-20 md:pb-5 pb-3 p-2 md:flex md:flex-row">
+  <div class="card md:py-5 py-3 p-2 md:flex md:flex-row flex-grow">
     <div class="md:w-3/5 md:my-auto">
       <img :src="this.$store.state.backendUrl+this.menu.image" class="rounded-lg w-full"/>
     </div>

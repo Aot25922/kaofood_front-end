@@ -22,3 +22,13 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Setup daisyUI
+```
+npm i daisyui
+```
+
+### Setup SweetAlert2
+```
+npm install sweetalert2
+```
