@@ -98,8 +98,9 @@ export default {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, change it!'
-      }).then(() => {
-        axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+      }).then((result) => {
+        if(result.isConfirmed) {
+          axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
             .then(() => {
               Swal.fire(
                   'Role has been edited!',
@@ -112,7 +113,16 @@ export default {
                   'Something went wrong!',
                   'error'
               )
-            })
+          })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire(
+            'Cancelled',
+            'You have been cancel to change role :)',
+            'error'
+          )
+          this.getUserList();
+          this.getStatus();
+        }
       })
     },
     async getStatus(){
