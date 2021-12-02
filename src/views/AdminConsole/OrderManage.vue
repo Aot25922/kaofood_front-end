@@ -1,41 +1,43 @@
 <template>
-  <div id="userManage" class="lg:py-8 md:py-6 p-5 bg-salmon-light flex-grow">
-    <!-- No permission -->
+  <div id="orderManage" class="bg-fire-lightest p-5 flex-grow">
     <div v-if="!accountRole" class="w-full">
       <ErrorPage msg="No way bro! Thinking WHY?" image="batman.gif" css="xl:w-2/5 mx-auto rounded-md my-5"></ErrorPage>
     </div>
-
-    <div v-else class="card bordered bg-white p-5">
-      <div class="card-title pt-10">
-        <h1 class="font-semibold md:text-2xl text-xl">User Dashboard</h1>
-        <div class="divider m-0"></div>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="table w-full table-zebra">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>E-mail</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody v-for="user in userList" :key="user.id">
-            <tr>
-              <th>{{ user.id }}</th>
-              <td>{{ user.fname }} {{ user.lname }}</td>
-              <td>{{ user.email }}</td>
-              <td>
-                <select v-model="user.role" id="role" name="role" @change="editRoleUser(user, user.role)">
-                <option :value="role" v-for="role in this.roleList" :key="role.id">{{ role.name }}</option>
-                </select></td>
-              <td>
-                <button v-if="user.role.name!='Admin'" class="lg:text-lg text-primary-focus" @click="deleteUser(user)"><i class="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div v-else>
+    <p class="font-bold p-5 text-2xl">Order Management</p>
+    <div class="card p-5 bg-white mb-8" v-for="order in orderList" :key="order.id">
+      <div class="collapse w-full border rounded-box border-base-300 collapse-arrow">
+        <input type="checkbox" />
+        <div class="collapse-title text-xl font-medium ">
+          Order Id: {{order.id}}
+        </div>
+        <div class="collapse-content">
+          <div class="overflow-x-auto">
+            <table class="table text-center w-full">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="orderDetail in order.orderDetail" :key="orderDetail.id">
+                  <th>{{orderDetail.id}}</th>
+                  <td>{{orderDetail.menu.name}}</td>
+                  <td>{{orderDetail.menu.price}} ฿</td>
+                  <td>{{orderDetail.count}}</td>
+                  <td>{{orderDetail.menu.price*orderDetail.count}} ฿</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ul class="w-full steps pt-5">
+          <li class="step" :class="{'step-primary':order.status.id>=status.id}" v-for="status in statusList" :key="status.id" @click="changeOrderStatus(order,status)">{{status.name}}</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -55,71 +57,34 @@ export default {
     }
   },
   methods:{
-    //โหลดข้อมูล userList
-    async getUserList() {
-      await axios.get(`${this.$store.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-          .then(response => { this.userList = response.data
-      })
+    async changeOrderStatus(order,status){
+      order.status = status
+      axios.put(`${this.$store.state.backendUrl}/admin/edit/order?orderId=${order.id}&statusId=${status.id}`,null,
+          {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+      {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your order status has been changed',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     },
-    deleteUser(user){
-      Swal.fire({
-        title: 'Are you sure?',
-        text: `You won't be able to revert this! You are deleting ${user.fname} ${user.lname}`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(() => {
-        axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-            .then(() => {
-              this.userList = this.userList.filter(list => {return list.id != user.id});
-              Swal.fire(
-                  'Deleted!',
-                  'Your user has been deleted.',
-                  'success'
-              );
-            }).catch(() => {
-              Swal.fire(
-                  'Oops...',
-                  'Something went wrong!',
-                  'error'
-              );
-            });
-        });
-    },
-    editRoleUser(user, role){
-      Swal.fire({
-        title: 'Are you sure?',
-        text: `Are you sure to change ${user.fname} ${user.lname} role to ${role.name}`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, change it!'
-      }).then(() => {
-        axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-            .then(() => {
-              Swal.fire(
-                  'Role has been edited!',
-                  'Your user has been changed role.',
-                  'success'
-              )
-            }).catch(() => {
-              Swal.fire(
-                  'Oops...',
-                  'Something went wrong!',
-                  'error'
-              )
-            })
-      })
+
+    async getOrderList() {
+      await axios.get(`${this.$store.state.backendUrl}/order`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+          .then(response => {
+            this.orderList = response.data
+          })
     },
     async getStatus(){
-      await axios.get(`${this.$store.state.backendUrl}/role`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-      .then(response => { 
-        this.roleList = response.data
+      await axios.get(`${this.$store.state.backendUrl}/status`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+        .then(response => {
+          this.statusList = response.data
+          console.log(this.statusList)
       })
-    },
+    }
   },
   computed: {
     accountRole() {
@@ -130,7 +95,7 @@ export default {
   },
   created() {
     if(this.accountRole){
-      this.getUserList();
+      this.getOrderList();
       this.getStatus();
     }
   }

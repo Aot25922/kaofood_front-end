@@ -106,6 +106,7 @@
 
 <script>
 import Swal from 'sweetalert2'
+
 export default {
   name: "AccountForm",
   props: ['mode'],
@@ -273,6 +274,7 @@ export default {
     saveForm() {
       if(this.$route.params.id != null) this.editAccount();
       if(this.$route.params.id == null) this.signUp();
+
     },
     async editAccount() {
       this.checkEditForm();
