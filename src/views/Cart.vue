@@ -152,43 +152,6 @@ export default {
         title: 'Checkout successfully'
       })
     },
-    async checkout(){
-      const axios = require('axios');
-      for(let i of this.cartList){
-        this.order.push({"menuId":i.id,"count":i.count})
-      }
-      try{
-         await axios.post(`${this.$store.state.backendUrl}/order/new/${this.$store.state.account.id}`,this.order,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-      } catch(error){
-        Swal.fire({
-            icon: 'error',
-            title: error.response.data,
-            footer: `If you don't have any account, Please Sign Up first`
-          })
-      }
-      this.order=[]
-      localStorage.removeItem("cart");
-      for(let i of this.cartList){
-        this.$store.dispatch('removeCart',i)
-      }
-      this.$router.push("/");
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-
-      Toast.fire({
-        icon: 'success',
-        title: 'Checkout successfully'
-      })
-    },
   },
   computed: {
     cartList() {
