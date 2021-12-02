@@ -1,17 +1,10 @@
 <template>
-<<<<<<< HEAD
-  <div id="app" class="select-none h-screen">
-    <LinkMenu />
-    <router-view />
-    <Footer/>
-=======
   <div id="app" class="select-none flex flex-col justify-between min-h-screen">
     <div class="min-h-full flex-grow flex flex-col">
       <LinkMenu class="flex-none"/>
       <router-view />
     </div>
     <Footer class="flex-none"/>
->>>>>>> dev
   </div>
 </template>
 

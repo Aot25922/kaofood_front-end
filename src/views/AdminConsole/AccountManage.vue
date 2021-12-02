@@ -27,15 +27,11 @@
               <td>{{ user.fname }} {{ user.lname }}</td>
               <td>{{ user.email }}</td>
               <td>
-<<<<<<< HEAD
-                <select v-model="user.role" id="role" name="role" @change="confirmChangeRole(user, user.role)">
-=======
                 <select v-model="user.role" id="role" name="role" @change="editRoleUser(user, user.role)">
->>>>>>> dev
                 <option :value="role" v-for="role in this.roleList" :key="role.id">{{ role.name }}</option>
                 </select></td>
               <td>
-                <button v-if="user.role.name!='Admin'" class="lg:text-lg text-primary-focus" @click="confirmDel(user)"><i class="fas fa-trash-alt"></i></button>
+                <button v-if="user.role.name!='Admin'" class="lg:text-lg text-primary-focus" @click="deleteUser(user)"><i class="fas fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>
@@ -49,7 +45,6 @@
 import axios from "axios";
 import Swal from 'sweetalert2'
 import ErrorPage from '@/components/ErrorPage.vue';
-
 export default {
   name: "AccountManage",
   components: { ErrorPage },
@@ -65,62 +60,6 @@ export default {
       await axios.get(`${this.$store.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
           .then(response => { this.userList = response.data
       })
-<<<<<<< HEAD
-      console.log("Get UserList Form API");
-    },
-
-    async deleteUser(user) {
-        await axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
-        this.userList = this.userList.filter(list => {return list.id != user.id})
-    },
-    confirmDel(user){
-      {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: `You won't be able to revert this! You are deleting ${user.fname} ${user.lname}`,
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire(
-              'Deleted!',
-              'Your user has been deleted.',
-              'success'
-            )
-            this.deleteUser(user);
-          }
-        })
-      }
-    },
-    async editRoleUser(user,role){
-        await axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-          .then(response => { console.log(response); })
-    },
-    confirmChangeRole(user, role){
-      {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: `Are you sure to change ${user.fname} ${user.lname} role to ${role.name}`,
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, change it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire(
-              'Role has been edited!',
-              'Your user has been changed role.',
-              'success'
-            )
-            this.editRoleUser(user, role);
-          }
-        })
-      }
-=======
     },
     deleteUser(user){
       Swal.fire({
@@ -174,7 +113,6 @@ export default {
               )
             })
       })
->>>>>>> dev
     },
     async getStatus(){
       await axios.get(`${this.$store.state.backendUrl}/role`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})

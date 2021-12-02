@@ -106,7 +106,6 @@
 
 <script>
 import Swal from 'sweetalert2'
-
 export default {
   name: "AccountForm",
   props: ['mode'],
@@ -270,18 +269,10 @@ export default {
       }
       this.signUpForm.accountEmailExist = (this.$store.state.account == 'accountEmailExist') ? true : false;
       this.signUpForm.accountPhoneExist = (this.$store.state.account == 'accountPhoneExist') ? true : false;
-       {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops!',
-          text: 'Email or Phone already exist!',
-        })
-      }
     },
     saveForm() {
       if(this.$route.params.id != null) this.editAccount();
       if(this.$route.params.id == null) this.signUp();
-
     },
     async editAccount() {
       this.checkEditForm();
@@ -306,16 +297,9 @@ export default {
         address : this.signUpForm.address,
         password: this.signUpForm.password
       })
-<<<<<<< HEAD
-      // console.log(editAccount)
-      let data = new FormData()
-      data.append("account", editAccount)
-      // try {
-=======
       let data = new FormData()
       data.append("account", editAccount)
        try {
->>>>>>> dev
         await axios.put(`${this.$store.state.backendUrl}/user/edit/profile`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$store.dispatch("fetchLocalStorage")
         {
@@ -325,11 +309,6 @@ export default {
           })
         }
         this.$router.push('/')
-<<<<<<< HEAD
-      // } catch(error) {
-      //   console.log(error)
-      // }
-=======
       } catch(error) {
         Swal.fire({
             icon: 'error',
@@ -337,7 +316,6 @@ export default {
             footer: `If you don't have any account, Please Sign Up first`
           })
       }
->>>>>>> dev
      },
   },
   mounted() {
