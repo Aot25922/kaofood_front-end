@@ -85,6 +85,7 @@
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -97,23 +98,75 @@ export default {
   components: { NoMenu },
   data() {
     return {
-      order :[]
+      userList : null,
+      roleList : null
     }
   },
-  methods: {
-    increaseAmount(item) {
-      if(item.count == null ||  item.count == '' ) item.count=0;
-      item.count += 1;
-      localStorage.setItem('cart',JSON.stringify(this.$store.state.cart))
+  methods:{
+    //โหลดข้อมูล userList
+    async getUserList() {
+      await axios.get(`${this.$store.state.backendUrl}/admin/allAccount`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+          .then(response => { this.userList = response.data
+      })
     },
-    decreaseAmount(item) {
-      if(item.count == null ||  item.count == '' ) item.count=0;
-      item.count -= 1;
-      if(item.count <=1 ) item.count=1;
-      localStorage.setItem('cart',JSON.stringify(this.$store.state.cart))
+    deleteUser(user){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `You won't be able to revert this! You are deleting ${user.fname} ${user.lname}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(() => {
+        axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+            .then(() => {
+              this.userList = this.userList.filter(list => {return list.id != user.id});
+              Swal.fire(
+                  'Deleted!',
+                  'Your user has been deleted.',
+                  'success'
+              );
+            }).catch(() => {
+              Swal.fire(
+                  'Oops...',
+                  'Something went wrong!',
+                  'error'
+              );
+            });
+        });
     },
-    removeCartItem(item){
-      this.$store.dispatch('removeCart',item)
+    editRoleUser(user, role){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `Are you sure to change ${user.fname} ${user.lname} role to ${role.name}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, change it!'
+      }).then(() => {
+        axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+            .then(() => {
+              Swal.fire(
+                  'Role has been edited!',
+                  'Your user has been changed role.',
+                  'success'
+              )
+            }).catch(() => {
+              Swal.fire(
+                  'Oops...',
+                  'Something went wrong!',
+                  'error'
+              )
+            })
+      })
+    },
+    async getStatus(){
+      await axios.get(`${this.$store.state.backendUrl}/role`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+      .then(response => { 
+        this.roleList = response.data
+      })
     },
     async checkout(){
       const axios = require('axios');
@@ -154,18 +207,16 @@ export default {
     },
   },
   computed: {
-    cartList() {
-      return this.$store.state.cart;
+    accountRole() {
+      if(this.$store.state.account==null) return false;
+      if(this.$store.state.account.role.name=='Admin') return true;
+      return false;
     },
-    total(){
-      let total = 0
-      for(let i of this.cartList){
-        total += i.count*i.price;
-      }
-      return total;
-    },
-    account(){
-      return this.$store.state.account
+  },
+  created() {
+    if(this.accountRole){
+      this.getUserList();
+      this.getStatus();
     }
   }
 };
