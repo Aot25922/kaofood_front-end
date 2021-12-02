@@ -3,7 +3,6 @@
   <div id="menu" class="bg-salmon-light">
     <!--FoodList with Loop-->
     <category @SelectCate="selectCate" class="py-2" />
-    <!-- <jw-pagination :items="menu" @changePage="onChangePage"></jw-pagination> -->
     <div class="xl:grid-rows-none lg:grid lg:grid-cols-3 lg:grid-rows-3 md:px-6 px-3 md:grid md:grid-cols-2 md:grid-rows-2 sm:flex sm:flex-row">
       <router-link to="/menu/add" v-if="this.$store.state.account!=null && this.$store.state.account.role.name!='Member'" class="md:m-3 md:px-1">
         <!-- Appear when Phone and hiiden un Ipad -->
@@ -37,14 +36,19 @@ export default {
   },
   computed: {
     menuFilterList() {
-      if (this.$store.state.search) return this.$store.state.menus.filter(list => {
+      let menuList = this.$store.state.menus
+      if (this.$store.state.search) {
+      menuList = menuList.filter(list => {
         list = list.name.toLowerCase()
         return list.indexOf(this.$store.state.search.toLowerCase()) > -1
       })
-      if (this.cateId == null) return this.$store.state.menus;
-      return this.$store.state.menus.filter(list => {
+      }
+      if (this.cateId != null) {
+      menuList = menuList.filter(list => {
         return list.category.id == this.cateId
       })
+      }
+      return menuList
     }
   },
   beforeCreate() {

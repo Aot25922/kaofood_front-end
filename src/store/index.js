@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default createStore({
   state: {
@@ -57,14 +58,12 @@ export default createStore({
           .then(response => {
             commit('SET_Category', response.data)
           })
-      console.log("Fetch Category");
     },
     async fetchMenuAPI({ commit }) {
       await axios.get(`${this.state.backendUrl}/menu`)
           .then(response => {
             commit('SET_MENU', response.data)
           })
-      console.log("Fetch MENU");
     },
     async fetchLocalStorage({ commit }) {
         try {
@@ -73,7 +72,6 @@ export default createStore({
               localStorage.setItem('JWT',response.headers.jwt)
             }
             commit('SET_ACCOUNT', response.data)
-            console.log(this.state.account)
           })
         } catch (e) {
            console.log(e)
@@ -86,7 +84,6 @@ export default createStore({
           localStorage.removeItem("cart");
         }
       }
-      console.log("Fetch LocalStorage");
     },
     addToCart({ commit }, item){
       if(this.state.cart.find(element => (element.id == item.id) ? true : false)){
@@ -113,9 +110,14 @@ export default createStore({
         await axios.post(`${this.state.backendUrl}/user/login`,body,{withCredentials:true})
             .then(response => {
               commit('SET_ACCOUNT', response.data)
-              console.log(this.state.account)
               localStorage.setItem('JWT',response.headers.jwt)
-            }).catch(function (error) {console.log(error);})
+            }).catch(function (error) {
+              Swal.fire({
+                icon: 'error',
+                title: error.response.data,
+                footer: `If you don't have any problem, please contact`
+              })
+            })
     }
   },
     async setNewAccount({ commit }, newAccount){
@@ -133,11 +135,16 @@ export default createStore({
           console.log(response.data)
           commit('SET_ACCOUNT', "success")
         }
-      }).catch(function (error) {console.log(error);})
+      }).catch(function (error) {
+        Swal.fire({
+          icon: 'error',
+          title: error.response.data,
+          footer: `If you don't have any problem, please contact`
+        })
+      })
     },
     searchMenu({ commit }, items) {
       commit('SET_SEARCH', items)
-      console.log(this.state.search)
     }
   },
   getters:{},

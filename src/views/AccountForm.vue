@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-fire-lightest px-7 py-12">
-    <div class="lg:grid lg:grid-cols-3 lg:mt-32 lg:mb-12">
+  <div class="bg-fire-lightest px-7 py-12 flex-grow">
+    <div class="lg:grid lg:grid-cols-3 lg:py-12">
       <img src="../assets/logo.png" class="lg:col-span-1 xl:p-16 lg:p-5 lg:m-auto md:mt-16 my-10 mx-auto lg:w-3/4 md:w-1/4 w-1/3"/>
       <div class="lg:col-span-2 lg:w-full xl:max-w-screen-lg max-w-xl mx-auto bg-white md:px-10 p-3 rounded shadow border-8 border-fire-darker">
         <!-- ส่วนของ Sign Up -->
@@ -148,6 +148,24 @@ export default {
     async login() {
       this.checkLoginForm();
       if (this.loginForm.isEmailEmpty || this.loginForm.isPasswordEmpty) return;
+      if (!this.validEmail(this.loginForm.email)){
+        Swal.fire({
+            icon: 'error',
+            title: 'Valid Email',
+            text: 'Please input you email',
+            footer: `If you don't have any account, Please Sign Up first`
+          })
+          return
+      }
+      if(this.loginForm.password.length<6){
+        Swal.fire({
+            icon: 'error',
+            title: 'Valid Password',
+            text: 'Please input password more than 6 character',
+            footer: `If you don't have any account, Please Sign Up first`
+          })
+          return
+      }
       await this.$store.dispatch("getAccount", this.loginForm);
       if (this.$store.state.account == null || this.$store.state.account == '') {
         this.loginForm.isErrorLogin = true;
@@ -180,8 +198,16 @@ export default {
       this.signUpForm.isAddressEmpty = (this.signUpForm.address == "") ? true : false
       this.signUpForm.isPhoneEmpty = (this.signUpForm.phone == "") ? true : false
       this.signUpForm.isEmailEmpty = (this.signUpForm.email == "") ? true : false
-      this.signUpForm.isPasswordEmpty = (this.signUpForm.password == "") ? true : false
+      if (this.signUpForm.password == '') {
+        this.signUpForm.isPasswordEmpty = true
+      }else { 
+        this.signUpForm.isPasswordEmpty = false 
+      }
       this.signUpForm.passwordNotSame = (this.signUpForm.password != this.signUpForm.confirmPassword) ? true : false
+    },
+    validEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     },
     checkEditForm(){
       this.signUpForm.isFirstNameEmpty = (this.signUpForm.firstName == "") ? true : false
@@ -199,6 +225,24 @@ export default {
       if (this.signUpForm.isFirstNameEmpty || this.signUpForm.isLastNameEmpty || this.signUpForm.isAddressEmpty
           || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty ||
           this.signUpForm.passwordNotSame) return;
+      if (!this.validEmail(this.signUpForm.email)){
+        Swal.fire({
+            icon: 'error',
+            title: 'Valid Email',
+            text: 'Please input you email',
+            footer: `If you don't have any account, Please Sign Up first`
+          })
+          return
+      }
+      if(this.signUpForm.password.length<6){
+        Swal.fire({
+            icon: 'error',
+            title: 'Valid Password',
+            text: 'Please input password more than 6 character',
+            footer: `If you don't have any account, Please Sign Up first`
+          })
+          return
+      }
       let newAccount = JSON.stringify({
         fname : this.signUpForm.firstName,
         lname : this.signUpForm.lastName,
@@ -244,6 +288,15 @@ export default {
       if (this.signUpForm.isFirstNameEmpty || this.signUpForm.isLastNameEmpty || this.signUpForm.isAddressEmpty
         || this.signUpForm.isPhoneEmpty || this.signUpForm.isEmailEmpty || this.signUpForm.isPasswordEmpty ||
         this.signUpForm.passwordNotSame) return;
+        if (!this.validEmail(this.signUpForm.email)){
+        Swal.fire({
+            icon: 'error',
+            title: 'Valid Email',
+            text: 'Please input you email',
+            footer: `If you don't have any account, Please Sign Up first`
+          })
+          return
+      }
       const axios = require('axios');
       let editAccount = JSON.stringify({
         fname : this.signUpForm.firstName,
@@ -253,10 +306,16 @@ export default {
         address : this.signUpForm.address,
         password: this.signUpForm.password
       })
+<<<<<<< HEAD
       // console.log(editAccount)
       let data = new FormData()
       data.append("account", editAccount)
       // try {
+=======
+      let data = new FormData()
+      data.append("account", editAccount)
+       try {
+>>>>>>> dev
         await axios.put(`${this.$store.state.backendUrl}/user/edit/profile`, data, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}});
         this.$store.dispatch("fetchLocalStorage")
         {
@@ -266,9 +325,19 @@ export default {
           })
         }
         this.$router.push('/')
+<<<<<<< HEAD
       // } catch(error) {
       //   console.log(error)
       // }
+=======
+      } catch(error) {
+        Swal.fire({
+            icon: 'error',
+            title: error.response.data,
+            footer: `If you don't have any account, Please Sign Up first`
+          })
+      }
+>>>>>>> dev
      },
   },
   mounted() {

@@ -1,5 +1,5 @@
 <template>
-  <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning">
+  <div id="form" class="lg:px-16 md:px-10 py-5 px-6 alert alert-warning flex-grow">
     <!-- No permission display -->
     <div v-if="account==null||this.$store.state.account.role.name=='Member'||this.error==true" class=" lg:mt-28 md:mt-24 mt-20 w-full">
       <ErrorPage msg="No no no, That isn't any pokemon here." image="pikachu.gif" css="rounded-md my-5"></ErrorPage>
@@ -53,6 +53,7 @@
 <script>
 import axios from "axios";
 import ErrorPage from '@/components/ErrorPage.vue'
+import Swal from 'sweetalert2'
 export default {
   name: "MenuForm",
   components: { ErrorPage },
@@ -103,10 +104,19 @@ export default {
         this.$router.push('/menu');
       } catch (error) {
         if(error.response.status==500){
-          alert("Image is too large or IO problem")
+          Swal.fire({
+            icon: 'error',
+            title: 'Image is too large ',
+            text: 'Please insert another picture',
+            footer: `If you don't have any problem, please contract`
+          })
         }
         else{
-        alert(error.response.data);
+        Swal.fire({
+            icon: 'error',
+            title: error.response.data,
+            footer: `If you don't have any problem, please contract`
+          })
         }
       }
     },
@@ -118,10 +128,19 @@ export default {
         await axios.put(`${this.$store.state.backendUrl}/menu/edit`, data ,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
         .catch(function (error) {
           if(error.response.status==500){
-            alert("Image is too large or IO problem")
+            Swal.fire({
+            icon: 'error',
+            title: 'Image is too large ',
+            text: 'Please insert another picture',
+            footer: `If you don't have any problem, please contract`
+          })
         }
           else{
-            alert(error.response.data); }});
+            Swal.fire({
+            icon: 'error',
+            title: error.response.data,
+            footer: `If you don't have any problem, please contract`
+          })}});
         this.$router.push('/menu');   
     },
     scrollToTop() {
