@@ -45,6 +45,7 @@
 import axios from "axios";
 import Swal from 'sweetalert2'
 import ErrorPage from '@/components/ErrorPage.vue';
+
 export default {
   name: "AccountManage",
   components: { ErrorPage },

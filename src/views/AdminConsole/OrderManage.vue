@@ -40,6 +40,7 @@
         </ul>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -47,14 +48,16 @@
 import axios from "axios";
 import Swal from 'sweetalert2'
 import ErrorPage from '@/components/ErrorPage.vue';
+
 export default {
-  name: "AccountManage",
+  name: "OrderManage",
   components: { ErrorPage },
-  data() {
-    return {
-      userList : null,
-      roleList : null
-    }
+  data(){
+     return {
+       statusList : null,
+       orderList : null,
+       orderDetailList : null
+     }
   },
   methods:{
     async changeOrderStatus(order,status){
@@ -78,6 +81,7 @@ export default {
             this.orderList = response.data
           })
     },
+
     async getStatus(){
       await axios.get(`${this.$store.state.backendUrl}/status`,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
         .then(response => {
@@ -89,7 +93,7 @@ export default {
   computed: {
     accountRole() {
       if(this.$store.state.account==null) return false;
-      if(this.$store.state.account.role.name=='Admin') return true;
+      if(this.$store.state.account.role.name!='Member') return true;
       return false;
     },
   },
@@ -98,6 +102,6 @@ export default {
       this.getOrderList();
       this.getStatus();
     }
-  }
+  },
 };
 </script>
