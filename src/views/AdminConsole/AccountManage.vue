@@ -71,23 +71,33 @@ export default {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
-      }).then(() => {
-        axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
-            .then(() => {
-              this.userList = this.userList.filter(list => {return list.id != user.id});
-              Swal.fire(
-                  'Deleted!',
-                  'Your user has been deleted.',
-                  'success'
-              );
-            }).catch(() => {
-              Swal.fire(
-                  'Oops...',
-                  'Something went wrong!',
-                  'error'
-              );
-            });
-        });
+      }).then((result) => {
+        if(result.isConfirmed) {
+          axios.delete(`${this.$store.state.backendUrl}/admin/delete/${user.id}`, {withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+              .then(() => {
+                this.userList = this.userList.filter(list => {return list.id != user.id});
+                Swal.fire(
+                    'Deleted!',
+                    'Your user has been deleted.',
+                    'success'
+                );
+              }).catch(() => {
+                Swal.fire(
+                    'Oops...',
+                    'Something went wrong!',
+                    'error'
+                );
+              });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire(
+            'Cancelled',
+            'You have been cancel to delete account :)',
+            'error'
+          )
+          this.getUserList();
+          this.getStatus();
+        }
+      });
     },
     editRoleUser(user, role){
       Swal.fire({
@@ -98,8 +108,9 @@ export default {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, change it!'
-      }).then(() => {
-        axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
+      }).then((result) => {
+        if(result.isConfirmed) {
+          axios.put(`${this.$store.state.backendUrl}/admin/edit/role/${user.id}?roleId=${role.id}`, null,{withCredentials:true , headers : {"Authorization": `Bearer ${localStorage.getItem('JWT')}`}})
             .then(() => {
               Swal.fire(
                   'Role has been edited!',
@@ -112,7 +123,16 @@ export default {
                   'Something went wrong!',
                   'error'
               )
-            })
+          })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire(
+            'Cancelled',
+            'You have been cancel to change role :)',
+            'error'
+          )
+          this.getUserList();
+          this.getStatus();
+        }
       })
     },
     async getStatus(){

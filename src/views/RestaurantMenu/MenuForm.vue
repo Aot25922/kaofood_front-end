@@ -5,7 +5,7 @@
       <ErrorPage msg="No no no, That isn't any pokemon here." image="pikachu.gif" css="rounded-md my-5"></ErrorPage>
     </div>
 
-    <form v-else @submit.prevent="submitform()" class="bg-salmon w-full text-black card p-5 lg:mt-32 md:mt-24 mt-20 mb-5 md:grid md:grid-cols-2">
+    <form v-else @submit.prevent="submitform()" class="bg-salmon w-full text-black card p-5 my-5 md:grid md:grid-cols-2">
       <div class="mt-4 flex flex-col md:p-2">
         <label for="menuName" class="font-semibold text-lg pb-2 label-text">Menu name</label>
         <input v-model.trim="form.name" autofocus
