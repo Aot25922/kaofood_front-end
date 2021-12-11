@@ -4,9 +4,7 @@ import Swal from 'sweetalert2'
 
 export default createStore({
   state: {
-    // backendUrl: "https://kaofood.works/api",
-    backendUrl: "https://dev.kaofood.works/api",
-    // backendUrl: "http://localhost:8080",
+    backendUrl: "https://bom2321.thddns.net:7997/kaofood/api",
     account: null,
     menus: [],
     categories: [],
